@@ -1,7 +1,6 @@
 import 'package:crowwn/widgets/signal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 import 'package:crowwn/dark_mode.dart';
 import 'package:crowwn/features/user_signals/presentation/providers/user_signals_provider.dart';
 import 'package:crowwn/features/bot/presentation/widgets/performance_overview_widget.dart';

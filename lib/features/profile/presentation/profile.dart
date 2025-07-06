@@ -3,7 +3,6 @@ import 'package:crowwn/features/brokers/presentation/screens/brokers_screen.dart
 import 'package:crowwn/features/profile/presentation/personal_data.dart';
 import 'package:crowwn/features/profile/presentation/widgets/profile_tile.dart';
 import 'package:crowwn/features/settings/change-password/presentation/change_password.dart';
-import 'package:crowwn/screens/Message%20&%20Notification/Notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
@@ -340,7 +339,8 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const BrokersScreen(initialTab: 0),
+                                builder: (context) =>
+                                    const BrokersScreen(initialTab: 0),
                               ),
                             );
                           },
@@ -451,7 +451,7 @@ class _ProfileState extends State<Profile> {
                           },
                         ),
                         ProfileTile.regular(
-                          image: "assets/images/144.png",
+                          image: "assets/images/app-icon.png",
                           name: "About App",
                           description: "About Us",
                           onTap: () {

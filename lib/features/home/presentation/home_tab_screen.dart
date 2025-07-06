@@ -193,6 +193,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
   @override
   Widget build(BuildContext context) {
     notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final size = MediaQuery.sizeOf(context);
     final botProvider = Provider.of<BotProvider>(context, listen: true);
     final binanceService = Provider.of<BinanceService>(context, listen: false);
 
@@ -232,7 +233,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               // Refresh broker balances
               final binanceProvider = context.read<BinanceProvider>();
               final deltaProvider = context.read<DeltaProvider>();
-              
+
               if (binanceProvider.isConnected) {
                 await binanceProvider.refreshBalance();
               }
@@ -254,25 +255,12 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         Expanded(
                           child: Row(
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color:
-                                          Colors.black.withValues(alpha: 0.08),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: CircleAvatar(
-                                  radius: 26,
-                                  backgroundImage:
-                                      AssetImage("assets/images/144.png"),
-                                ),
+                              Image.asset(
+                                "assets/images/app-icon.png",
+                                width: size.width * 0.12,
+                                height: size.width * 0.12,
                               ),
-                              const SizedBox(width: 14),
+                              const SizedBox(width: 5),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,6 +272,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                                             .withValues(alpha: 0.7),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
+                                        height: 1.2,
                                       ),
                                     ),
                                     const SizedBox(height: 2),
@@ -303,6 +292,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                                             color: notifier.textColor,
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
+                                            height: 1,
                                           ),
                                         );
                                       },
@@ -324,11 +314,11 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                       ],
                     ),
                     const SizedBox(height: 28),
-                    
+
                     // Broker Cards Section
                     _brokerCardsSection(notifier),
                     const SizedBox(height: 28),
-                    
+
                     // Strategies Section (Horizontal Scroll)
                     Text(
                       "Crypto Currencies",
@@ -550,7 +540,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        width: MediaQuery.of(context).size.width - 40, // Full width minus padding
+        width:
+            MediaQuery.of(context).size.width - 40, // Full width minus padding
         clipBehavior: Clip.none,
         decoration: BoxDecoration(
           gradient: gradient,
@@ -578,12 +569,14 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                       Container(
                         width: 40, // Increased from 36 to 48
                         height: 40, // Increased from 36 to 48
-                        padding: brokerName == "Delta" 
+                        padding: brokerName == "Delta"
                             ? const EdgeInsets.all(0) // Less padding for Delta
-                            : const EdgeInsets.all(8), // Normal padding for others
+                            : const EdgeInsets.all(
+                                8), // Normal padding for others
                         decoration: BoxDecoration(
                           color: Colors.white, // Changed to solid white
-                          borderRadius: BorderRadius.circular(12), // Increased radius
+                          borderRadius:
+                              BorderRadius.circular(12), // Increased radius
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withValues(alpha: 0.1),
@@ -593,19 +586,26 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8), // Adjusted for padding
+                          borderRadius:
+                              BorderRadius.circular(8), // Adjusted for padding
                           child: Image.asset(
                             logoPath,
-                            fit: BoxFit.contain, // Changed to contain for better logo display
-                            width: brokerName == "Delta" ? 36 : null, // Force width for Delta
-                            height: brokerName == "Delta" ? 36 : null, // Force height for Delta
+                            fit: BoxFit
+                                .contain, // Changed to contain for better logo display
+                            width: brokerName == "Delta"
+                                ? 36
+                                : null, // Force width for Delta
+                            height: brokerName == "Delta"
+                                ? 36
+                                : null, // Force height for Delta
                           ),
                         ),
                       ),
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center, // Center vertically
+                        mainAxisAlignment:
+                            MainAxisAlignment.center, // Center vertically
                         children: [
                           Text(
                             brokerName,
@@ -623,15 +623,19 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                                 width: 8,
                                 height: 8,
                                 decoration: BoxDecoration(
-                                  color: isConnected ? Colors.green : Colors.grey,
+                                  color:
+                                      isConnected ? Colors.green : Colors.grey,
                                   shape: BoxShape.circle,
-                                  boxShadow: isConnected ? [
-                                    BoxShadow(
-                                      color: Colors.green.withValues(alpha: 0.5),
-                                      blurRadius: 4,
-                                      spreadRadius: 1,
-                                    ),
-                                  ] : null,
+                                  boxShadow: isConnected
+                                      ? [
+                                          BoxShadow(
+                                            color: Colors.green
+                                                .withValues(alpha: 0.5),
+                                            blurRadius: 4,
+                                            spreadRadius: 1,
+                                          ),
+                                        ]
+                                      : null,
                                 ),
                               ),
                               const SizedBox(width: 6),
@@ -653,7 +657,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                   // Right side - Balance or connection status
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center, // Center vertically
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // Center vertically
                     children: [
                       if (isConnected && balance != null)
                         Column(

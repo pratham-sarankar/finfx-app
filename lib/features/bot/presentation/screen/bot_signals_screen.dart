@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:crowwn/dark_mode.dart';
-import 'package:crowwn/models/signal.dart';
 import 'package:crowwn/features/bot/presentation/providers/signals_provider.dart';
 import 'package:crowwn/features/bot/presentation/widgets/performance_overview_widget.dart';
 
