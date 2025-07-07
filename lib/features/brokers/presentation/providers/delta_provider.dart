@@ -1,8 +1,8 @@
-import 'package:crowwn/features/brokers/domain/models/delta_balance.dart';
-import 'package:crowwn/features/brokers/domain/models/delta_credentials.dart';
-import 'package:crowwn/services/auth_storage_service.dart';
-import 'package:crowwn/services/delta_service.dart';
-import 'package:crowwn/utils/api_error.dart';
+import 'package:finfx/features/brokers/domain/models/delta_balance.dart';
+import 'package:finfx/features/brokers/domain/models/delta_credentials.dart';
+import 'package:finfx/services/auth_storage_service.dart';
+import 'package:finfx/services/delta_service.dart';
+import 'package:finfx/utils/api_error.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/screens/config/Latest_News_model.dart';
+import 'package:finfx/screens/config/Latest_News_model.dart';
 import '../../dark_mode.dart';
 import '../Gold/Detail_gold.dart';
 import '../config/common.dart';

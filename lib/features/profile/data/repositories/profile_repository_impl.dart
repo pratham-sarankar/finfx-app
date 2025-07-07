@@ -2,10 +2,10 @@
 import 'dart:convert';
 
 // Project imports:
-import 'package:crowwn/services/api_service.dart';
-import 'package:crowwn/utils/api_error.dart';
-import 'package:crowwn/features/profile/data/models/profile_model.dart';
-import 'package:crowwn/features/profile/domain/repositories/profile_repository.dart';
+import 'package:finfx/services/api_service.dart';
+import 'package:finfx/utils/api_error.dart';
+import 'package:finfx/features/profile/data/models/profile_model.dart';
+import 'package:finfx/features/profile/domain/repositories/profile_repository.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {
   final ApiService _apiService;

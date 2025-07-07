@@ -2,12 +2,12 @@
 import 'dart:convert';
 
 // Package imports:
-import 'package:crowwn/features/settings/change-password/data/models/change_password_response.dart';
+import 'package:finfx/features/settings/change-password/data/models/change_password_response.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
-import 'package:crowwn/models/responses/sign_up_response.dart';
+import 'package:finfx/models/responses/sign_up_response.dart';
 import '../utils/api_error.dart';
 import 'api_service.dart';
 

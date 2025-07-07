@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:crowwn/utils/toast_utils.dart';
+import 'package:finfx/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:

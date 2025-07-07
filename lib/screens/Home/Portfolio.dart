@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 // Flutter imports:
-import 'package:crowwn/features/home/presentation/home_screen.dart';
+import 'package:finfx/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:

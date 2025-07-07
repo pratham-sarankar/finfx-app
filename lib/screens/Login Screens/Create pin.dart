@@ -10,7 +10,7 @@ import 'package:otp_text_field/style.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/screens/Login%20Screens/Verify%20success.dart';
+import 'package:finfx/screens/Login%20Screens/Verify%20success.dart';
 import '../../dark_mode.dart';
 import '../../services/auth_service.dart';
 import '../config/common.dart';

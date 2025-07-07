@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/screens/Wallet/Transferbalance_confirmation.dart';
-import 'package:crowwn/screens/config/Contact_list.dart';
+import 'package:finfx/screens/Wallet/Transferbalance_confirmation.dart';
+import 'package:finfx/screens/config/Contact_list.dart';
 import '../../dark_mode.dart';
 import '../config/common.dart';
 

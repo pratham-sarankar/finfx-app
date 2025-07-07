@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/screens/Message%20&%20Notification/Message_ofline.dart';
-import 'package:crowwn/screens/config/common.dart';
-import 'package:crowwn/screens/config/message_model.dart';
+import 'package:finfx/screens/Message%20&%20Notification/Message_ofline.dart';
+import 'package:finfx/screens/config/common.dart';
+import 'package:finfx/screens/config/message_model.dart';
 import '../../dark_mode.dart';
 import 'Message_online.dart';
 

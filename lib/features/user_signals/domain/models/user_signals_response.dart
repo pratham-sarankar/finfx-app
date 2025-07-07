@@ -1,4 +1,4 @@
-import 'package:crowwn/models/signal.dart';
+import 'package:finfx/models/signal.dart';
 
 class UserSignalsResponse {
   final List<Signal> signals;

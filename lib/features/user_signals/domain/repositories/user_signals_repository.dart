@@ -1,4 +1,4 @@
-import 'package:crowwn/features/user_signals/domain/models/user_signals_response.dart';
+import 'package:finfx/features/user_signals/domain/models/user_signals_response.dart';
 
 abstract class UserSignalsRepository {
   Future<UserSignalsResponse> getUserSignals({

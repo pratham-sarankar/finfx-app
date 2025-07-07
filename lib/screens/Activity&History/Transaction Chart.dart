@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 // Project imports:
-import 'package:crowwn/screens/config/common.dart';
+import 'package:finfx/screens/config/common.dart';
 import '../../dark_mode.dart';
 import 'History Report.dart';
 

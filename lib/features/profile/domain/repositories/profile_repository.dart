@@ -1,6 +1,6 @@
 // Project imports:
-import 'package:crowwn/features/profile/data/models/profile_model.dart';
-import 'package:crowwn/utils/api_error.dart';
+import 'package:finfx/features/profile/data/models/profile_model.dart';
+import 'package:finfx/utils/api_error.dart';
 
 abstract class ProfileRepository {
   /// Fetches the profile of the currently logged-in user

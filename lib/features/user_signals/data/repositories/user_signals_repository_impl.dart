@@ -1,6 +1,6 @@
-import 'package:crowwn/features/user_signals/domain/models/user_signals_response.dart';
-import 'package:crowwn/features/user_signals/domain/repositories/user_signals_repository.dart';
-import 'package:crowwn/features/user_signals/data/services/user_signals_service.dart';
+import 'package:finfx/features/user_signals/domain/models/user_signals_response.dart';
+import 'package:finfx/features/user_signals/domain/repositories/user_signals_repository.dart';
+import 'package:finfx/features/user_signals/data/services/user_signals_service.dart';
 
 class UserSignalsRepositoryImpl implements UserSignalsRepository {
   final UserSignalsService _userSignalsService;

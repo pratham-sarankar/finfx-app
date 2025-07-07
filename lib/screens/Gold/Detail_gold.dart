@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 // Project imports:
-import 'package:crowwn/screens/Gold/sell_buy_gold.dart';
-import 'package:crowwn/screens/config/common.dart';
+import 'package:finfx/screens/Gold/sell_buy_gold.dart';
+import 'package:finfx/screens/config/common.dart';
 import '../../dark_mode.dart';
 import 'Auto invest.dart';
 import 'Loan_gold.dart';

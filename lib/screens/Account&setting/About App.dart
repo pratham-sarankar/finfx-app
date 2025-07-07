@@ -1,13 +1,13 @@
 // ignore_for_file: file_names, camel_case_types
 
 // Flutter imports:
+import 'package:finfx/screens/config/common.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/screens/config/common.dart';
 import '../../dark_mode.dart';
 
 class About_App extends StatefulWidget {

@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 // Flutter imports:
-import 'package:crowwn/utils/toast_utils.dart';
+import 'package:finfx/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
 import 'dart:async'; // Add this import for Timer
 
@@ -12,8 +12,8 @@ import 'package:otp_text_field/style.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/features/onboarding/presentation/kyc/kyc_screen.dart';
-import 'package:crowwn/features/profile/presentation/providers/profile_provider.dart';
+import 'package:finfx/features/onboarding/presentation/kyc/kyc_screen.dart';
+import 'package:finfx/features/profile/presentation/providers/profile_provider.dart';
 import '../../dark_mode.dart';
 import '../../services/auth_service.dart';
 import '../../services/auth_storage_service.dart';

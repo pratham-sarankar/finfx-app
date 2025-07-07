@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/screens/NFT/Collections.dart';
-import 'package:crowwn/screens/NFT/Spacybox.dart';
-import 'package:crowwn/screens/NFT/Statics.dart';
-import 'package:crowwn/screens/config/common.dart';
+import 'package:finfx/screens/NFT/Collections.dart';
+import 'package:finfx/screens/NFT/Spacybox.dart';
+import 'package:finfx/screens/NFT/Statics.dart';
+import 'package:finfx/screens/config/common.dart';
 import '../../dark_mode.dart';
 import 'Hot bids see all.dart';
 import 'Hot colletion see all.dart';

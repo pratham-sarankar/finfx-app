@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:crowwn/features/home/data/models/bot_model.dart';
-import 'package:crowwn/utils/api_error.dart';
-import 'package:crowwn/features/home/domain/repositories/bot_repository.dart';
+import 'package:finfx/features/home/data/models/bot_model.dart';
+import 'package:finfx/utils/api_error.dart';
+import 'package:finfx/features/home/domain/repositories/bot_repository.dart';
 
 class BotProvider extends ChangeNotifier {
   final BotRepository _repository;

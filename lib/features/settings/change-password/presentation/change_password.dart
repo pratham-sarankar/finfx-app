@@ -1,6 +1,6 @@
 // Flutter imports:
-import 'package:crowwn/services/auth_service.dart';
-import 'package:crowwn/utils/toast_utils.dart';
+import 'package:finfx/services/auth_service.dart';
+import 'package:finfx/utils/toast_utils.dart';
 
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import '../../../../dark_mode.dart';
-import 'package:crowwn/utils/api_error.dart';
+import 'package:finfx/utils/api_error.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});

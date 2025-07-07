@@ -1,15 +1,15 @@
 // Flutter imports:
-import 'package:crowwn/features/brokers/presentation/screens/brokers_screen.dart';
-import 'package:crowwn/screens/Home/portfolio.dart';
+import 'package:finfx/features/brokers/presentation/screens/brokers_screen.dart';
+import 'package:finfx/screens/Home/portfolio.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/features/profile/presentation/profile.dart';
-import 'package:crowwn/features/user_signals/presentation/screens/user_signals_screen.dart';
-import 'package:crowwn/features/home/presentation/home_tab_screen.dart';
+import 'package:finfx/features/profile/presentation/profile.dart';
+import 'package:finfx/features/user_signals/presentation/screens/user_signals_screen.dart';
+import 'package:finfx/features/home/presentation/home_tab_screen.dart';
 import '../../../dark_mode.dart';
 
 class HomeScreen extends StatefulWidget {

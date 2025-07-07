@@ -1,5 +1,5 @@
-import 'package:crowwn/dark_mode.dart';
-import 'package:crowwn/features/home/data/models/bot_model.dart';
+import 'package:finfx/dark_mode.dart';
+import 'package:finfx/features/home/data/models/bot_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/bot_details_provider.dart';

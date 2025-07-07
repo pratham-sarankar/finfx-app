@@ -1,5 +1,5 @@
-import 'package:crowwn/models/signal.dart';
-import 'package:crowwn/features/user_signals/domain/models/user_signals_response.dart';
+import 'package:finfx/models/signal.dart';
+import 'package:finfx/features/user_signals/domain/models/user_signals_response.dart';
 
 class UserSignalsResponseModel extends UserSignalsResponse {
   UserSignalsResponseModel({

@@ -1,7 +1,7 @@
-import 'package:crowwn/dark_mode.dart';
-import 'package:crowwn/features/bot/presentation/screen/bot_detail_screen.dart';
-import 'package:crowwn/features/home/data/models/bot_model.dart';
-import 'package:crowwn/screens/config/common.dart';
+import 'package:finfx/dark_mode.dart';
+import 'package:finfx/features/bot/presentation/screen/bot_detail_screen.dart';
+import 'package:finfx/features/home/data/models/bot_model.dart';
+import 'package:finfx/screens/config/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

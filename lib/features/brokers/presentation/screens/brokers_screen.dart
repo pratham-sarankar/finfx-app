@@ -1,6 +1,6 @@
 // Flutter imports:
-import 'package:crowwn/features/brokers/presentation/providers/binance_provider.dart';
-import 'package:crowwn/features/brokers/presentation/providers/delta_provider.dart';
+import 'package:finfx/features/brokers/presentation/providers/binance_provider.dart';
+import 'package:finfx/features/brokers/presentation/providers/delta_provider.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:

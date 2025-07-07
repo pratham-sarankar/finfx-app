@@ -8,7 +8,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/screens/config/common.dart';
+import 'package:finfx/screens/config/common.dart';
 import '../../../dark_mode.dart';
 import '../../../utils/toast_utils.dart';
 import 'providers/profile_provider.dart';

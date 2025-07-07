@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:crowwn/screens/config/common.dart';
+import 'package:finfx/screens/config/common.dart';
 
 class Notification_detail extends StatefulWidget {
   final String image;

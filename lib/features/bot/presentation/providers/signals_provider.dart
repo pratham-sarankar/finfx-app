@@ -1,6 +1,6 @@
-import 'package:crowwn/models/signal.dart';
-import 'package:crowwn/repositories/signal_repository.dart';
-import 'package:crowwn/utils/api_error.dart';
+import 'package:finfx/models/signal.dart';
+import 'package:finfx/repositories/signal_repository.dart';
+import 'package:finfx/utils/api_error.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
 // Flutter imports:
-import 'package:crowwn/features/home/data/models/bot_model.dart';
-import 'package:crowwn/widgets/signal_card.dart';
+import 'package:finfx/features/home/data/models/bot_model.dart';
+import 'package:finfx/widgets/signal_card.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,9 +8,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/dark_mode.dart';
-import 'package:crowwn/features/bot/presentation/providers/signals_provider.dart';
-import 'package:crowwn/features/bot/presentation/widgets/performance_overview_widget.dart';
+import 'package:finfx/dark_mode.dart';
+import 'package:finfx/features/bot/presentation/providers/signals_provider.dart';
+import 'package:finfx/features/bot/presentation/widgets/performance_overview_widget.dart';
 
 class BotSignalsScreen extends StatefulWidget {
   const BotSignalsScreen({super.key, required this.bot});

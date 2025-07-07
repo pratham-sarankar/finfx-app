@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/dark_mode.dart';
-import 'package:crowwn/features/user_signals/presentation/providers/user_signals_provider.dart';
-import 'package:crowwn/features/user_signals/presentation/widgets/user_signals_tab.dart';
+import 'package:finfx/dark_mode.dart';
+import 'package:finfx/features/user_signals/presentation/providers/user_signals_provider.dart';
+import 'package:finfx/features/user_signals/presentation/widgets/user_signals_tab.dart';
 
 class UserSignalsScreen extends StatefulWidget {
   const UserSignalsScreen({super.key});

@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:crowwn/utils/api_error.dart';
+import 'package:finfx/utils/api_error.dart';
 
 class BotModel {
   final String id;

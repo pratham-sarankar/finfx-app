@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:crowwn/utils/toast_utils.dart';
+import 'package:finfx/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,12 +10,12 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/features/home/presentation/home_screen.dart';
-import 'package:crowwn/screens/Login%20Screens/Email%20verification.dart';
-import 'package:crowwn/services/auth_service.dart';
-import 'package:crowwn/services/auth_storage_service.dart';
-import 'package:crowwn/utils/api_error.dart';
-import 'package:crowwn/features/profile/presentation/providers/profile_provider.dart';
+import 'package:finfx/features/home/presentation/home_screen.dart';
+import 'package:finfx/screens/Login%20Screens/Email%20verification.dart';
+import 'package:finfx/services/auth_service.dart';
+import 'package:finfx/services/auth_storage_service.dart';
+import 'package:finfx/utils/api_error.dart';
+import 'package:finfx/features/profile/presentation/providers/profile_provider.dart';
 
 import '../../dark_mode.dart';
 import '../config/common.dart';

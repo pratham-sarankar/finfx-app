@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:crowwn/models/signal.dart';
+import 'package:finfx/models/signal.dart';
 
 class Bot {
   final String name;

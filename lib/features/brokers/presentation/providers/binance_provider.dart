@@ -1,8 +1,8 @@
-import 'package:crowwn/features/brokers/domain/models/binance_balance.dart';
-import 'package:crowwn/features/brokers/domain/models/binance_credentials.dart';
-import 'package:crowwn/services/auth_storage_service.dart';
-import 'package:crowwn/services/binance_service.dart';
-import 'package:crowwn/utils/api_error.dart';
+import 'package:finfx/features/brokers/domain/models/binance_balance.dart';
+import 'package:finfx/features/brokers/domain/models/binance_credentials.dart';
+import 'package:finfx/services/auth_storage_service.dart';
+import 'package:finfx/services/binance_service.dart';
+import 'package:finfx/utils/api_error.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

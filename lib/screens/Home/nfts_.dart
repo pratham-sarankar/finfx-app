@@ -17,7 +17,7 @@ import '../NFT/Statics.dart';
 import '../NFT/Top collections see all.dart';
 import '../config/common.dart';
 
-// import 'package:Crowwn/NFT/Statics.dart';
+// import 'package:finfx/NFT/Statics.dart';
 
 class nfts_ extends StatefulWidget {
   const nfts_({super.key});

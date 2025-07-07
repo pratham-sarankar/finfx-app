@@ -1,13 +1,13 @@
 // Flutter imports:
-import 'package:crowwn/utils/toast_utils.dart';
+import 'package:finfx/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/dark_mode.dart';
-import 'package:crowwn/utils/api_error.dart';
+import 'package:finfx/dark_mode.dart';
+import 'package:finfx/utils/api_error.dart';
 import '../../../../../screens/config/common.dart';
 import '../../providers/kyc_provider.dart';
 

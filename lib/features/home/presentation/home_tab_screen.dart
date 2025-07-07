@@ -1,11 +1,11 @@
 // Flutter imports:
-import 'package:crowwn/features/brokers/presentation/providers/binance_provider.dart';
-import 'package:crowwn/features/brokers/presentation/providers/delta_provider.dart';
-import 'package:crowwn/features/brokers/presentation/screens/brokers_screen.dart';
-import 'package:crowwn/features/brokers/domain/models/binance_balance.dart';
-import 'package:crowwn/features/brokers/domain/models/delta_balance.dart';
-import 'package:crowwn/features/home/data/models/bot_model.dart';
-import 'package:crowwn/features/home/presentation/widgets/bot_card.dart';
+import 'package:finfx/features/brokers/presentation/providers/binance_provider.dart';
+import 'package:finfx/features/brokers/presentation/providers/delta_provider.dart';
+import 'package:finfx/features/brokers/presentation/screens/brokers_screen.dart';
+import 'package:finfx/features/brokers/domain/models/binance_balance.dart';
+import 'package:finfx/features/brokers/domain/models/delta_balance.dart';
+import 'package:finfx/features/home/data/models/bot_model.dart';
+import 'package:finfx/features/home/presentation/widgets/bot_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,11 +14,11 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/screens/Message%20&%20Notification/Notifications.dart';
+import 'package:finfx/screens/Message%20&%20Notification/Notifications.dart';
 import '../../bot/presentation/screen/bot_detail_screen.dart';
-import 'package:crowwn/features/home/presentation/providers/bot_provider.dart';
-import 'package:crowwn/services/binance_service.dart';
-import 'package:crowwn/features/profile/presentation/providers/profile_provider.dart';
+import 'package:finfx/features/home/presentation/providers/bot_provider.dart';
+import 'package:finfx/services/binance_service.dart';
+import 'package:finfx/features/profile/presentation/providers/profile_provider.dart';
 
 import '../../../dark_mode.dart'; // Assuming Dark mode.dart is needed for theme colors
 

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/screens/config/common.dart';
+import 'package:finfx/screens/config/common.dart';
 import '../../dark_mode.dart';
 
 class buy_gold extends StatefulWidget {

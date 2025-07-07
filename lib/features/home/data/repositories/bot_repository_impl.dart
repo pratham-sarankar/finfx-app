@@ -2,10 +2,10 @@
 import 'dart:convert';
 
 // Project imports:
-import 'package:crowwn/services/api_service.dart';
-import 'package:crowwn/utils/api_error.dart';
-import 'package:crowwn/features/home/data/models/bot_model.dart';
-import 'package:crowwn/features/home/domain/repositories/bot_repository.dart';
+import 'package:finfx/services/api_service.dart';
+import 'package:finfx/utils/api_error.dart';
+import 'package:finfx/features/home/data/models/bot_model.dart';
+import 'package:finfx/features/home/domain/repositories/bot_repository.dart';
 
 class BotRepositoryImpl implements BotRepository {
   final ApiService _apiService;

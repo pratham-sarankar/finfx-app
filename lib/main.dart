@@ -1,8 +1,8 @@
 // Flutter imports:
-import 'package:crowwn/features/brokers/presentation/providers/binance_provider.dart';
-import 'package:crowwn/features/brokers/presentation/providers/delta_provider.dart';
-import 'package:crowwn/features/bot/presentation/providers/signals_provider.dart';
-import 'package:crowwn/features/user_signals/presentation/providers/user_signals_provider.dart';
+import 'package:finfx/features/brokers/presentation/providers/binance_provider.dart';
+import 'package:finfx/features/brokers/presentation/providers/delta_provider.dart';
+import 'package:finfx/features/bot/presentation/providers/signals_provider.dart';
+import 'package:finfx/features/user_signals/presentation/providers/user_signals_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -13,22 +13,22 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/dark_mode.dart';
-import 'package:crowwn/features/onboarding/data/repositories/kyc_repository_impl.dart';
-import 'package:crowwn/features/onboarding/presentation/providers/kyc_provider.dart';
-import 'package:crowwn/features/onboarding/presentation/splash/splash_screen.dart';
-import 'package:crowwn/features/home/data/repositories/bot_repository_impl.dart';
-import 'package:crowwn/features/home/presentation/providers/bot_provider.dart';
-import 'package:crowwn/features/user_signals/data/repositories/user_signals_repository_impl.dart';
-import 'package:crowwn/features/user_signals/data/services/user_signals_service.dart';
+import 'package:finfx/dark_mode.dart';
+import 'package:finfx/features/onboarding/data/repositories/kyc_repository_impl.dart';
+import 'package:finfx/features/onboarding/presentation/providers/kyc_provider.dart';
+import 'package:finfx/features/onboarding/presentation/splash/splash_screen.dart';
+import 'package:finfx/features/home/data/repositories/bot_repository_impl.dart';
+import 'package:finfx/features/home/presentation/providers/bot_provider.dart';
+import 'package:finfx/features/user_signals/data/repositories/user_signals_repository_impl.dart';
+import 'package:finfx/features/user_signals/data/services/user_signals_service.dart';
 import 'firebase_options.dart';
 import 'services/api_service.dart';
 import 'services/auth_service.dart';
 import 'services/auth_storage_service.dart';
 import 'services/binance_service.dart';
 import 'services/delta_service.dart';
-import 'package:crowwn/features/profile/presentation/providers/profile_provider.dart';
-import 'package:crowwn/features/profile/data/repositories/profile_repository_impl.dart';
+import 'package:finfx/features/profile/presentation/providers/profile_provider.dart';
+import 'package:finfx/features/profile/data/repositories/profile_repository_impl.dart';
 import 'features/bot/data/services/bot_subscription_service.dart';
 import 'features/bot/presentation/providers/bot_details_provider.dart';
 import 'repositories/signal_repository.dart';

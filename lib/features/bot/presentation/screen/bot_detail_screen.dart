@@ -1,13 +1,13 @@
 // Flutter imports:
-import 'package:crowwn/features/bot/presentation/screen/bot_details_tab.dart';
-import 'package:crowwn/features/home/data/models/bot_model.dart';
+import 'package:finfx/features/bot/presentation/screen/bot_details_tab.dart';
+import 'package:finfx/features/home/data/models/bot_model.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/features/bot/presentation/screen/bot_signals_screen.dart';
+import 'package:finfx/features/bot/presentation/screen/bot_signals_screen.dart';
 import '../../../../dark_mode.dart';
 
 class BotDetailsScreen extends StatefulWidget {

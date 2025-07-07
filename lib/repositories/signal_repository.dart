@@ -4,9 +4,9 @@ import 'dart:convert';
 // Package imports:
 
 // Project imports:
-import 'package:crowwn/models/signal.dart';
-import 'package:crowwn/services/api_service.dart';
-import 'package:crowwn/utils/api_error.dart';
+import 'package:finfx/models/signal.dart';
+import 'package:finfx/services/api_service.dart';
+import 'package:finfx/utils/api_error.dart';
 
 class SignalRepository {
   final ApiService _apiService;

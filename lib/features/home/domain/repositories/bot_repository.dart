@@ -1,6 +1,6 @@
 // Project imports:
-import 'package:crowwn/features/home/data/models/bot_model.dart';
-import 'package:crowwn/utils/api_error.dart';
+import 'package:finfx/features/home/data/models/bot_model.dart';
+import 'package:finfx/utils/api_error.dart';
 
 abstract class BotRepository {
   /// Fetches all available bots

@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:crowwn/features/profile/data/models/profile_model.dart';
-import 'package:crowwn/utils/api_error.dart';
-import 'package:crowwn/features/profile/domain/repositories/profile_repository.dart';
+import 'package:finfx/features/profile/data/models/profile_model.dart';
+import 'package:finfx/utils/api_error.dart';
+import 'package:finfx/features/profile/domain/repositories/profile_repository.dart';
 
 class ProfileProvider extends ChangeNotifier {
   final ProfileRepository _repository;

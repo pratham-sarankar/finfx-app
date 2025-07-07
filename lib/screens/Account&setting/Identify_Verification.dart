@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/features/onboarding/presentation/kyc/kyc_screen.dart';
+import 'package:finfx/features/onboarding/presentation/kyc/kyc_screen.dart';
 import '../../dark_mode.dart';
 import '../config/common.dart';
 

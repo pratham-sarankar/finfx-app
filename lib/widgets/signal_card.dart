@@ -1,5 +1,5 @@
-import 'package:crowwn/dark_mode.dart';
-import 'package:crowwn/models/signal.dart';
+import 'package:finfx/dark_mode.dart';
+import 'package:finfx/models/signal.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';

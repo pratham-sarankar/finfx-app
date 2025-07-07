@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crowwn/dark_mode.dart';
-import 'package:crowwn/models/signal.dart';
+import 'package:finfx/dark_mode.dart';
+import 'package:finfx/models/signal.dart';
 
 class PerformanceOverviewWidget extends StatefulWidget {
   final PerformanceOverview performanceOverview;

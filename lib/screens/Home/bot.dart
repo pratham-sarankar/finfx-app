@@ -5,7 +5,7 @@
 // import 'package:provider/provider.dart';
 
 // // Project imports:
-// import 'package:crowwn/models/bot.dart';
+// import 'package:finfx/models/bot.dart';
 // import '../../dark_mode.dart';
 // import 'performance/performance_screen.dart';
 

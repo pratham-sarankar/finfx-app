@@ -1,14 +1,14 @@
 // Flutter imports:
-import 'package:crowwn/features/home/presentation/home_screen.dart';
+import 'package:finfx/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:crowwn/dark_mode.dart';
-import 'package:crowwn/features/onboarding/presentation/kyc/sections/experience_screen.dart';
-import 'package:crowwn/screens/Login%20Screens/Verify%20success.dart';
+import 'package:finfx/dark_mode.dart';
+import 'package:finfx/features/onboarding/presentation/kyc/sections/experience_screen.dart';
+import 'package:finfx/screens/Login%20Screens/Verify%20success.dart';
 import 'sections/basic_info_screen.dart';
 import 'sections/capital_management_screen.dart';
 import 'sections/risk_profiling_screen.dart';
