@@ -77,7 +77,7 @@ class BotCard extends StatelessWidget {
                 ),
               ),
               CupertinoSwitch(
-                value: false,
+                value: true,
                 onChanged: (value) {},
               )
             ],

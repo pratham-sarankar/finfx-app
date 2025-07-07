@@ -322,19 +322,19 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     const SizedBox(height: 28),
 
                     // Strategies Section (Horizontal Scroll)
-                    Text(
-                      "Crypto Currencies",
-                      style: TextStyle(
-                        color: notifier.textColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
+                    // Text(
+                    //   "Crypto Currencies",
+                    //   style: TextStyle(
+                    //     color: notifier.textColor,
+                    //     fontSize: 18,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 16),
 
-                    // Modern Crypto Price Card
-                    _cryptoPriceCard(binanceService),
-                    const SizedBox(height: 40),
+                    // // Modern Crypto Price Card
+                    // _cryptoPriceCard(binanceService),
+                    // const SizedBox(height: 40),
 
                     // Strategies Section (Horizontal Scroll)
                     Row(
@@ -366,6 +366,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     else if (botProvider.bots.isNotEmpty)
                       Column(
                         children: botProvider.bots
+                            .where((element) => element.group == selectedGroup)
                             .map((bot) => BotCard(bot: bot))
                             .toList(),
                       )
@@ -481,16 +482,16 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
             clipBehavior: Clip.none,
             children: [
               _buildBrokerCard(
-                brokerName: "Meta Trader 4",
-                logoPath: "assets/images/mt4.webp",
+                brokerName: "Meta Trader 5",
+                logoPath: "assets/images/mt5.png",
                 gradient: const LinearGradient(
-                  colors: [Color(0xFFF7931A), Color(0xFFF8D147)],
+                  colors: [Color(0xFF00D4FF), Color(0xFF0099CC)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                isConnected: context.watch<BinanceProvider>().isConnected,
-                balance: context.watch<BinanceProvider>().balance,
-                isLoading: context.watch<BinanceProvider>().isLoading,
+                isConnected: context.watch<DeltaProvider>().isConnected,
+                balance: context.watch<DeltaProvider>().balance,
+                isLoading: context.watch<DeltaProvider>().isLoading,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -502,16 +503,16 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               ),
               const SizedBox(width: 12),
               _buildBrokerCard(
-                brokerName: "Meta Trader 5",
-                logoPath: "assets/images/mt5.png",
+                brokerName: "Meta Trader 4",
+                logoPath: "assets/images/mt4.webp",
                 gradient: const LinearGradient(
-                  colors: [Color(0xFF00D4FF), Color(0xFF0099CC)],
+                  colors: [Color(0xFFF7931A), Color(0xFFF8D147)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                isConnected: context.watch<DeltaProvider>().isConnected,
-                balance: context.watch<DeltaProvider>().balance,
-                isLoading: context.watch<DeltaProvider>().isLoading,
+                isConnected: context.watch<BinanceProvider>().isConnected,
+                balance: context.watch<BinanceProvider>().balance,
+                isLoading: context.watch<BinanceProvider>().isLoading,
                 onTap: () {
                   Navigator.push(
                     context,

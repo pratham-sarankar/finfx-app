@@ -6,6 +6,7 @@ class BotModel {
   final String name;
   final String html;
   final DateTime createdAt;
+  String? group;
   final DateTime updatedAt;
 
   BotModel({
@@ -14,6 +15,7 @@ class BotModel {
     required this.html,
     required this.createdAt,
     required this.updatedAt,
+    required this.group,
   });
 
   factory BotModel.fromJson(Map<String, dynamic> json) {
@@ -24,6 +26,7 @@ class BotModel {
         html: json['html'] as String,
         createdAt: DateTime.parse(json['createdAt'] as String),
         updatedAt: DateTime.parse(json['updatedAt'] as String),
+        group: "",
       );
     } catch (e) {
       throw ApiError.fromString(

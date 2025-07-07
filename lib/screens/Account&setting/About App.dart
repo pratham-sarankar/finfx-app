@@ -96,7 +96,7 @@ class _About_AppState extends State<About_App> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "At Zyroteck, we are passionate about reshaping the future of finance through intelligent automation and cutting-edge technology. Founded with a vision to empower traders and investors, we develop high-performance trading bots and tools that harness the power of AI, data analytics, and algorithmic precision.",
+                    "At FinFX.Ai, we are passionate about reshaping the future of finance through intelligent automation and cutting-edge technology. Founded with a vision to empower traders and investors, we develop high-performance trading bots and tools that harness the power of AI, data analytics, and algorithmic precision.",
                     style: TextStyle(
                         color: Color(0xff64748B),
                         fontSize: 16,
@@ -105,7 +105,7 @@ class _About_AppState extends State<About_App> {
                   ),
                   AppConstants.Height(15),
                   const Text(
-                    "Our mission is to make crypto trading smarter, faster, and more accessible—whether you're a beginner or a seasoned professional. With a team of engineers, data scientists, and market analysts, Zyroteck is committed to delivering secure, transparent, and adaptive solutions for the evolving digital economy.",
+                    "Our mission is to make crypto trading smarter, faster, and more accessible—whether you're a beginner or a seasoned professional. With a team of engineers, data scientists, and market analysts, FinFX.Ai is committed to delivering secure, transparent, and adaptive solutions for the evolving digital economy.",
                     style: TextStyle(
                         color: Color(0xff64748B),
                         fontSize: 16,

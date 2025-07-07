@@ -6,7 +6,96 @@ import 'package:crowwn/features/home/domain/repositories/bot_repository.dart';
 
 class BotProvider extends ChangeNotifier {
   final BotRepository _repository;
-  List<BotModel> _bots = [];
+  List<BotModel> _bots = [
+    BotModel(
+      id: '68551d5cb15e0643f8657a3f',
+      name: 'XAU/USD',
+      html: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      group: 'Commodities',
+    ),
+    BotModel(
+      id: '68551d5cb15e0643f8657a3f',
+      name: 'XAG/USD',
+      html: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      group: 'Commodities',
+    ),
+    BotModel(
+      id: '68551d5cb15e0643f8657a3f',
+      name: 'Crudeoil',
+      html: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      group: 'Commodities',
+    ),
+    BotModel(
+      id: '68551d5cb15e0643f8657a3f',
+      name: 'EUR/USD',
+      html: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      group: 'Currency',
+    ),
+    BotModel(
+      id: '68551d5cb15e0643f8657a3f',
+      name: 'JPY/USD',
+      html: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      group: 'Currency',
+    ),
+    BotModel(
+      id: '68551d5cb15e0643f8657a3f',
+      name: 'AUD/USD',
+      html: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      group: 'Currency',
+    ),
+    BotModel(
+      id: '68551d5cb15e0643f8657a3f',
+      name: 'Apple',
+      html: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      group: 'Stocks',
+    ),
+    BotModel(
+      id: '68551d5cb15e0643f8657a3f',
+      name: 'Amazon',
+      html: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      group: 'Stocks',
+    ),
+    BotModel(
+      id: '68551d5cb15e0643f8657a3f',
+      name: 'Microsoft',
+      html: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      group: 'Stocks',
+    ),
+    BotModel(
+      id: '68551d5cb15e0643f8657a3f',
+      name: 'BTC/USD',
+      html: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      group: 'Crypto',
+    ),
+    BotModel(
+      id: '68551d5cb15e0643f8657a3f',
+      name: 'ETH/USD',
+      html: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      group: 'Crypto',
+    ),
+  ];
   bool _isLoading = false;
   String? _error;
 

@@ -317,20 +317,21 @@ class _ProfileState extends State<Profile> {
                             );
                           },
                         ),
-                        ProfileTile.regular(
-                          image: 'assets/images/Identycard_.png',
-                          name: 'Identify Verification',
-                          description: 'Verify your identity',
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const Identify_Verification(),
-                              ),
-                            );
-                          },
-                        ),
+                        // ProfileTile.regular(
+                        //   image: 'assets/images/Identycard_.png',
+                        //   name: 'Identify Verification',
+                        //   description: 'Verify your identity',
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             const Identify_Verification(),
+                        //       ),
+                        //     );
+                        //   },
+                        // ),
+
                         ProfileTile.regular(
                           image: 'assets/images/cloud-connection.png',
                           name: 'API Connection',
@@ -438,18 +439,19 @@ class _ProfileState extends State<Profile> {
                                 ));
                           },
                         ),
-                        ProfileTile.regular(
-                          image: "assets/images/card.png",
-                          name: "Refferal Code",
-                          description: "Refferal Program",
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Reffle_code(),
-                                ));
-                          },
-                        ),
+                        // ProfileTile.regular(
+                        //   image: "assets/images/card.png",
+                        //   name: "Refferal Code",
+                        //   description: "Refferal Program",
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //           builder: (context) => const Reffle_code(),
+                        //         ));
+                        //   },
+                        // ),
+
                         ProfileTile.regular(
                           image: "assets/images/app-icon.png",
                           name: "About App",
