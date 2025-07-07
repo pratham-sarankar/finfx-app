@@ -1,4 +1,4 @@
-package com.zyrotech.app
+package com.finfx.app
 
 import io.flutter.embedding.android.FlutterActivity
 
