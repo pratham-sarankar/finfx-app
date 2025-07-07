@@ -53,19 +53,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDUJVVDd_MI03rSUndGNksS42uAAznynQg',
-    appId: '1:120628086177:android:41d869bbfded4c050377e0',
-    messagingSenderId: '120628086177',
-    projectId: 'zyrotech-bc4a2',
-    storageBucket: 'zyrotech-bc4a2.firebasestorage.app',
+    apiKey: 'AIzaSyBSNqAm7mjf2ZRqh8Fl_5uvm1b5tU6yhGM',
+    appId: '1:917312759089:android:947b12b13110f6e67d7c10',
+    messagingSenderId: '917312759089',
+    projectId: 'finfx-f86db',
+    storageBucket: 'finfx-f86db.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB0fAAfWNjaxr79QtemDn2C6r0ygQUEB0Y',
-    appId: '1:120628086177:ios:18d91c335df80dd70377e0',
-    messagingSenderId: '120628086177',
-    projectId: 'zyrotech-bc4a2',
-    storageBucket: 'zyrotech-bc4a2.firebasestorage.app',
-    iosBundleId: 'com.zyrotech.app',
+    apiKey: 'AIzaSyBaKL5oy482E1d1Q1KMS6ygmfe2kiQ5ELY',
+    appId: '1:917312759089:ios:afa9cdbe5993c9177d7c10',
+    messagingSenderId: '917312759089',
+    projectId: 'finfx-f86db',
+    storageBucket: 'finfx-f86db.firebasestorage.app',
+    iosBundleId: 'com.finfx.app',
   );
+
 }
