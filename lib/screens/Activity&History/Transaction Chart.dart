@@ -27,7 +27,7 @@ class _Trans_chartState extends State<Trans_chart> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     final List<ChartData> chartData = [
-      ChartData('', 80, const Color(0xff6B39F4)),
+      ChartData('', 80, const Color(0xff2e9844)),
       ChartData('', 38, const Color(0xff0153FF)),
       ChartData('', 38, const Color(0xff1DCE5C)),
     ];
@@ -133,7 +133,7 @@ class _Trans_chartState extends State<Trans_chart> {
                                     width: 8,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        color: const Color(0xff6B39F4)),
+                                        color: const Color(0xff2e9844)),
                                   ),
                                   AppConstants.Width(5),
                                   Text(

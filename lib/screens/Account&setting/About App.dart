@@ -27,7 +27,7 @@ class _About_AppState extends State<About_App> {
     return Scaffold(
       backgroundColor: notifier.background,
       appBar: AppBar(
-        backgroundColor: const Color(0xff6B39F4),
+        backgroundColor: const Color(0xff2e9844),
         // flexibleSpace: Image.asset("assets/images/Background (2).png",fit: BoxFit.cover,),
         elevation: 0,
         title: const Text(

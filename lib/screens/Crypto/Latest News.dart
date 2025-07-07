@@ -39,7 +39,7 @@ class _latest_newsState extends State<latest_news> {
         ),
         title: const Text("Latest News",
             style: TextStyle(
-                color: Color(0xff6B39F4),
+                color: Color(0xff2e9844),
                 fontSize: 17,
                 fontFamily: "Manrope-Bold")),
       ),

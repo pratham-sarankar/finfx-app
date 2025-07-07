@@ -139,7 +139,7 @@ class _UploadState extends State<Upload> {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(20),
-                                              color: const Color(0xff6B39F4),
+                                              color: const Color(0xff2e9844),
                                             ),
                                             child: const Center(
                                               child: Text(
@@ -184,7 +184,7 @@ class _UploadState extends State<Upload> {
                                               "Retake Picture",
                                               style: TextStyle(
                                                 fontSize: 18,
-                                                color: Color(0xff6B39F4),
+                                                color: Color(0xff2e9844),
                                                 fontFamily: "Manrope-Bold",
                                               ),
                                             ),

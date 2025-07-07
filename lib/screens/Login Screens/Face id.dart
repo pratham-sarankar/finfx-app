@@ -96,7 +96,7 @@
 //               child: Container(
 //                 height: height / 12,
 //                 // width: double.infinity,
-//                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xff6B39F4),),
+//                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: const Color(0xff2e9844),),
 //                 child: const Center(
 //                   child: Text(
 //                     "Enable Face ID",
@@ -122,7 +122,7 @@
 //                   child: Text(
 //                     "Skip for Now",
 //                     style: TextStyle(
-//                         color: Color(0xff6B39F4),
+//                         color: Color(0xff2e9844),
 //                         fontSize: 17,
 //                         fontFamily: "Manrope-Bold"),
 //                   ),
@@ -137,7 +137,7 @@
 //   Widget indicator({required double value}){
 //     return  LinearProgressIndicator(
 //       value: value,
-//       color: const Color(0xff6B39F4),
+//       color: const Color(0xff2e9844),
 //       backgroundColor: notifier.linerIndicator,
 //     );
 //   }

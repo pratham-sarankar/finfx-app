@@ -39,7 +39,7 @@ class _see_allState extends State<see_all> {
         ),
         title: const Text("See All Assets",
             style: TextStyle(
-                color: Color(0xff6B39F4),
+                color: Color(0xff2e9844),
                 fontSize: 17,
                 fontFamily: "Manrope-Bold")),
       ),

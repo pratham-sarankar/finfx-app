@@ -74,11 +74,11 @@ class _BotDetailsScreenState extends State<BotDetailsScreen>
               controller: _tabController,
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: const Color(0xff6B39F4).withValues(alpha: 0.1),
+                color: const Color(0xff2e9844).withValues(alpha: 0.1),
                 border: Border.all(
-                    color: const Color(0xff6B39F4).withValues(alpha: 0.3)),
+                    color: const Color(0xff2e9844).withValues(alpha: 0.3)),
               ),
-              labelColor: const Color(0xff6B39F4),
+              labelColor: const Color(0xff2e9844),
               unselectedLabelColor: notifier.textColor.withValues(alpha: 0.7),
               labelStyle: const TextStyle(
                 fontSize: 14,

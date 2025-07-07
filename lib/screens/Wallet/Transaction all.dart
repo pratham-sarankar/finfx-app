@@ -32,7 +32,7 @@ class _Transaction_allState extends State<Transaction_all> {
         ),
         title: const Text("See All Transactions",
             style: TextStyle(
-                color: Color(0xff6B39F4),
+                color: Color(0xff2e9844),
                 fontSize: 17,
                 fontFamily: "Manrope-Bold")),
       ),

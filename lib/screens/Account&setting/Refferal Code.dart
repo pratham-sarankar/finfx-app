@@ -125,13 +125,13 @@ class _Reffle_codeState extends State<Reffle_code> {
                                           children: [
                                             Icon(
                                               Icons.copy,
-                                              color: Color(0xff6B39F4),
+                                              color: Color(0xff2e9844),
                                               size: 14,
                                             ),
                                             Text(
                                               'Copy',
                                               style: TextStyle(
-                                                  color: Color(0xff6B39F4),
+                                                  color: Color(0xff2e9844),
                                                   fontSize: 12,
                                                   fontFamily: "Manrope-Bold"),
                                             )
@@ -272,7 +272,7 @@ class _Reffle_codeState extends State<Reffle_code> {
                                                                       FontWeight
                                                                           .w700,
                                                                   color: Color(
-                                                                      0xff6B39F4),
+                                                                      0xff2e9844),
                                                                 ),
                                                               ),
                                                               TextSpan(
@@ -301,7 +301,7 @@ class _Reffle_codeState extends State<Reffle_code> {
                                                                       FontWeight
                                                                           .w700,
                                                                   color: Color(
-                                                                      0xff6B39F4),
+                                                                      0xff2e9844),
                                                                 ),
                                                               ),
                                                               TextSpan(
@@ -343,7 +343,7 @@ class _Reffle_codeState extends State<Reffle_code> {
                                                                       FontWeight
                                                                           .w700,
                                                                   color: Color(
-                                                                      0xff6B39F4),
+                                                                      0xff2e9844),
                                                                 ),
                                                               ),
                                                               TextSpan(
@@ -382,7 +382,7 @@ class _Reffle_codeState extends State<Reffle_code> {
                                                                     .circular(
                                                                         10)),
                                                             color: Color(
-                                                                0xff6B39F4)),
+                                                                0xff2e9844)),
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
@@ -582,7 +582,7 @@ class _Reffle_codeState extends State<Reffle_code> {
                           height: 60,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: const Color(0xff6B39F4)),
+                              color: const Color(0xff2e9844)),
                           child: const Center(
                               child: Text("Invite My Friends",
                                   style: TextStyle(

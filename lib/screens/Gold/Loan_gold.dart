@@ -93,7 +93,7 @@ class _LoanState extends State<Loan> {
                       hintStyle: const TextStyle(
                           fontFamily: "Manrope-Bold",
                           fontSize: 24,
-                          color: Color(0xff6B39F4))),
+                          color: Color(0xff2e9844))),
                 ),
               ),
             ),
@@ -105,8 +105,8 @@ class _LoanState extends State<Loan> {
                 max: 100,
                 divisions: 100,
                 label: "${_Value.round().toString()} gr",
-                thumbColor: const Color(0xff6B39F4),
-                activeColor: const Color(0xff6B39F4),
+                thumbColor: const Color(0xff2e9844),
+                activeColor: const Color(0xff2e9844),
                 onChanged: (double value) {
                   setState(() {
                     _Value = value;
@@ -158,13 +158,13 @@ class _LoanState extends State<Loan> {
                                 : notifier.tabBar1,
                             border: Border.all(
                                 color: selectIndex == 0
-                                    ? const Color(0xff6b39f4)
+                                    ? const Color(0xff2e9844)
                                     : Colors.blue.withValues(alpha: 0.1))),
                         child: Center(
                             child: Text("3 months",
                                 style: TextStyle(
                                     color: selectIndex == 0
-                                        ? const Color(0xff6B39F4)
+                                        ? const Color(0xff2e9844)
                                         : Colors.grey,
                                     fontSize: 12,
                                     fontFamily: "Manrope-Bold"))),
@@ -187,13 +187,13 @@ class _LoanState extends State<Loan> {
                                 : notifier.tabBar1,
                             border: Border.all(
                                 color: selectIndex == 1
-                                    ? const Color(0xff6b39f4)
+                                    ? const Color(0xff2e9844)
                                     : Colors.blue.withValues(alpha: 0.1))),
                         child: Center(
                             child: Text("6 months",
                                 style: TextStyle(
                                     color: selectIndex == 1
-                                        ? const Color(0xff6B39F4)
+                                        ? const Color(0xff2e9844)
                                         : Colors.grey,
                                     fontSize: 12,
                                     fontFamily: "Manrope-Bold"))),
@@ -216,13 +216,13 @@ class _LoanState extends State<Loan> {
                                 : notifier.tabBar1,
                             border: Border.all(
                                 color: selectIndex == 2
-                                    ? const Color(0xff6b39f4)
+                                    ? const Color(0xff2e9844)
                                     : Colors.blue.withValues(alpha: 0.1))),
                         child: Center(
                             child: Text("9 months",
                                 style: TextStyle(
                                     color: selectIndex == 2
-                                        ? const Color(0xff6B39F4)
+                                        ? const Color(0xff2e9844)
                                         : Colors.grey,
                                     fontSize: 12,
                                     fontFamily: "Manrope-Bold"))),
@@ -245,13 +245,13 @@ class _LoanState extends State<Loan> {
                                 : notifier.tabBar1,
                             border: Border.all(
                                 color: selectIndex == 3
-                                    ? const Color(0xff6b39f4)
+                                    ? const Color(0xff2e9844)
                                     : Colors.blue.withValues(alpha: 0.1))),
                         child: Center(
                             child: Text("12 months",
                                 style: TextStyle(
                                     color: selectIndex == 3
-                                        ? const Color(0xff6B39F4)
+                                        ? const Color(0xff2e9844)
                                         : Colors.grey,
                                     fontSize: 12,
                                     fontFamily: "Manrope-Bold"))),
@@ -274,13 +274,13 @@ class _LoanState extends State<Loan> {
                                 : notifier.tabBar1,
                             border: Border.all(
                                 color: selectIndex == 4
-                                    ? const Color(0xff6b39f4)
+                                    ? const Color(0xff2e9844)
                                     : Colors.blue.withValues(alpha: 0.1))),
                         child: Center(
                             child: Text("16 months",
                                 style: TextStyle(
                                     color: selectIndex == 4
-                                        ? const Color(0xff6B39F4)
+                                        ? const Color(0xff2e9844)
                                         : Colors.grey,
                                     fontSize: 12,
                                     fontFamily: "Manrope-Bold"))),
@@ -303,13 +303,13 @@ class _LoanState extends State<Loan> {
                                 : notifier.tabBar1,
                             border: Border.all(
                                 color: selectIndex == 5
-                                    ? const Color(0xff6b39f4)
+                                    ? const Color(0xff2e9844)
                                     : Colors.blue.withValues(alpha: 0.1))),
                         child: Center(
                             child: Text("24 months",
                                 style: TextStyle(
                                     color: selectIndex == 5
-                                        ? const Color(0xff6B39F4)
+                                        ? const Color(0xff2e9844)
                                         : Colors.grey,
                                     fontSize: 12,
                                     fontFamily: "Manrope-Bold"))),
@@ -471,7 +471,7 @@ class _LoanState extends State<Loan> {
             // width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
                 child: Text("Review Loan",

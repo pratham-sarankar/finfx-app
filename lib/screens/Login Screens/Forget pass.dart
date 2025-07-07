@@ -134,7 +134,7 @@ class _ForgetState extends State<Forget> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff6B39F4),
+                    backgroundColor: const Color(0xff2e9844),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),

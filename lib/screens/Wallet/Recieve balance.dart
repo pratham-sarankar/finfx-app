@@ -172,7 +172,7 @@ class _Recevie_balanceState extends State<Recevie_balance> {
                               Text(
                                 "Change",
                                 style: TextStyle(
-                                  color: Color(0xff6B39F4),
+                                  color: Color(0xff2e9844),
                                   fontSize: 12,
                                   fontFamily: "Manrope-Bold",
                                 ),
@@ -205,7 +205,7 @@ class _Recevie_balanceState extends State<Recevie_balance> {
             width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
                 child: Text("Recieve Preview",

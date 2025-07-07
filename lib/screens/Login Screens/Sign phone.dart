@@ -110,7 +110,7 @@ class _phoneState extends State<phone> {
               child: Container(
                 height: height / 11,
                 decoration: BoxDecoration(
-                    color: const Color(0xff6B39F4),
+                    color: const Color(0xff2e9844),
                     borderRadius: BorderRadius.circular(15)),
                 child: const Center(
                     child: Text("Send OTP",
@@ -137,7 +137,7 @@ class _phoneState extends State<phone> {
                   "Skip",
                   style: TextStyle(
                       fontSize: 16,
-                      color: Color(0xff6B39F4),
+                      color: Color(0xff2e9844),
                       fontFamily: "Manrope-Bold"),
                 ),
               ),

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 Widget indicator({required double value}) {
   return LinearProgressIndicator(
     value: value,
-    color: const Color(0xff6B39F4),
+    color: const Color(0xff2e9844),
     backgroundColor: const Color(0xff334155),
   );
 }

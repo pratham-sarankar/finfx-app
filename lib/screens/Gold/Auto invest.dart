@@ -104,7 +104,7 @@ class _InvestState extends State<Invest> {
                     color: notifier.onboardBackgroundColor,
                     border: Border.all(
                       color: select == 0
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : notifier.getContainerBorder,
                     )),
                 child: Column(
@@ -187,7 +187,7 @@ class _InvestState extends State<Invest> {
                     color: notifier.onboardBackgroundColor,
                     border: Border.all(
                       color: select == 1
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : notifier.getContainerBorder,
                     )),
                 child: Column(
@@ -269,7 +269,7 @@ class _InvestState extends State<Invest> {
             // width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
                 child: Text("Review Auto Invest",

@@ -37,7 +37,7 @@ class _NemusState extends State<Nemus> with SingleTickerProviderStateMixin {
     return Scaffold(
       backgroundColor: notifier.background,
       appBar: AppBar(
-        backgroundColor: const Color(0xff6B39F4),
+        backgroundColor: const Color(0xff2e9844),
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
@@ -136,7 +136,7 @@ class _NemusState extends State<Nemus> with SingleTickerProviderStateMixin {
                                   text: ' Spacybox',
                                   style: TextStyle(
                                       fontSize: 12,
-                                      color: Color(0xff6B39F4),
+                                      color: Color(0xff2e9844),
                                       fontFamily: "Manrope-SemiBold"),
                                 ),
                               ],

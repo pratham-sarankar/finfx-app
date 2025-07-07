@@ -151,7 +151,7 @@ class _ExchangeState extends State<Exchange> {
             width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
                 child: Text("Convert",
@@ -180,7 +180,7 @@ class _ExchangeState extends State<Exchange> {
             color: notifier.textField,
             border: Border.all(
                 color:
-                    tap == 0 ? const Color(0xff6B39F4) : notifier.textField)),
+                    tap == 0 ? const Color(0xff2e9844) : notifier.textField)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -261,7 +261,7 @@ class _ExchangeState extends State<Exchange> {
             color: notifier.textField,
             border: Border.all(
                 color:
-                    tap == 1 ? const Color(0xff6B39F4) : notifier.textField)),
+                    tap == 1 ? const Color(0xff2e9844) : notifier.textField)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

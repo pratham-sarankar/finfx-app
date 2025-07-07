@@ -52,13 +52,13 @@ class _BotDetailsTabState extends State<BotDetailsTab> {
                           Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: const Color(0xff6B39F4)
+                              color: const Color(0xff2e9844)
                                   .withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
                               Icons.smart_toy,
-                              color: const Color(0xff6B39F4),
+                              color: const Color(0xff2e9844),
                               size: 24,
                             ),
                           ),
@@ -123,7 +123,7 @@ class _BotDetailsTabState extends State<BotDetailsTab> {
                                         strokeWidth: 2,
                                         valueColor:
                                             AlwaysStoppedAnimation<Color>(
-                                          const Color(0xff6B39F4),
+                                          const Color(0xff2e9844),
                                         ),
                                       ),
                                     ),
@@ -330,7 +330,7 @@ class _BotDetailsTabState extends State<BotDetailsTab> {
                   },
             backgroundColor: botDetailsProvider.isSubscribed
                 ? Colors.red
-                : const Color(0xff6B39F4),
+                : const Color(0xff2e9844),
             icon: botDetailsProvider.isToggling
                 ? SizedBox(
                     width: 20,

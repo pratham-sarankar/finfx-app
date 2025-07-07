@@ -49,7 +49,7 @@ class _PortfolioState extends State<Portfolio> {
     var height = MediaQuery.of(context).size.height;
     // var width = MediaQuery.of(context).size.width;
     final List<ChartData> chartData = [
-      ChartData('', 80, const Color(0xff6B39F4)),
+      ChartData('', 80, const Color(0xff2e9844)),
       ChartData('', 38, const Color(0xff0153FF)),
       ChartData('', 38, const Color(0xff1DCE5C)),
     ];
@@ -672,7 +672,7 @@ class _PortfolioState extends State<Portfolio> {
             ),
             backgroundColor: const Color(0xff0F172A),
             palette: const [
-              Color(0xff6B39F4),
+              Color(0xff2e9844),
             ],
             // primaryYAxis: NumericAxis(minimum: 0, maximum: 100, interval: 5),
             tooltipBehavior: _tooltip1,

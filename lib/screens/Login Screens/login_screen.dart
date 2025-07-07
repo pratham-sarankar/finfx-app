@@ -335,7 +335,7 @@ class _LoginState extends State<Login> {
                                       "Forgot Password?",
                                       style: TextStyle(
                                           fontSize: 14,
-                                          color: Color(0xff6B39F4),
+                                          color: Color(0xff2e9844),
                                           fontFamily: "Manrope-Bold"),
                                     ),
                                   )
@@ -345,7 +345,7 @@ class _LoginState extends State<Login> {
                             TextButton(
                               onPressed: _login,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xff6B39F4),
+                                backgroundColor: const Color(0xff2e9844),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
@@ -434,7 +434,7 @@ class _LoginState extends State<Login> {
                               "Sign Up",
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Color(0xff6B39F4),
+                                  color: Color(0xff2e9844),
                                   fontFamily: "Manrope-Bold"),
                             )),
                       ],
@@ -466,7 +466,7 @@ class _LoginState extends State<Login> {
                       children: [
                         const CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            Color(0xff6B39F4),
+                            Color(0xff2e9844),
                           ),
                         ),
                         const SizedBox(height: 15),

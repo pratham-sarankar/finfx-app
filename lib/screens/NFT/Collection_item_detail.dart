@@ -162,7 +162,7 @@ class _Colle_detailState extends State<Colle_detail>
                     style: TextStyle(color: Color(0xff64748B), fontSize: 12)),
                 subtitle: Text("Read more",
                     style: TextStyle(
-                        color: Color(0xff6B39F4),
+                        color: Color(0xff2e9844),
                         fontFamily: "Manrope-SemiBold",
                         fontSize: 12)),
               ),
@@ -341,7 +341,7 @@ class _Colle_detailState extends State<Colle_detail>
             width: 327,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
                 child: Text(

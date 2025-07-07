@@ -5,6 +5,8 @@ import 'package:crowwn/features/brokers/presentation/screens/brokers_screen.dart
 import 'package:crowwn/features/brokers/domain/models/binance_balance.dart';
 import 'package:crowwn/features/brokers/domain/models/delta_balance.dart';
 import 'package:crowwn/features/home/data/models/bot_model.dart';
+import 'package:crowwn/features/home/presentation/widgets/bot_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -175,7 +177,7 @@ class HomeTabScreen extends StatefulWidget {
 
 class _HomeTabScreenState extends State<HomeTabScreen> {
   ColorNotifire notifier = ColorNotifire();
-  String selectedTimeFilter = "Trending";
+  String selectedGroup = "Commodities";
   String selectedExchange = "Binance";
 
   @override
@@ -346,7 +348,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Icon(Icons.trending_up, color: Color(0xff6B39F4)),
+                        Icon(Icons.trending_up, color: Color(0xff2e9844)),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -364,7 +366,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     else if (botProvider.bots.isNotEmpty)
                       Column(
                         children: botProvider.bots
-                            .map((bot) => _modernBotCard(bot, notifier))
+                            .map((bot) => BotCard(bot: bot))
                             .toList(),
                       )
                     else
@@ -479,8 +481,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
             clipBehavior: Clip.none,
             children: [
               _buildBrokerCard(
-                brokerName: "Binance",
-                logoPath: "assets/images/binance.jpeg",
+                brokerName: "Meta Trader 4",
+                logoPath: "assets/images/mt4.webp",
                 gradient: const LinearGradient(
                   colors: [Color(0xFFF7931A), Color(0xFFF8D147)],
                   begin: Alignment.topLeft,
@@ -500,8 +502,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               ),
               const SizedBox(width: 12),
               _buildBrokerCard(
-                brokerName: "Delta",
-                logoPath: "assets/images/delta_logo.png",
+                brokerName: "Meta Trader 5",
+                logoPath: "assets/images/mt5.png",
                 gradient: const LinearGradient(
                   colors: [Color(0xFF00D4FF), Color(0xFF0099CC)],
                   begin: Alignment.topLeft,
@@ -813,16 +815,16 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
 
   // Modern filter tabs
   Widget _modernFilterTabs() {
-    final tabs = ["Trending", "BTC/USDT", "XAU/USD", "Solana", "ETH/USDT"];
+    final tabs = ["Commodities", "Currency", "Stocks", "Crypto"];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: tabs.map((tab) {
-          final isSelected = selectedTimeFilter == tab;
+          final isSelected = selectedGroup == tab;
           return GestureDetector(
             onTap: () {
               setState(() {
-                selectedTimeFilter = tab;
+                selectedGroup = tab;
               });
             },
             child: AnimatedContainer(
@@ -831,12 +833,12 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? const Color(0xff6B39F4).withValues(alpha: 0.12)
+                    ? const Color(0xff2e9844).withValues(alpha: 0.12)
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(14),
                 border: isSelected
                     ? Border.all(
-                        color: const Color(0xff6B39F4).withValues(alpha: 0.3))
+                        color: const Color(0xff2e9844).withValues(alpha: 0.3))
                     : null,
               ),
               child: Row(
@@ -846,7 +848,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     _getTabIcon(tab),
                     size: 15,
                     color: isSelected
-                        ? const Color(0xff6B39F4)
+                        ? const Color(0xff2e9844)
                         : notifier.textColor.withValues(alpha: 0.7),
                   ),
                   const SizedBox(width: 6),
@@ -854,7 +856,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     tab,
                     style: TextStyle(
                       color: isSelected
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : notifier.textColor.withValues(alpha: 0.7),
                       fontSize: 13,
                       fontWeight:
@@ -866,177 +868,6 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
             ),
           );
         }).toList(),
-      ),
-    );
-  }
-
-  // Modern bot card
-  Widget _modernBotCard(BotModel bot, ColorNotifire notifier) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BotDetailsScreen(
-              bot: bot,
-            ),
-          ),
-        );
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          color: notifier.container,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: notifier.textColor.withValues(alpha: 0.08)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: notifier.textColor.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child:
-                    Icon(Icons.show_chart, color: Color(0xff6B39F4), size: 22),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            bot.name,
-                            style: TextStyle(
-                              color: notifier.textColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Color(0xff6B39F4).withValues(alpha: 0.08),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            "High Frequency", // TODO: Replace with dynamic type
-                            style: TextStyle(
-                              color: Color(0xff6B39F4),
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Row(
-                      children: [
-                        Icon(Icons.trending_up, color: Colors.green, size: 15),
-                        const SizedBox(width: 4),
-                        Text(
-                          "Win Rate: 78%", // TODO: Replace with dynamic win rate
-                          style: TextStyle(
-                            color: notifier.textColor.withValues(alpha: 0.7),
-                            fontSize: 13,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Icon(Icons.attach_money, color: Colors.amber, size: 15),
-                        const SizedBox(width: 2),
-                        Text(
-                          "\$1,878.80", // TODO: Replace with dynamic price
-                          style: TextStyle(
-                            color: notifier.textColor.withValues(alpha: 0.7),
-                            fontSize: 13,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        _buildMetricChip("BTC/USDT", Icons.currency_exchange),
-                        const SizedBox(width: 8),
-                        _buildMetricChip("ROI: +12.5%", Icons.trending_up),
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.green.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.trending_up,
-                                  size: 14, color: Colors.green),
-                              const SizedBox(width: 4),
-                              Text(
-                                "Profit",
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMetricChip(String text, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: notifier.textColor.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon,
-              size: 14, color: notifier.textColor.withValues(alpha: 0.7)),
-          const SizedBox(width: 4),
-          Text(
-            text,
-            style: TextStyle(
-              color: notifier.textColor.withValues(alpha: 0.7),
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
       ),
     );
   }

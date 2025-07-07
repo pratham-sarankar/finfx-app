@@ -94,7 +94,7 @@ class _FaqState extends State<Faq> {
                         "Why didn't I receive the SMS OTP code?",
                         style: TextStyle(
                             fontFamily: "Manrope-Medium",
-                            color: Color(0xff6B39F4),
+                            color: Color(0xff2e9844),
                             fontSize: 14,
                             fontWeight: FontWeight.w600),
                       )
@@ -117,7 +117,7 @@ class _FaqState extends State<Faq> {
                         "What is the minimum and maximum amount\nper sale and purchase transaction?",
                         style: TextStyle(
                             fontFamily: "Manrope-Medium",
-                            color: Color(0xff6B39F4),
+                            color: Color(0xff2e9844),
                             fontSize: 14,
                             fontWeight: FontWeight.w600),
                       )
@@ -140,7 +140,7 @@ class _FaqState extends State<Faq> {
                         "How much is the balance withdrawal fee?",
                         style: TextStyle(
                             fontFamily: "Manrope-Medium",
-                            color: Color(0xff6B39F4),
+                            color: Color(0xff2e9844),
                             fontSize: 14,
                             fontWeight: FontWeight.w600),
                       )
@@ -163,7 +163,7 @@ class _FaqState extends State<Faq> {
                         "How long does it take for account\nverification?",
                         style: TextStyle(
                             fontFamily: "Manrope-Medium",
-                            color: Color(0xff6B39F4),
+                            color: Color(0xff2e9844),
                             fontSize: 14,
                             fontWeight: FontWeight.w600),
                       )
@@ -196,7 +196,7 @@ class _FaqState extends State<Faq> {
                         leading: Image.asset(
                             "assets/images/question-circle-outlined.png",
                             scale: 3,
-                            color: const Color(0xff6B39F4)),
+                            color: const Color(0xff2e9844)),
                         title: const Text("Getting Started",
                             style: TextStyle(
                                 color: Color(0xff0F172A),
@@ -219,7 +219,7 @@ class _FaqState extends State<Faq> {
                           color: Colors.grey.withValues(alpha: 0.1)),
                       child: ListTile(
                         leading: Image.asset("assets/images/Person.png",
-                            scale: 3, color: const Color(0xff6B39F4)),
+                            scale: 3, color: const Color(0xff2e9844)),
                         title: const Text("My Account",
                             style: TextStyle(
                                 color: Color(0xff0F172A),

@@ -30,7 +30,7 @@ class ColorNotifire with ChangeNotifier {
       isDark ? const Color(0xff1E293B) : const Color(0xffF1F5F9);
 
   get outlinedButtonColor =>
-      isDark ? const Color(0xff6B39F4) : const Color(0xff6B39F4);
+      isDark ? const Color(0xff2e9844) : const Color(0xff2e9844);
   get background => isDark
       ? const Color(0xff0F172A)
       : const Color.fromARGB(255, 244, 244, 244);
@@ -39,8 +39,8 @@ class ColorNotifire with ChangeNotifier {
   get textColor => isDark ? Colors.white : const Color(0xff0F172A);
   get getContainerBorder =>
       isDark ? const Color(0xff334155) : const Color(0xffE2E8F0);
-  get checkBox => isDark ? const Color(0xff6B39F4) : const Color(0xffCBD5E1);
-  get radioButton => isDark ? const Color(0xff6B39F4) : const Color(0xffCBD5E1);
+  get checkBox => isDark ? const Color(0xff2e9844) : const Color(0xffCBD5E1);
+  get radioButton => isDark ? const Color(0xff2e9844) : const Color(0xffCBD5E1);
   get textField => isDark ? const Color(0xff1E293B) : const Color(0xffF8F9FD);
   get textField1 => isDark ? Colors.red : Colors.blue;
   get textFieldHintText =>
@@ -48,10 +48,10 @@ class ColorNotifire with ChangeNotifier {
   get passwordIcon =>
       isDark ? const Color(0xff64748B) : const Color(0xff94A3B8);
   get tabBar1 => isDark ? const Color(0xff1E293B) : const Color(0xffF8F5FF);
-  get tabBar3 => isDark ? const Color(0xff6B39F4) : const Color(0xffF8F5FF);
+  get tabBar3 => isDark ? const Color(0xff2e9844) : const Color(0xffF8F5FF);
   get tabBar4 => isDark ? const Color(0xff0F172A) : const Color(0xffFFFFFF);
   get tabBar2 => isDark ? const Color(0xff1E293B) : const Color(0xffF8F9FD);
-  get tabBarText1 => isDark ? const Color(0xff6B39F4) : const Color(0xff6B39F4);
+  get tabBarText1 => isDark ? const Color(0xff2e9844) : const Color(0xff2e9844);
   get tabBarText2 => isDark ? Colors.grey : Colors.grey;
   get bottom => isDark ? const Color(0xffFFFFFF) : const Color(0xff0F172A);
   get earn => isDark ? Colors.transparent : const Color(0xffFFFFFF);

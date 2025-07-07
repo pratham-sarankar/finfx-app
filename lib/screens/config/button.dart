@@ -68,7 +68,7 @@ Widget button1({required String text, required onPressed}) {
     height: 50,
     width: 330,
     decoration: BoxDecoration(
-        color: const Color(0xff6B39F4),
+        color: const Color(0xff2e9844),
         borderRadius: BorderRadius.circular(15)),
     child: ElevatedButton(
       onPressed: () {},

@@ -89,7 +89,7 @@ class _Top_successState extends State<Top_success> {
                 height: height / 13,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xff6B39F4)),
+                    color: const Color(0xff2e9844)),
                 child: const Center(
                     child: Text("Show Details",
                         style: TextStyle(
@@ -115,7 +115,7 @@ class _Top_successState extends State<Top_success> {
                 child: const Center(
                   child: Text(
                     "Done",
-                    style: TextStyle(color: Color(0xff6B39F4), fontSize: 17),
+                    style: TextStyle(color: Color(0xff2e9844), fontSize: 17),
                   ),
                 ),
               ),

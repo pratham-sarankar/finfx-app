@@ -63,7 +63,7 @@ class _nftsState extends State<nfts> {
                       style: TextStyle(
                           fontSize: 15,
                           fontFamily: "Manrope-Medium",
-                          color: Color(0xff6B39F4)),
+                          color: Color(0xff2e9844)),
                     ),
                   ),
                 ],
@@ -289,7 +289,7 @@ class _nftsState extends State<nfts> {
                       style: TextStyle(
                         fontSize: 15,
                         fontFamily: "Manrope-Medium",
-                        color: Color(0xff6B39F4),
+                        color: Color(0xff2e9844),
                       ),
                     ),
                   ),
@@ -409,7 +409,7 @@ class _nftsState extends State<nfts> {
                                             "0.029 ETH",
                                             style: TextStyle(
                                                 fontSize: 11,
-                                                color: Color(0xff6B39F4),
+                                                color: Color(0xff2e9844),
                                                 fontFamily: "Manrope-SemiBold"),
                                           ),
                                           const Spacer(),
@@ -541,7 +541,7 @@ class _nftsState extends State<nfts> {
                                             "0.500 ETH",
                                             style: TextStyle(
                                                 fontSize: 11,
-                                                color: Color(0xff6B39F4),
+                                                color: Color(0xff2e9844),
                                                 fontFamily: "Manrope-SemiBold"),
                                           ),
                                           const Spacer(),
@@ -591,7 +591,7 @@ class _nftsState extends State<nfts> {
                       style: TextStyle(
                         fontSize: 15,
                         fontFamily: "Manrope-Medium",
-                        color: Color(0xff6B39F4),
+                        color: Color(0xff2e9844),
                       ),
                     ),
                   ),

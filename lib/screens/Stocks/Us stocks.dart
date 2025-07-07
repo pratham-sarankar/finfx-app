@@ -239,7 +239,7 @@ class _StockState extends State<Stock> {
                       child: const Text(
                         "See all",
                         style: TextStyle(
-                          color: Color(0xff6B39F4),
+                          color: Color(0xff2e9844),
                           fontSize: 14,
                           fontFamily: "Manrope-Regular",
                         ),
@@ -512,7 +512,7 @@ class _StockState extends State<Stock> {
                     child: Container(
                       height: 130,
                       decoration: BoxDecoration(
-                          color: const Color(0xff6B39F4),
+                          color: const Color(0xff2e9844),
                           borderRadius: BorderRadius.circular(15)),
                       child: const Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -576,7 +576,7 @@ class _StockState extends State<Stock> {
                         "See all",
                         style: TextStyle(
                             fontSize: 15,
-                            color: Color(0xff6B39F4),
+                            color: Color(0xff2e9844),
                             fontFamily: "Manrope-Medium"),
                       )),
                 ],
@@ -769,7 +769,7 @@ class _StockState extends State<Stock> {
                         width: 212,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xff6B39F4)),
+                            color: const Color(0xff2e9844)),
                         child: Padding(
                           padding: const EdgeInsets.only(
                               top: 20, left: 20, right: 20, bottom: 10),
@@ -951,7 +951,7 @@ class _StockState extends State<Stock> {
                       child: const Text(
                         "See all",
                         style:
-                            TextStyle(fontSize: 14, color: Color(0xff6B39F4)),
+                            TextStyle(fontSize: 14, color: Color(0xff2e9844)),
                       ))
                 ],
               ),

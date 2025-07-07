@@ -342,7 +342,7 @@ class _Crypto_State extends State<Crypto_> with SingleTickerProviderStateMixin {
                   style: TextStyle(
                     fontFamily: "Manrope-Medium",
                     fontSize: 15,
-                    color: Color(0xff6B39F4),
+                    color: Color(0xff2e9844),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -442,7 +442,7 @@ class _Crypto_State extends State<Crypto_> with SingleTickerProviderStateMixin {
                       "See all",
                       style: TextStyle(
                         fontSize: 15,
-                        color: Color(0xff6B39F4),
+                        color: Color(0xff2e9844),
                         fontFamily: "Manrope-Medium",
                       ),
                     ),
@@ -652,7 +652,7 @@ class _Crypto_State extends State<Crypto_> with SingleTickerProviderStateMixin {
                       "See all",
                       style: TextStyle(
                         fontSize: 14,
-                        color: Color(0xff6B39F4),
+                        color: Color(0xff2e9844),
                       ),
                     ),
                   )

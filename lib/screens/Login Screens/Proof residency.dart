@@ -106,7 +106,7 @@ class _ProofState extends State<Proof> {
                   color: notifier.textField,
                   border: Border.all(
                       color: selectedFilter == 0
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : notifier.background)),
               child: Center(
                 child: ListTile(
@@ -128,7 +128,7 @@ class _ProofState extends State<Proof> {
                           color: notifier.textColor)),
                   trailing: Radio(
                     fillColor: WidgetStateColor.resolveWith(
-                        (states) => const Color(0xff6B39F4)),
+                        (states) => const Color(0xff2e9844)),
                     value: 0,
                     groupValue: selectedFilter,
                     onChanged: (index) {
@@ -150,7 +150,7 @@ class _ProofState extends State<Proof> {
                 color: notifier.textField,
                 border: Border.all(
                   color: selectedFilter == 1
-                      ? const Color(0xff6B39F4)
+                      ? const Color(0xff2e9844)
                       : notifier.background,
                 ),
               ),
@@ -185,7 +185,7 @@ class _ProofState extends State<Proof> {
                   ),
                   trailing: Radio(
                     fillColor: WidgetStateColor.resolveWith(
-                      (states) => const Color(0xff6B39F4),
+                      (states) => const Color(0xff2e9844),
                     ),
                     value: 1,
                     groupValue: selectedFilter,
@@ -207,7 +207,7 @@ class _ProofState extends State<Proof> {
                   borderRadius: BorderRadius.circular(20),
                   color: notifier.textField,
                   border: Border.all(
-                    color: const Color(0xff6B39F4),
+                    color: const Color(0xff2e9844),
                     width: 2,
                   ),
                 ),
@@ -222,14 +222,14 @@ class _ProofState extends State<Proof> {
                                   height: 100,
                                   width: 100,
                                   decoration: BoxDecoration(
-                                    color: const Color(0xff6B39F4)
+                                    color: const Color(0xff2e9844)
                                         .withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(15),
                                   ),
                                   child: const Icon(
                                     Icons.description,
                                     size: 50,
-                                    color: Color(0xff6B39F4),
+                                    color: Color(0xff2e9844),
                                   ),
                                 ),
                                 AppConstants.Height(20),
@@ -291,14 +291,14 @@ class _ProofState extends State<Proof> {
                                 height: 100,
                                 width: 100,
                                 decoration: BoxDecoration(
-                                  color: const Color(0xff6B39F4)
+                                  color: const Color(0xff2e9844)
                                       .withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: const Icon(
                                   Icons.upload_file,
                                   size: 50,
-                                  color: Color(0xff6B39F4),
+                                  color: Color(0xff2e9844),
                                 ),
                               ),
                               AppConstants.Height(20),
@@ -341,7 +341,7 @@ class _ProofState extends State<Proof> {
                   Radius.circular(20),
                 ),
               ),
-              backgroundColor: const Color(0xff6B39F4),
+              backgroundColor: const Color(0xff2e9844),
             ),
             onPressed: selectedFile != null
                 ? () {
@@ -373,7 +373,7 @@ class _ProofState extends State<Proof> {
                 height: 50,
                 // width: 330,
                 decoration: BoxDecoration(
-                    color: const Color(0xff6B39F4),
+                    color: const Color(0xff2e9844),
                     borderRadius: BorderRadius.circular(15)),
                 child: ElevatedButton(
                   onPressed: () {
@@ -385,7 +385,7 @@ class _ProofState extends State<Proof> {
                       );
                     },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff6B39F4),
+                      backgroundColor: const Color(0xff2e9844),
                       shape: RoundedRectangleBorder(
                           side: const BorderSide(width: 300),
                           borderRadius: BorderRadius.circular(15))),

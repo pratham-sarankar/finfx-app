@@ -100,7 +100,7 @@ class _VerifyState extends State<Verify> {
                   height: 60,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: const Color(0xff6B39F4),
+                    color: const Color(0xff2e9844),
                   ),
                   child: const Center(
                     child: Text(
@@ -117,7 +117,7 @@ class _VerifyState extends State<Verify> {
             ),
             // CommonButton(
             //   tap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => Upload(),));},
-            //   color: Color(0xff6B39F4),
+            //   color: Color(0xff2e9844),
             //   text: "Continue",
             //   textcolor: Colors.white, fontsize: 17,
             // ),

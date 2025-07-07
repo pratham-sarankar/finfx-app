@@ -211,7 +211,7 @@ class _rankingsState extends State<rankings> {
                                                   Colors.transparent,
                                                 ),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xff2e9844),
                                                 side: WidgetStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -254,7 +254,7 @@ class _rankingsState extends State<rankings> {
                                                     const WidgetStatePropertyAll(
                                                         Colors.transparent),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xff2e9844),
                                                 side: WidgetStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -296,7 +296,7 @@ class _rankingsState extends State<rankings> {
                                                   Colors.transparent,
                                                 ),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xff2e9844),
                                                 side: WidgetStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -338,7 +338,7 @@ class _rankingsState extends State<rankings> {
                                                   Colors.transparent,
                                                 ),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xff2e9844),
                                                 side: WidgetStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -380,7 +380,7 @@ class _rankingsState extends State<rankings> {
                                                   Colors.transparent,
                                                 ),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xff2e9844),
                                                 side: WidgetStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -422,7 +422,7 @@ class _rankingsState extends State<rankings> {
                                                   Colors.transparent,
                                                 ),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xff2e9844),
                                                 side: WidgetStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -462,7 +462,7 @@ class _rankingsState extends State<rankings> {
                                                     const WidgetStatePropertyAll(
                                                         Colors.transparent),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xff2e9844),
                                                 side: WidgetStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -502,7 +502,7 @@ class _rankingsState extends State<rankings> {
                                                     const WidgetStatePropertyAll(
                                                         Colors.transparent),
                                                 checkColor:
-                                                    const Color(0xff6B39F4),
+                                                    const Color(0xff2e9844),
                                                 side: WidgetStateBorderSide
                                                     .resolveWith(
                                                   (states) => const BorderSide(
@@ -541,7 +541,7 @@ class _rankingsState extends State<rankings> {
                                                   borderRadius:
                                                       BorderRadius.circular(15),
                                                   color:
-                                                      const Color(0xff6B39F4)),
+                                                      const Color(0xff2e9844)),
                                               child: const Center(
                                                   child: Text(
                                                 "Apply",

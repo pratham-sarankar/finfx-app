@@ -76,7 +76,7 @@ class _MessageState extends State<Message> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: notifier
-                      .textField, /*border: Border.all(color: Color(0xff6B39F4))*/
+                      .textField, /*border: Border.all(color: Color(0xff2e9844))*/
                 ),
                 child: TextField(
                   // keyboardType: TextInputType.number,
@@ -184,7 +184,7 @@ class _MessageState extends State<Message> {
                                 width: 20,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    color: const Color(0xff6B39F4)),
+                                    color: const Color(0xff2e9844)),
                                 child: Center(
                                   child: Text(
                                     data.message,
@@ -354,7 +354,7 @@ class _MessageState extends State<Message> {
                                   borderRadius: BorderRadius.circular(15),
                                   border: Border.all(
                                     color: selectedFilter == 0
-                                        ? const Color(0xff6B39F4)
+                                        ? const Color(0xff2e9844)
                                         : notifier.getContainerBorder,
                                   )),
                               child: Row(
@@ -372,7 +372,7 @@ class _MessageState extends State<Message> {
                                   const Spacer(),
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 0,
                                     groupValue: selectedFilter,
@@ -403,7 +403,7 @@ class _MessageState extends State<Message> {
                                   borderRadius: BorderRadius.circular(15),
                                   border: Border.all(
                                     color: selectedFilter == 1
-                                        ? const Color(0xff6B39F4)
+                                        ? const Color(0xff2e9844)
                                         : notifier.getContainerBorder,
                                   )),
                               child: Row(
@@ -421,7 +421,7 @@ class _MessageState extends State<Message> {
                                   const Spacer(),
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 1,
                                     groupValue: selectedFilter,
@@ -452,7 +452,7 @@ class _MessageState extends State<Message> {
                                   borderRadius: BorderRadius.circular(15),
                                   border: Border.all(
                                     color: selectedFilter == 2
-                                        ? const Color(0xff6B39F4)
+                                        ? const Color(0xff2e9844)
                                         : notifier.getContainerBorder,
                                   )),
                               child: Row(
@@ -470,7 +470,7 @@ class _MessageState extends State<Message> {
                                   const Spacer(),
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: Color(0xff0056D2),
                                     value: 2,
                                     groupValue: selectedFilter,
@@ -495,7 +495,7 @@ class _MessageState extends State<Message> {
                               height: 60,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
-                                  color: const Color(0xff6B39F4)),
+                                  color: const Color(0xff2e9844)),
                               child: const Center(
                                   child: Text("Done",
                                       style: TextStyle(
@@ -513,7 +513,7 @@ class _MessageState extends State<Message> {
             },
           );
         },
-        backgroundColor: const Color(0xff6B39F4),
+        backgroundColor: const Color(0xff2e9844),
         child: const Icon(Icons.add),
       ),
     );

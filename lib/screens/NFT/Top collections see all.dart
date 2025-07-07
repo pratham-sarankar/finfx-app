@@ -42,7 +42,7 @@ class _Top_collections_seeState extends State<Top_collections_see> {
             style: TextStyle(
                 fontSize: 17,
                 fontFamily: "Manrope-Bold",
-                color: Color(0xff6B39F4))),
+                color: Color(0xff2e9844))),
       ),
       body: SingleChildScrollView(
         child: Padding(

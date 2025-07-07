@@ -82,7 +82,7 @@ class _nfts_State extends State<nfts_> {
                         style: TextStyle(
                             fontSize: 15,
                             fontFamily: "Manrope-Medium",
-                            color: Color(0xff6B39F4)),
+                            color: Color(0xff2e9844)),
                       ),
                     ),
                   ],
@@ -311,7 +311,7 @@ class _nfts_State extends State<nfts_> {
                         style: TextStyle(
                             fontSize: 15,
                             fontFamily: "Manrope-Medium",
-                            color: Color(0xff6B39F4)),
+                            color: Color(0xff2e9844)),
                       ),
                     ),
                   ],
@@ -429,7 +429,7 @@ class _nfts_State extends State<nfts_> {
                                               "0.029 ETH",
                                               style: TextStyle(
                                                   fontSize: 11,
-                                                  color: Color(0xff6B39F4),
+                                                  color: Color(0xff2e9844),
                                                   fontFamily:
                                                       "Manrope-SemiBold"),
                                             ),
@@ -562,7 +562,7 @@ class _nfts_State extends State<nfts_> {
                                               "0.500 ETH",
                                               style: TextStyle(
                                                   fontSize: 11,
-                                                  color: Color(0xff6B39F4),
+                                                  color: Color(0xff2e9844),
                                                   fontFamily:
                                                       "Manrope-SemiBold"),
                                             ),
@@ -613,7 +613,7 @@ class _nfts_State extends State<nfts_> {
                         style: TextStyle(
                             fontSize: 15,
                             fontFamily: "Manrope-Medium",
-                            color: Color(0xff6B39F4)),
+                            color: Color(0xff2e9844)),
                       ),
                     ),
                   ],
@@ -933,7 +933,7 @@ class _nfts_State extends State<nfts_> {
                         style: TextStyle(
                             fontSize: 15,
                             fontFamily: "Manrope-Medium",
-                            color: Color(0xff6B39F4)),
+                            color: Color(0xff2e9844)),
                       ),
                     ),
                   ],
@@ -1129,7 +1129,7 @@ class _nfts_State extends State<nfts_> {
                         style: TextStyle(
                             fontSize: 15,
                             fontFamily: "Manrope-Medium",
-                            color: Color(0xff6B39F4)),
+                            color: Color(0xff2e9844)),
                       ),
                     ),
                   ],
@@ -1204,7 +1204,7 @@ class _nfts_State extends State<nfts_> {
                                         padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
                                         child: Row(
                                           children: [
-                                            const Text("0.029 ETH",style: TextStyle(fontSize: 11,color: Color(0xff6B39F4),fontFamily: "Manrope-SemiBold"),),
+                                            const Text("0.029 ETH",style: TextStyle(fontSize: 11,color: Color(0xff2e9844),fontFamily: "Manrope-SemiBold"),),
                                             const Spacer(),
                                             Text("0.019 ETH",style: TextStyle(fontSize: 11,color:notifier.textColor,fontFamily: "Manrope-SemiBold"),)
                                           ],
@@ -1284,7 +1284,7 @@ class _nfts_State extends State<nfts_> {
                                         padding:  const EdgeInsets.only(left: 10,right: 10,bottom: 10),
                                         child: Row(
                                           children: [
-                                            const Text("0.500 ETH",style: TextStyle(fontSize: 11,color: Color(0xff6B39F4),fontFamily: "Manrope-SemiBold"),),
+                                            const Text("0.500 ETH",style: TextStyle(fontSize: 11,color: Color(0xff2e9844),fontFamily: "Manrope-SemiBold"),),
                                             const Spacer(),
                                             Text("0.450 ETH",style: TextStyle(fontSize: 11,color: notifier.textColor,fontFamily: "Manrope-SemiBold"),)
                                           ],
@@ -1318,7 +1318,7 @@ class _nfts_State extends State<nfts_> {
                         style: TextStyle(
                             fontSize: 15,
                             fontFamily: "Manrope-Medium",
-                            color: Color(0xff6B39F4)),
+                            color: Color(0xff2e9844)),
                       ),
                     ),
                   ],

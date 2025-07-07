@@ -29,7 +29,7 @@ class _Help_CenterState extends State<Help_Center> {
       resizeToAvoidBottomInset: false,
       backgroundColor: notifier.background,
       appBar: AppBar(
-        backgroundColor: const Color(0xff6B39F4),
+        backgroundColor: const Color(0xff2e9844),
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
@@ -316,7 +316,7 @@ class _Help_CenterState extends State<Help_Center> {
                   builder: (context) => const Faq(),
                 ));
           },
-          backgroundColor: const Color(0xff6B39F4),
+          backgroundColor: const Color(0xff2e9844),
           child: const Icon(Icons.headset_mic_outlined)),
     );
   }

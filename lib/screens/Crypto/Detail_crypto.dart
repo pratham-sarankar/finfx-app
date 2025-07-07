@@ -152,7 +152,7 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: _index == 0
-                            ? const Color(0xff6B39F4)
+                            ? const Color(0xff2e9844)
                             : notifier.tabBar4,
                       ),
                       child: Center(
@@ -177,9 +177,9 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: _index == 1
-                            ? const Color(0xff6B39F4)
+                            ? const Color(0xff2e9844)
                             : notifier
-                                .tabBar4, /*? Color(0xff6B39F4) : Color(0xffF8F9FD),*/
+                                .tabBar4, /*? Color(0xff2e9844) : Color(0xffF8F9FD),*/
                       ),
                       child: Center(
                           child: Text("1W",
@@ -207,7 +207,7 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: _index == 2
-                            ? const Color(0xff6B39F4)
+                            ? const Color(0xff2e9844)
                             : notifier.tabBar4,
                       ),
                       child: Center(
@@ -232,7 +232,7 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: _index == 3
-                            ? const Color(0xff6B39F4)
+                            ? const Color(0xff2e9844)
                             : notifier.tabBar4,
                       ),
                       child: Center(
@@ -257,7 +257,7 @@ class _Detail_cryptoState extends State<Detail_crypto> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: _index == 4
-                            ? const Color(0xff6B39F4)
+                            ? const Color(0xff2e9844)
                             : notifier.tabBar4,
                       ),
                       child: Center(
@@ -566,7 +566,7 @@ class _Detail_cryptoState extends State<Detail_crypto> {
             // width: 327,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
                 child: Text("Buy MATIC",

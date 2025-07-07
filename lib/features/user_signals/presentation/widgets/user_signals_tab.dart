@@ -248,13 +248,13 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: const Color(0xff6B39F4).withValues(alpha: 0.1),
+                        color: const Color(0xff2e9844).withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
                         'Filtered',
                         style: TextStyle(
-                          color: const Color(0xff6B39F4),
+                          color: const Color(0xff2e9844),
                           fontSize: 10,
                           fontWeight: FontWeight.w500,
                         ),
@@ -285,11 +285,11 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
               _buildPerformanceMetric(
                   'Win Rate',
                   '${userSignalsProvider.getWinRate(widget.status).toStringAsFixed(1)}%',
-                  const Color(0xff6B39F4)),
+                  const Color(0xff2e9844)),
               _buildPerformanceMetric(
                   'Avg ROI',
                   '${userSignalsProvider.getAverageROI(widget.status).toStringAsFixed(2)}%',
-                  const Color(0xff6B39F4)),
+                  const Color(0xff2e9844)),
             ],
           ),
         ],

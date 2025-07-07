@@ -135,7 +135,7 @@ class _Sell_stockState extends State<Sell_stock> {
                             ),
                             child: Image.asset(
                               "assets/images/arrows-sort.png",
-                              color: const Color(0xff6B39F4),
+                              color: const Color(0xff2e9844),
                               scale: 2.7,
                             ),
                           ),
@@ -174,7 +174,7 @@ class _Sell_stockState extends State<Sell_stock> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: index4 == 0
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : Colors.grey.withValues(alpha: 0.1),
                     ),
                     child: Center(
@@ -202,7 +202,7 @@ class _Sell_stockState extends State<Sell_stock> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: index4 == 1
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : Colors.grey.withValues(alpha: 0.1),
                     ),
                     child: Center(
@@ -230,7 +230,7 @@ class _Sell_stockState extends State<Sell_stock> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: index4 == 2
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : Colors.grey.withValues(alpha: 0.1),
                     ),
                     child: Center(
@@ -258,7 +258,7 @@ class _Sell_stockState extends State<Sell_stock> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: index4 == 3
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : Colors.grey.withValues(alpha: 0.1),
                     ),
                     child: Center(
@@ -290,7 +290,7 @@ class _Sell_stockState extends State<Sell_stock> {
             width: width / 2,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
                 child: Text("Sell",

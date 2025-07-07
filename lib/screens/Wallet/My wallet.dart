@@ -52,7 +52,7 @@ class _WalletState extends State<Wallet> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: const Color(0xff6B39F4),
+        backgroundColor: const Color(0xff2e9844),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -321,7 +321,7 @@ class _WalletState extends State<Wallet> {
                           "See all",
                           style: TextStyle(
                               fontSize: 15,
-                              color: Color(0xff6B39F4),
+                              color: Color(0xff2e9844),
                               fontFamily: "Manrope - Regular"),
                         ),
                       )

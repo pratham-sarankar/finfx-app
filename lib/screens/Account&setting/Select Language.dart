@@ -60,7 +60,7 @@ class _Select_languageState extends State<Select_language> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: notifier
-                      .onboardBackgroundColor, /*border: Border.all(color: Color(0xff6B39F4))*/
+                      .onboardBackgroundColor, /*border: Border.all(color: Color(0xff2e9844))*/
                 ),
                 child: Center(
                   child: TextField(
@@ -103,7 +103,7 @@ class _Select_languageState extends State<Select_language> {
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                           color: selectedFilter == 0
-                              ? const Color(0xff6B39F4)
+                              ? const Color(0xff2e9844)
                               : notifier.getContainerBorder,
                           width: 1)),
                   child: Padding(
@@ -138,7 +138,7 @@ class _Select_languageState extends State<Select_language> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 0,
                                     groupValue: selectedFilter,
@@ -176,7 +176,7 @@ class _Select_languageState extends State<Select_language> {
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                           color: selectedFilter == 1
-                              ? const Color(0xff6B39F4)
+                              ? const Color(0xff2e9844)
                               : notifier.getContainerBorder,
                           width: 1)),
                   child: Padding(
@@ -211,7 +211,7 @@ class _Select_languageState extends State<Select_language> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 1,
                                     groupValue: selectedFilter,
@@ -249,7 +249,7 @@ class _Select_languageState extends State<Select_language> {
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                           color: selectedFilter == 2
-                              ? const Color(0xff6B39F4)
+                              ? const Color(0xff2e9844)
                               : notifier.getContainerBorder,
                           width: 1)),
                   child: Padding(
@@ -284,7 +284,7 @@ class _Select_languageState extends State<Select_language> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 2,
                                     groupValue: selectedFilter,
@@ -322,7 +322,7 @@ class _Select_languageState extends State<Select_language> {
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                           color: selectedFilter == 3
-                              ? const Color(0xff6B39F4)
+                              ? const Color(0xff2e9844)
                               : notifier.getContainerBorder,
                           width: 1)),
                   child: Padding(
@@ -356,7 +356,7 @@ class _Select_languageState extends State<Select_language> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 3,
                                     groupValue: selectedFilter,
@@ -394,7 +394,7 @@ class _Select_languageState extends State<Select_language> {
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                           color: selectedFilter == 4
-                              ? const Color(0xff6B39F4)
+                              ? const Color(0xff2e9844)
                               : notifier.getContainerBorder,
                           width: 1)),
                   child: Padding(
@@ -428,7 +428,7 @@ class _Select_languageState extends State<Select_language> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 4,
                                     groupValue: selectedFilter,
@@ -466,7 +466,7 @@ class _Select_languageState extends State<Select_language> {
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                           color: selectedFilter == 5
-                              ? const Color(0xff6B39F4)
+                              ? const Color(0xff2e9844)
                               : notifier.getContainerBorder,
                           width: 1)),
                   child: Padding(
@@ -500,7 +500,7 @@ class _Select_languageState extends State<Select_language> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 5,
                                     groupValue: selectedFilter,
@@ -538,7 +538,7 @@ class _Select_languageState extends State<Select_language> {
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                           color: selectedFilter == 6
-                              ? const Color(0xff6B39F4)
+                              ? const Color(0xff2e9844)
                               : notifier.getContainerBorder,
                           width: 1)),
                   child: Padding(
@@ -572,7 +572,7 @@ class _Select_languageState extends State<Select_language> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 6,
                                     groupValue: selectedFilter,
@@ -612,7 +612,7 @@ class _Select_languageState extends State<Select_language> {
             width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
               child: Text(

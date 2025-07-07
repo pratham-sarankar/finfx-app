@@ -123,7 +123,7 @@ class _Buy_cryptoState extends State<Buy_crypto> {
                               color: notifier.onboardBackgroundColor,
                             ),
                             child: Image.asset("assets/images/arrows-sort.png",
-                                color: const Color(0xff6B39F4), scale: 2.7),
+                                color: const Color(0xff2e9844), scale: 2.7),
                           ),
                         ),
                       ],
@@ -159,7 +159,7 @@ class _Buy_cryptoState extends State<Buy_crypto> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: index2 == 0
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : Colors.grey.withValues(alpha: 0.1),
                     ),
                     child: Center(
@@ -183,7 +183,7 @@ class _Buy_cryptoState extends State<Buy_crypto> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: index2 == 1
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : Colors.grey.withValues(alpha: 0.1),
                     ),
                     child: Center(
@@ -207,7 +207,7 @@ class _Buy_cryptoState extends State<Buy_crypto> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: index2 == 2
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : Colors.grey.withValues(alpha: 0.1),
                     ),
                     child: Center(
@@ -231,7 +231,7 @@ class _Buy_cryptoState extends State<Buy_crypto> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: index2 == 3
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : Colors.grey.withValues(alpha: 0.1),
                     ),
                     child: Center(
@@ -263,7 +263,7 @@ class _Buy_cryptoState extends State<Buy_crypto> {
             width: width / 2,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
                 child: Text("Buy",

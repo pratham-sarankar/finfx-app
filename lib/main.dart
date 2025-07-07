@@ -169,7 +169,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.from(
         useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xff6B39F4),
+          seedColor: const Color(0xff2e9844),
+          // 2e9844
         ),
       ),
       debugShowCheckedModeBanner: false,

@@ -634,7 +634,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                                   BorderRadius.circular(12),
                                               gradient: const LinearGradient(
                                                 colors: [
-                                                  Color(0xff6B39F4),
+                                                  Color(0xff2e9844),
                                                   Color(0xff8B5CF6)
                                                 ],
                                                 begin: Alignment.topLeft,
@@ -805,7 +805,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              color: const Color(0xff6B39F4),
+                                              color: const Color(0xff2e9844),
                                             ),
                                             child: const Center(
                                               child: Text(
@@ -971,7 +971,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              color: const Color(0xff6B39F4),
+                                              color: const Color(0xff2e9844),
                                             ),
                                             child: const Center(
                                               child: Text(
@@ -1139,7 +1139,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              color: const Color(0xff6B39F4),
+                                              color: const Color(0xff2e9844),
                                             ),
                                             child: const Center(
                                               child: Text(
@@ -1186,7 +1186,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                           const Text(
                             "Edit Watchlist",
                             style: TextStyle(
-                              color: Color(0xff6B39F4),
+                              color: Color(0xff2e9844),
                             ),
                           ),
                         ],
@@ -1199,7 +1199,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                         labelPadding: EdgeInsetsDirectional.symmetric(
                             horizontal: 5, vertical: 3),
                         physics: const BouncingScrollPhysics(),
-                        labelColor: const Color(0xff6B39F4),
+                        labelColor: const Color(0xff2e9844),
                         labelStyle: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -1592,7 +1592,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
         //   alignment: Alignment(0.1, 1.23),
         //   child: FloatingActionButton(
         //     splashColor: Colors.blue,
-        //     backgroundColor: Color(0xff6B39F4),
+        //     backgroundColor: Color(0xff2e9844),
         //     child: Image(
         //         image: AssetImage("assets/images/Floating action.png"),
         //         height: 20,

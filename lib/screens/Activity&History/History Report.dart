@@ -111,7 +111,7 @@ class _History_reportState extends State<History_report> {
                                         child: const Center(
                                             child: Text("Cancel",
                                                 style: TextStyle(
-                                                    color: Color(0xff6B39F4),
+                                                    color: Color(0xff2e9844),
                                                     fontSize: 14,
                                                     fontFamily:
                                                         "Manrope-Bold"))),
@@ -130,7 +130,7 @@ class _History_reportState extends State<History_report> {
                                         width: width / 4,
                                         // width: 130,
                                         decoration: BoxDecoration(
-                                            color: const Color(0xff6B39F4),
+                                            color: const Color(0xff2e9844),
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: const Center(

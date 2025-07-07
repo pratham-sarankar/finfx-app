@@ -28,7 +28,7 @@ class _Order_goldState extends State<Order_gold> {
     return Scaffold(
       backgroundColor: notifier.background,
       appBar: AppBar(
-        backgroundColor: const Color(0xff6B39F4),
+        backgroundColor: const Color(0xff2e9844),
         elevation: 0,
         centerTitle: true,
         leading: GestureDetector(
@@ -205,7 +205,7 @@ class _Order_goldState extends State<Order_gold> {
                                       "Change",
                                       style: TextStyle(
                                           fontSize: 15,
-                                          color: Color(0xff6B39F4),
+                                          color: Color(0xff2e9844),
                                           fontFamily: "Manrope-Bold"),
                                     ),
                                   ],
@@ -370,7 +370,7 @@ class _Order_goldState extends State<Order_gold> {
             // width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
                 child: Text("Preview Buy",

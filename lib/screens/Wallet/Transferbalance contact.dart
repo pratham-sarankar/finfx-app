@@ -47,7 +47,7 @@ class _Transfer_contactState extends State<Transfer_contact> {
           Padding(
             padding: EdgeInsets.only(right: 20),
             child: Icon(Icons.add_circle_outline,
-                color: Color(0xff6B39F4), size: 20),
+                color: Color(0xff2e9844), size: 20),
           )
         ],
         backgroundColor: notifier.background,
@@ -65,7 +65,7 @@ class _Transfer_contactState extends State<Transfer_contact> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: notifier
-                      .onboardBackgroundColor, /*border: Border.all(color: Color(0xff6B39F4))*/
+                      .onboardBackgroundColor, /*border: Border.all(color: Color(0xff2e9844))*/
                 ),
                 child: Center(
                   child: TextField(

@@ -242,7 +242,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xff6B39F4).withValues(alpha: 0.2),
+                    color: const Color(0xff2e9844).withValues(alpha: 0.2),
                     blurRadius: 20,
                     spreadRadius: 5,
                   ),
@@ -257,7 +257,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                     height: 60,
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        const Color(0xff6B39F4).withValues(alpha: 0.2),
+                        const Color(0xff2e9844).withValues(alpha: 0.2),
                       ),
                       strokeWidth: 3,
                     ),
@@ -275,13 +275,13 @@ class _EmailVerificationState extends State<EmailVerification> {
                           height: 40,
                           decoration: BoxDecoration(
                             color:
-                                const Color(0xff6B39F4).withValues(alpha: 0.1),
+                                const Color(0xff2e9844).withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
                           child: Center(
                             child: Icon(
                               Icons.email_outlined,
-                              color: const Color(0xff6B39F4),
+                              color: const Color(0xff2e9844),
                               size: 24,
                             ),
                           ),
@@ -437,7 +437,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                           style: TextStyle(
                             fontSize: 14,
                             color: _canResendOtp
-                                ? const Color(0xff6B39F4)
+                                ? const Color(0xff2e9844)
                                 : const Color(0xff64748B),
                             fontFamily: "Manrope-SemiBold",
                           ),
@@ -455,13 +455,13 @@ class _EmailVerificationState extends State<EmailVerification> {
                         ? _verifyOtp
                         : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff6B39F4),
+                      backgroundColor: const Color(0xff2e9844),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       disabledBackgroundColor:
-                          const Color(0xff6B39F4).withValues(alpha: 0.5),
+                          const Color(0xff2e9844).withValues(alpha: 0.5),
                       disabledForegroundColor:
                           Colors.white.withValues(alpha: 0.5),
                     ),

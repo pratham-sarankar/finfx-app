@@ -83,7 +83,7 @@ class _Top_paymentState extends State<Top_payment> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: selectedFilter == 0
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : notifier.getContainerBorder,
                       width: 1,
                     ),
@@ -144,7 +144,7 @@ class _Top_paymentState extends State<Top_payment> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 0,
                                     groupValue: selectedFilter,
@@ -182,7 +182,7 @@ class _Top_paymentState extends State<Top_payment> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: selectedFilter == 1
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : notifier.getContainerBorder,
                       width: 1,
                     ),
@@ -241,7 +241,7 @@ class _Top_paymentState extends State<Top_payment> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                      (states) => const Color(0xff6B39F4),
+                                      (states) => const Color(0xff2e9844),
                                     ),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 1,
@@ -280,7 +280,7 @@ class _Top_paymentState extends State<Top_payment> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: selectedFilter == 2
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : notifier.getContainerBorder,
                       width: 1,
                     ),
@@ -339,7 +339,7 @@ class _Top_paymentState extends State<Top_payment> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                      (states) => const Color(0xff6B39F4),
+                                      (states) => const Color(0xff2e9844),
                                     ),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 2,
@@ -387,7 +387,7 @@ class _Top_paymentState extends State<Top_payment> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: selectedFilter == 3
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : notifier.getContainerBorder,
                       width: 1,
                     ),
@@ -442,7 +442,7 @@ class _Top_paymentState extends State<Top_payment> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                        (states) => const Color(0xff6B39F4)),
+                                        (states) => const Color(0xff2e9844)),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 3,
                                     groupValue: selectedFilter,
@@ -480,7 +480,7 @@ class _Top_paymentState extends State<Top_payment> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: selectedFilter == 4
-                          ? const Color(0xff6B39F4)
+                          ? const Color(0xff2e9844)
                           : notifier.getContainerBorder,
                       width: 1,
                     ),
@@ -537,7 +537,7 @@ class _Top_paymentState extends State<Top_payment> {
                                 children: [
                                   Radio(
                                     fillColor: WidgetStateColor.resolveWith(
-                                      (states) => const Color(0xff6B39F4),
+                                      (states) => const Color(0xff2e9844),
                                     ),
                                     // activeColor: const Color(0xff0056D2),
                                     value: 4,
@@ -581,7 +581,7 @@ class _Top_paymentState extends State<Top_payment> {
             width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
                 child: Text("Confirm",

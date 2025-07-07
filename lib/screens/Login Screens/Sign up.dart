@@ -265,7 +265,7 @@ class _SignState extends State<Sign> {
                           color: notifier.textColor,
                         ),
                       ),
-                      activeColor: const Color(0xff6B39F4),
+                      activeColor: const Color(0xff2e9844),
                       checkColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -283,7 +283,7 @@ class _SignState extends State<Sign> {
                       child: ElevatedButton(
                         onPressed: signUp,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff6B39F4),
+                          backgroundColor: const Color(0xff2e9844),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
@@ -372,7 +372,7 @@ class _SignState extends State<Sign> {
                             "Sign In",
                             style: TextStyle(
                               fontSize: 14,
-                              color: Color(0xff6B39F4),
+                              color: Color(0xff2e9844),
                               fontFamily: "Manrope-Medium",
                             ),
                           ),
@@ -408,7 +408,7 @@ class _SignState extends State<Sign> {
                     children: [
                       const CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Color(0xff6B39F4),
+                          Color(0xff2e9844),
                         ),
                       ),
                       const SizedBox(height: 15),

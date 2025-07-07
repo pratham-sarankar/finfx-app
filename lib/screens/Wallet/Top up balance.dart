@@ -175,7 +175,7 @@ class _Top_upState extends State<Top_up> {
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: "Manrope-Bold",
-                                  color: Color(0xff6B39F4),
+                                  color: Color(0xff2e9844),
                                 ),
                               )
                             ],
@@ -206,7 +206,7 @@ class _Top_upState extends State<Top_up> {
             width: 370,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff6B39F4),
+              color: const Color(0xff2e9844),
             ),
             child: const Center(
                 child: Text("Deposit Preview",

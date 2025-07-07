@@ -134,7 +134,7 @@ class _Hot_collectionState extends State<Hot_collection> {
             style: TextStyle(
                 fontSize: 17,
                 fontFamily: "Manrope-Bold",
-                color: Color(0xff6B39F4))),
+                color: Color(0xff2e9844))),
       ),
       body: SingleChildScrollView(
         child: Column(

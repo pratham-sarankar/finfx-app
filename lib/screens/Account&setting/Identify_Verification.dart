@@ -79,7 +79,7 @@ class _Identify_VerificationState extends State<Identify_Verification> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: const Color(0xff6B39F4),
+        backgroundColor: const Color(0xff2e9844),
         elevation: 0,
         title: const Text(
           "Identify Verification",
@@ -96,7 +96,7 @@ class _Identify_VerificationState extends State<Identify_Verification> {
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
-                color: Color(0xff6B39F4),
+                color: Color(0xff2e9844),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
@@ -332,7 +332,7 @@ class _Identify_VerificationState extends State<Identify_Verification> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff6B39F4),
+                        backgroundColor: const Color(0xff2e9844),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
