@@ -229,7 +229,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'This advanced trading bot uses sophisticated algorithms to analyze market trends and execute trades automatically. It\'s designed to maximize profits while minimizing risks through intelligent decision-making processes.',
+                        widget.bot.description,
                         style: TextStyle(
                           color: notifier.textColor.withValues(alpha: 0.8),
                           fontSize: 14,
