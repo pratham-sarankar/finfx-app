@@ -144,6 +144,7 @@ void main() async {
           create: (context) {
             return BotDetailsProvider(
               subscriptionService: context.read<BotSubscriptionService>(),
+              apiService: context.read<ApiService>(),
             );
           },
         ),

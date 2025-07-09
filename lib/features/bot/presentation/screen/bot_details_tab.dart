@@ -20,9 +20,9 @@ class _BotDetailsTabState extends State<BotDetailsTab>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // Always refresh subscription status when tab initializes
+    // Always refresh bot details when tab initializes
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<BotDetailsProvider>().loadSubscriptionStatus(widget.bot.id);
+      context.read<BotDetailsProvider>().loadBotDetails(widget.bot.id);
     });
   }
 
@@ -35,9 +35,9 @@ class _BotDetailsTabState extends State<BotDetailsTab>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    // Refresh subscription status when app becomes active
+    // Refresh bot details when app becomes active
     if (state == AppLifecycleState.resumed) {
-      context.read<BotDetailsProvider>().loadSubscriptionStatus(widget.bot.id);
+      context.read<BotDetailsProvider>().loadBotDetails(widget.bot.id);
     }
   }
 
@@ -265,49 +265,119 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                       const SizedBox(height: 20),
 
                       // Performance Metrics
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildMetricCard(
-                              title: 'Total Return',
-                              value: '+15.7%',
-                              color: Colors.green,
-                              icon: Icons.trending_up,
+                      if (botDetailsProvider.isLoadingPerformance)
+                        _buildPerformanceShimmer()
+                      else if (botDetailsProvider.performanceOverview !=
+                          null) ...[
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildMetricCard(
+                                title: 'Total Trades',
+                                value: botDetailsProvider
+                                    .performanceOverview!.totalTrades
+                                    .toString(),
+                                color: Colors.orange,
+                                icon: Icons.swap_horiz,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildMetricCard(
-                              title: 'Win Rate',
-                              value: '78%',
-                              color: Colors.blue,
-                              icon: Icons.analytics,
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: _buildMetricCard(
+                                title: 'Total Return',
+                                value: botDetailsProvider
+                                    .performanceOverview!.formattedTotalReturn,
+                                color: botDetailsProvider
+                                    .performanceOverview!.totalReturnColor,
+                                icon: botDetailsProvider
+                                    .performanceOverview!.totalReturnIcon,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildMetricCard(
-                              title: 'Total Trades',
-                              value: '156',
-                              color: Colors.orange,
-                              icon: Icons.swap_horiz,
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildMetricCard(
+                                title: 'Win Rate',
+                                value: botDetailsProvider
+                                    .performanceOverview!.formattedWinRate,
+                                color: botDetailsProvider
+                                    .performanceOverview!.winRateColor,
+                                icon: botDetailsProvider
+                                    .performanceOverview!.winRateIcon,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _buildMetricCard(
-                              title: 'Risk Level',
-                              value: 'Medium',
-                              color: Colors.purple,
-                              icon: Icons.security,
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: _buildMetricCard(
+                                title: 'Profit Factor',
+                                value: botDetailsProvider
+                                    .performanceOverview!.formattedProfitFactor,
+                                color: botDetailsProvider
+                                    .performanceOverview!.profitFactorColor,
+                                icon: botDetailsProvider
+                                    .performanceOverview!.profitFactorIcon,
+                              ),
                             ),
+                          ],
+                        ),
+                      ] else if (botDetailsProvider.performanceError != null)
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.red.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                                color: Colors.red.withValues(alpha: 0.3)),
                           ),
-                        ],
-                      ),
+                          child: Row(
+                            children: [
+                              Icon(Icons.error_outline,
+                                  color: Colors.red, size: 20),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  'Failed to load performance data',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 14,
+                                    fontFamily: "Manrope-Regular",
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      else
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: notifier.textColor.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(Icons.info_outline,
+                                  color:
+                                      notifier.textColor.withValues(alpha: 0.7),
+                                  size: 20),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  'No performance data available',
+                                  style: TextStyle(
+                                    color: notifier.textColor
+                                        .withValues(alpha: 0.7),
+                                    fontSize: 14,
+                                    fontFamily: "Manrope-Regular",
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -428,5 +498,80 @@ class _BotDetailsTabState extends State<BotDetailsTab>
 
   String _formatDate(DateTime date) {
     return '${date.day}/${date.month}/${date.year}';
+  }
+
+  Widget _buildPerformanceShimmer() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: _buildShimmerMetricCard(),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildShimmerMetricCard(),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _buildShimmerMetricCard(),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildShimmerMetricCard(),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildShimmerMetricCard() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: notifier.background,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: notifier.textColor.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                width: 60,
+                height: 12,
+                decoration: BoxDecoration(
+                  color: notifier.textColor.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Container(
+            width: 80,
+            height: 18,
+            decoration: BoxDecoration(
+              color: notifier.textColor.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
