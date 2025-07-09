@@ -4,6 +4,7 @@ import 'package:finfx/features/brokers/presentation/providers/delta_provider.dar
 import 'package:finfx/features/bot/presentation/providers/signals_provider.dart';
 import 'package:finfx/features/user_signals/presentation/providers/user_signals_provider.dart';
 import 'package:finfx/features/groups/presentation/providers/groups_provider.dart';
+import 'package:finfx/features/subscriptions/presentation/providers/subscriptions_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -154,6 +155,13 @@ void main() async {
                   apiService: context.read<ApiService>(),
                 ),
               ),
+            );
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return SubscriptionsProvider(
+              context.read<ApiService>(),
             );
           },
         ),

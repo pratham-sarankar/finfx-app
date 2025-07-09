@@ -1,96 +1,48 @@
-import 'package:finfx/features/subscriptions/presentation/widgets/subscription_card.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../../../../dark_mode.dart';
+import 'package:finfx/dark_mode.dart';
+import 'package:finfx/features/subscriptions/presentation/providers/subscriptions_provider.dart';
+import 'package:finfx/features/subscriptions/presentation/widgets/subscription_card.dart';
 
 class MySubscriptionsScreen extends StatefulWidget {
-  const MySubscriptionsScreen({super.key, this.subscriptions = const []});
-
-  final List<Map<String, dynamic>> subscriptions;
+  const MySubscriptionsScreen({super.key});
 
   @override
   State<MySubscriptionsScreen> createState() => _MySubscriptionsScreenState();
 }
 
 class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
-  String selectedFilter = 'All';
+  String selectedFilter = 'all';
 
-  // Dummy data for demonstration
-  List<Map<String, dynamic>> get dummySubscriptions => [
-        {
-          "userId": "686d338fc39deb504d02331c",
-          "status": "active",
-          "subscribedAt": "2025-07-08T15:07:27.756Z",
-          "id": "686d342fc39deb504d02334a",
-          "bot": {
-            "id": "686d3414c39deb504d02333f",
-            "name": "Smart Bot",
-            "description": "AI-powered trading bot for smart investments.",
-            "recommendedCapital": 1000,
-            "performanceDuration": "1M",
-            "script": "USD"
-          }
-        },
-        {
-          "userId": "686d338fc39deb504d02331c",
-          "status": "cancelled",
-          "subscribedAt": "2024-05-01T10:00:00.000Z",
-          "id": "686d342fc39deb504d02334b",
-          "bot": {
-            "id": "686d3414c39deb504d02333g",
-            "name": "Growth Bot",
-            "description": "Maximizes portfolio growth with minimal risk.",
-            "recommendedCapital": 500,
-            "performanceDuration": "3M",
-            "script": "USD"
-          }
-        },
-        {
-          "userId": "686d338fc39deb504d02331c",
-          "status": "inactive",
-          "subscribedAt": "2024-12-15T08:30:00.000Z",
-          "id": "686d342fc39deb504d02334c",
-          "bot": {
-            "id": "686d3414c39deb504d02333h",
-            "name": "Safe Bot",
-            "description":
-                "Focuses on capital preservation and steady returns.",
-            "recommendedCapital": 250,
-            "performanceDuration": "6M",
-            "script": "USD"
-          }
-        },
-        {
-          "userId": "686d338fc39deb504d02331c",
-          "status": "active",
-          "subscribedAt": "2024-11-20T14:30:00.000Z",
-          "id": "686d342fc39deb504d02334d",
-          "bot": {
-            "id": "686d3414c39deb504d02333i",
-            "name": "Premium Bot",
-            "description":
-                "Advanced trading strategies for experienced investors.",
-            "recommendedCapital": 2000,
-            "performanceDuration": "6M",
-            "script": "USD"
-          }
-        },
-      ];
-
-  List<Map<String, dynamic>> get filteredSubscriptions {
-    if (selectedFilter == 'All') {
-      return dummySubscriptions;
-    }
-    return dummySubscriptions
-        .where((sub) => sub['status'] == selectedFilter.toLowerCase())
-        .toList();
+  @override
+  void initState() {
+    super.initState();
+    // Fetch subscriptions when the screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context
+          .read<SubscriptionsProvider>()
+          .fetchSubscriptions(status: selectedFilter);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     ColorNotifire notifier = Provider.of<ColorNotifire>(context, listen: true);
-    final subs = filteredSubscriptions;
+    final subscriptionsProvider =
+        Provider.of<SubscriptionsProvider>(context, listen: true);
+
+    // Show error via Snackbar if there's an error
+    if (subscriptionsProvider.error != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(subscriptionsProvider.error!),
+            backgroundColor: Colors.red,
+          ),
+        );
+        subscriptionsProvider.clearError();
+      });
+    }
 
     return Scaffold(
       backgroundColor: notifier.background,
@@ -121,59 +73,35 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
               ),
               child: Row(
                 children: [
-                  _buildFilterChip('All', notifier),
-                  _buildFilterChip('Active', notifier),
-                  _buildFilterChip('Inactive', notifier),
-                  _buildFilterChip('Cancelled', notifier),
+                  _buildFilterChip('all', 'All', notifier),
+                  _buildFilterChip('active', 'Active', notifier),
+                  _buildFilterChip('cancelled', 'Cancelled', notifier),
                 ],
               ),
             ),
             // Subscriptions List
             Expanded(
-              child: subs.isEmpty
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.sentiment_dissatisfied,
-                            size: 64,
-                            color: notifier.textColor.withValues(alpha: 0.5),
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  await subscriptionsProvider.fetchSubscriptions(
+                      status: selectedFilter);
+                },
+                child: subscriptionsProvider.isLoading
+                    ? _buildShimmerList()
+                    : subscriptionsProvider.subscriptions.isEmpty
+                        ? _buildEmptyState(notifier)
+                        : ListView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            itemCount:
+                                subscriptionsProvider.subscriptions.length,
+                            itemBuilder: (context, index) {
+                              final subscription =
+                                  subscriptionsProvider.subscriptions[index];
+                              return SubscriptionCard(
+                                  subscription: subscription);
+                            },
                           ),
-                          const SizedBox(height: 16),
-                          Text(
-                            selectedFilter == 'All'
-                                ? 'No subscriptions yet!'
-                                : 'No $selectedFilter subscriptions',
-                            style: TextStyle(
-                              color: notifier.textColor,
-                              fontSize: 20,
-                              fontFamily: "Manrope-Bold",
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            selectedFilter == 'All'
-                                ? 'Explore our bots and start your investment journey.'
-                                : 'Try changing the filter or subscribe to a new bot.',
-                            style: TextStyle(
-                              color: notifier.textColor.withValues(alpha: 0.7),
-                              fontSize: 14,
-                              fontFamily: "Manrope-Regular",
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: subs.length,
-                      itemBuilder: (context, index) {
-                        final sub = subs[index];
-                        return SubscriptionCard(subscription: sub);
-                      },
-                    ),
+              ),
             ),
           ],
         ),
@@ -181,7 +109,7 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
     );
   }
 
-  Widget _buildFilterChip(String filter, ColorNotifire notifier) {
+  Widget _buildFilterChip(String filter, String label, ColorNotifire notifier) {
     final isSelected = selectedFilter == filter;
     return Expanded(
       child: GestureDetector(
@@ -189,6 +117,10 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
           setState(() {
             selectedFilter = filter;
           });
+          // Fetch subscriptions for the selected filter
+          context.read<SubscriptionsProvider>().fetchSubscriptions(
+                status: filter == 'all' ? null : filter,
+              );
         },
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12),
@@ -204,7 +136,7 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
             ),
           ),
           child: Text(
-            filter,
+            label,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: isSelected
@@ -214,6 +146,161 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
               fontFamily: isSelected ? "Manrope-Bold" : "Manrope-Regular",
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(ColorNotifire notifier) {
+    String message;
+    String subMessage;
+
+    switch (selectedFilter) {
+      case 'all':
+        message = 'No subscriptions yet!';
+        subMessage = 'Explore our bots and start your investment journey.';
+        break;
+      case 'active':
+        message = 'No active subscriptions';
+        subMessage = 'You don\'t have any active subscriptions at the moment.';
+        break;
+      case 'cancelled':
+        message = 'No cancelled subscriptions';
+        subMessage = 'You don\'t have any cancelled subscriptions.';
+        break;
+      default:
+        message = 'No subscriptions found';
+        subMessage = 'Try changing the filter or subscribe to a new bot.';
+    }
+
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.sentiment_dissatisfied,
+            size: 64,
+            color: notifier.textColor.withValues(alpha: 0.5),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            message,
+            style: TextStyle(
+              color: notifier.textColor,
+              fontSize: 20,
+              fontFamily: "Manrope-Bold",
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            subMessage,
+            style: TextStyle(
+              color: notifier.textColor.withValues(alpha: 0.7),
+              fontSize: 14,
+              fontFamily: "Manrope-Regular",
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildShimmerList() {
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return _buildShimmerCard();
+      },
+    );
+  }
+
+  Widget _buildShimmerCard() {
+    ColorNotifire notifier = Provider.of<ColorNotifire>(context, listen: true);
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: notifier.container,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: notifier.getContainerBorder),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: notifier.textColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 18,
+                              decoration: BoxDecoration(
+                                color:
+                                    notifier.textColor.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Container(
+                            width: 80,
+                            height: 24,
+                            decoration: BoxDecoration(
+                              color: notifier.textColor.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        height: 14,
+                        decoration: BoxDecoration(
+                          color: notifier.textColor.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Container(
+                        height: 14,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          color: notifier.textColor.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Container(
+              width: double.infinity,
+              height: 40,
+              decoration: BoxDecoration(
+                color: notifier.textColor.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ],
         ),
       ),
     );
