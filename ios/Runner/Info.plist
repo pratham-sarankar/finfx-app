@@ -5,7 +5,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-	<string>FinFx</string>
+    <string>FinFx</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-	<string>FinFx</string>
+    <string>FinFx</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -47,6 +47,10 @@
     <true />
     <key>UIApplicationSupportsIndirectInputEvents</key>
     <true />
+    <key>GIDClientID</key>
+    <string>917312759089-ku1o04rd0p93lk734j0qs83d3ju2dd9m.apps.googleusercontent.com</string>
+    <key>GIDServerClientID</key>
+    <string>917312759089-3v5j2uvkqmfa2u48e0fvs7iqfvd5pg17.apps.googleusercontent.com</string>
     <key>CFBundleURLTypes</key>
     <array>
       <dict>
@@ -54,8 +58,7 @@
         <string>Editor</string>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.googleusercontent.apps.120628086177-fig6c2ppctrn80qkfsriutmdu4r3t452</string>
-          <string>com.googleusercontent.apps.120628086177-478c2vemvhas4esornl6djvr32a3q7vd</string>
+          <string>com.googleusercontent.apps.917312759089-ku1o04rd0p93lk734j0qs83d3ju2dd9m</string>
         </array>
       </dict>
     </array>

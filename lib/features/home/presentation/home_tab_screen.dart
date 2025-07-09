@@ -6,6 +6,8 @@ import 'package:finfx/features/brokers/domain/models/binance_balance.dart';
 import 'package:finfx/features/brokers/domain/models/delta_balance.dart';
 import 'package:finfx/features/home/data/models/bot_model.dart';
 import 'package:finfx/features/home/presentation/widgets/bot_card.dart';
+import 'package:finfx/features/groups/presentation/providers/groups_provider.dart';
+import 'package:finfx/features/groups/data/models/group_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -177,15 +179,14 @@ class HomeTabScreen extends StatefulWidget {
 
 class _HomeTabScreenState extends State<HomeTabScreen> {
   ColorNotifire notifier = ColorNotifire();
-  String selectedGroup = "Commodities";
-  String selectedExchange = "Binance";
+  GroupModel? selectedGroup;
 
   @override
   void initState() {
     super.initState();
-    // Fetch bots when the screen loads
+    // Fetch groups when the screen loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<BotProvider>().fetchBots();
+      context.read<GroupsProvider>().fetchGroups();
       // Initialize broker providers
       context.read<BinanceProvider>().initialize();
       context.read<DeltaProvider>().initialize();
@@ -197,10 +198,19 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     notifier = Provider.of<ColorNotifire>(context, listen: true);
     final size = MediaQuery.sizeOf(context);
     final botProvider = Provider.of<BotProvider>(context, listen: true);
-    final binanceService = Provider.of<BinanceService>(context, listen: false);
+    final groupsProvider = Provider.of<GroupsProvider>(context, listen: true);
 
     // Get greeting based on current time
     String greeting = _getTimeBasedGreeting();
+
+    // Set default selected group if not set and groups are available
+    if (selectedGroup == null && groupsProvider.groups.isNotEmpty) {
+      selectedGroup = groupsProvider.groups.first;
+      // Fetch bots for the first group
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        context.read<BotProvider>().fetchBotsByGroup(selectedGroup!.id);
+      });
+    }
 
     // Show error via Snackbar if there's an error
     if (botProvider.error != null) {
@@ -212,6 +222,19 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
           ),
         );
         botProvider.clearError();
+      });
+    }
+
+    // Show groups error via Snackbar if there's an error
+    if (groupsProvider.error != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(groupsProvider.error!),
+            backgroundColor: Colors.red,
+          ),
+        );
+        groupsProvider.clearError();
       });
     }
 
@@ -232,6 +255,13 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
           child: RefreshIndicator(
             onRefresh: () async {
               setState(() {});
+              // Refresh groups and bots
+              await context.read<GroupsProvider>().fetchGroups();
+              if (selectedGroup != null) {
+                await context
+                    .read<BotProvider>()
+                    .fetchBotsByGroup(selectedGroup!.id);
+              }
               // Refresh broker balances
               final binanceProvider = context.read<BinanceProvider>();
               final deltaProvider = context.read<DeltaProvider>();
@@ -322,21 +352,6 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     const SizedBox(height: 28),
 
                     // Strategies Section (Horizontal Scroll)
-                    // Text(
-                    //   "Crypto Currencies",
-                    //   style: TextStyle(
-                    //     color: notifier.textColor,
-                    //     fontSize: 18,
-                    //     fontWeight: FontWeight.bold,
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 16),
-
-                    // // Modern Crypto Price Card
-                    // _cryptoPriceCard(binanceService),
-                    // const SizedBox(height: 40),
-
-                    // Strategies Section (Horizontal Scroll)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -354,7 +369,10 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     const SizedBox(height: 20),
 
                     // Filter Tabs
-                    _modernFilterTabs(),
+                    if (groupsProvider.isLoading)
+                      _buildShimmerFilterTabs()
+                    else
+                      _modernFilterTabs(groupsProvider.groups),
                     const SizedBox(height: 20),
 
                     // Modern Bot List
@@ -366,7 +384,6 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     else if (botProvider.bots.isNotEmpty)
                       Column(
                         children: botProvider.bots
-                            .where((element) => element.group == selectedGroup)
                             .map((bot) => BotCard(bot: bot))
                             .toList(),
                       )
@@ -382,7 +399,9 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         ),
                         child: Center(
                           child: Text(
-                            'No bots available',
+                            selectedGroup != null
+                                ? 'No bots available for ${selectedGroup!.name}'
+                                : 'No bots available',
                             style: TextStyle(
                               color: notifier.textColor.withValues(alpha: 0.7),
                               fontSize: 14,
@@ -815,18 +834,19 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
   }
 
   // Modern filter tabs
-  Widget _modernFilterTabs() {
-    final tabs = ["Commodities", "Currency", "Stocks", "Crypto"];
+  Widget _modernFilterTabs(List<GroupModel> groups) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: tabs.map((tab) {
-          final isSelected = selectedGroup == tab;
+        children: groups.map((group) {
+          final isSelected = selectedGroup?.id == group.id;
           return GestureDetector(
             onTap: () {
               setState(() {
-                selectedGroup = tab;
+                selectedGroup = group;
               });
+              // Always fetch fresh bots for the selected group
+              context.read<BotProvider>().fetchBotsByGroup(group.id);
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
@@ -846,7 +866,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
-                    _getTabIcon(tab),
+                    _getTabIcon(group.name),
                     size: 15,
                     color: isSelected
                         ? const Color(0xff2e9844)
@@ -854,7 +874,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    tab,
+                    group.name,
                     style: TextStyle(
                       color: isSelected
                           ? const Color(0xff2e9844)
@@ -869,6 +889,46 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
             ),
           );
         }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildShimmerFilterTabs() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(4, (index) {
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            decoration: BoxDecoration(
+              color: notifier.textColor.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 15,
+                  height: 15,
+                  decoration: BoxDecoration(
+                    color: notifier.textColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Container(
+                  width: 60,
+                  height: 13,
+                  decoration: BoxDecoration(
+                    color: notifier.textColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
@@ -1077,19 +1137,17 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
   }
 
   IconData _getTabIcon(String tabName) {
-    switch (tabName) {
-      case "Today":
-        return Icons.today_outlined;
-      case "This Week":
-        return Icons.calendar_view_week;
-      case "This Month":
-        return Icons.calendar_month;
-      case "This Year":
-        return Icons.calendar_today;
-      case "All Time":
-        return Icons.history;
+    switch (tabName.toLowerCase()) {
+      case "commodities":
+        return Icons.inventory_2_outlined;
+      case "currency":
+        return Icons.currency_exchange_outlined;
+      case "stocks":
+        return Icons.trending_up_outlined;
+      case "crypto":
+        return Icons.currency_bitcoin_outlined;
       default:
-        return Icons.calendar_today;
+        return Icons.category_outlined;
     }
   }
 
@@ -1102,117 +1160,5 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     } else {
       return 'Good Evening';
     }
-  }
-
-  Widget _cryptoPriceCard(BinanceService binanceService) {
-    final coins = [
-      {
-        'symbol': 'BTCUSDT',
-        'name': 'Bitcoin',
-        'icon': 'assets/images/Bitcoin.png',
-        'gradient': [Color(0xffF7931A), Color(0xffFFB300)],
-      },
-      {
-        'symbol': 'ETHUSDT',
-        'name': 'Ethereum',
-        'icon': 'assets/images/Ethereum (ETH).png',
-        'gradient': [Color(0xff627EEA), Color(0xff8CA6DB)],
-      },
-      {
-        'symbol': 'SOLUSDT',
-        'name': 'Solana',
-        'icon': 'assets/images/SOL.png',
-        'gradient': [Color(0xff00FFA3), Color(0xffDC1FFF)],
-      },
-    ];
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: coins.map((coin) {
-        return Expanded(
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 6),
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
-              gradient: LinearGradient(
-                colors: List<Color>.from(coin['gradient'] as List),
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: (coin['gradient'] as List<Color>)
-                      .first
-                      .withValues(alpha: 0.13),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white.withValues(alpha: 0.13),
-                  ),
-                  padding: const EdgeInsets.all(7),
-                  child: Image.asset(
-                    coin['icon'] as String,
-                    width: 28,
-                    height: 28,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  coin['name'] as String,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                FutureBuilder<double>(
-                  future:
-                      binanceService.getLatestPrice(coin['symbol'] as String),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Container(
-                        width: 48,
-                        height: 14,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.13),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text(
-                        '--',
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    } else {
-                      return Text(
-                        '\$${snapshot.data!.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      }).toList(),
-    );
   }
 }

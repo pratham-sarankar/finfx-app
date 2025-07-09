@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:finfx/features/brokers/presentation/screens/brokers_screen.dart';
+import 'package:finfx/features/subscriptions/presentation/screens/my_subscriptions_screen.dart';
 import 'package:finfx/screens/Home/portfolio.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       const UserSignalsScreen(),
       // const BotScreen(),
       // const Portfolio(),
-      const Scaffold(),
+      const MySubscriptionsScreen(),
       const BrokersScreen(),
       const Profile(),
     ];

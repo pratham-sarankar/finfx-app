@@ -195,29 +195,10 @@ class _LoginState extends State<Login> {
                         color: const Color(0xff0F172A),
                         child: Column(
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 20, left: 10),
-                                  child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Icon(
-                                        Icons.close,
-                                        color: notifier.textColor,
-                                        size: 25,
-                                      )),
-                                ),
-                              ],
-                            ),
                             const Spacer(),
                             Image.asset("assets/images/app-icon.png",
                                 color: notifier.isDark ? Colors.white : null,
                                 height: height / 6),
-                            const Spacer(),
                             const Text('Welcome Back!',
                                 style: TextStyle(
                                     color: Colors.white,
