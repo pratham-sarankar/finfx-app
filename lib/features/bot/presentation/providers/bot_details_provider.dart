@@ -29,10 +29,7 @@ class BotDetailsProvider extends ChangeNotifier {
 
   /// Load subscription status for a specific bot
   Future<void> loadSubscriptionStatus(String botId) async {
-    if (_currentBotId == botId && _subscriptionStatus != null) {
-      return; // Already loaded for this bot
-    }
-
+    // Always refresh the data to ensure we have the latest status
     _currentBotId = botId;
     _isLoading = true;
     _error = null;

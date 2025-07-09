@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:finfx/features/bot/presentation/screen/bot_signals_screen.dart';
+import 'package:finfx/features/bot/presentation/providers/bot_details_provider.dart';
 import '../../../../dark_mode.dart';
 
 class BotDetailsScreen extends StatefulWidget {
@@ -23,25 +24,45 @@ class BotDetailsScreen extends StatefulWidget {
 }
 
 class _BotDetailsScreenState extends State<BotDetailsScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late TabController _tabController;
   ColorNotifire notifier = ColorNotifire();
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _tabController.dispose();
     super.dispose();
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    // Refresh subscription status when app becomes active
+    if (state == AppLifecycleState.resumed) {
+      context.read<BotDetailsProvider>().loadSubscriptionStatus(widget.bot.id);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     notifier = Provider.of<ColorNotifire>(context, listen: true);
+
+    // Refresh subscription status when the screen is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context
+            .read<BotDetailsProvider>()
+            .loadSubscriptionStatus(widget.bot.id);
+      }
+    });
 
     return Scaffold(
       backgroundColor: notifier.background,

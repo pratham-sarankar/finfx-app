@@ -12,16 +12,33 @@ class BotDetailsTab extends StatefulWidget {
   State<BotDetailsTab> createState() => _BotDetailsTabState();
 }
 
-class _BotDetailsTabState extends State<BotDetailsTab> {
+class _BotDetailsTabState extends State<BotDetailsTab>
+    with WidgetsBindingObserver {
   ColorNotifire notifier = ColorNotifire();
 
   @override
   void initState() {
     super.initState();
-    // Load subscription status when tab initializes
+    WidgetsBinding.instance.addObserver(this);
+    // Always refresh subscription status when tab initializes
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<BotDetailsProvider>().loadSubscriptionStatus(widget.bot.id);
     });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    // Refresh subscription status when app becomes active
+    if (state == AppLifecycleState.resumed) {
+      context.read<BotDetailsProvider>().loadSubscriptionStatus(widget.bot.id);
+    }
   }
 
   @override

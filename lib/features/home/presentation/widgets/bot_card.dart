@@ -17,9 +17,7 @@ class BotCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BotDetailsScreen(
-              bot: bot,
-            ),
+            builder: (context) => BotDetailsScreen(bot: bot),
           ),
         );
       },
