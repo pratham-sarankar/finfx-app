@@ -3,7 +3,6 @@ import 'package:finfx/features/brokers/presentation/providers/binance_provider.d
 import 'package:finfx/features/brokers/presentation/providers/delta_provider.dart';
 import 'package:finfx/features/bot/presentation/providers/signals_provider.dart';
 import 'package:finfx/features/user_signals/presentation/providers/user_signals_provider.dart';
-import 'package:finfx/features/groups/presentation/providers/groups_provider.dart';
 import 'package:finfx/features/subscriptions/presentation/providers/subscriptions_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,6 @@ import 'package:finfx/dark_mode.dart';
 import 'package:finfx/features/onboarding/data/repositories/kyc_repository_impl.dart';
 import 'package:finfx/features/onboarding/presentation/providers/kyc_provider.dart';
 import 'package:finfx/features/onboarding/presentation/splash/splash_screen.dart';
-import 'package:finfx/features/home/data/repositories/bot_repository_impl.dart';
 import 'package:finfx/features/home/presentation/providers/bot_provider.dart';
 import 'package:finfx/features/user_signals/data/repositories/user_signals_repository_impl.dart';
 import 'package:finfx/features/user_signals/data/services/user_signals_service.dart';
@@ -37,9 +35,7 @@ import 'repositories/signal_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     MultiProvider(
       providers: [
@@ -129,13 +125,6 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) {
             return BotProvider(
-              context.read<ApiService>(),
-            );
-          },
-        ),
-        ChangeNotifierProvider(
-          create: (context) {
-            return GroupsProvider(
               context.read<ApiService>(),
             );
           },

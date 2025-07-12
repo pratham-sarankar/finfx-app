@@ -2,7 +2,6 @@ import 'package:finfx/dark_mode.dart';
 import 'package:finfx/features/bot/presentation/screen/bot_detail_screen.dart';
 import 'package:finfx/features/home/data/models/bot_model.dart';
 import 'package:finfx/screens/config/common.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -68,27 +67,6 @@ class BotCard extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: const Color(0xff2e9844)
-                                    .withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: const Color(0xff2e9844)
-                                      .withValues(alpha: 0.3),
-                                ),
-                              ),
-                              child: Text(
-                                bot.group.name,
-                                style: const TextStyle(
-                                  color: Color(0xff2e9844),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                ),
                               ),
                             ),
                           ],

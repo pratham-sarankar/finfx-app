@@ -4,11 +4,7 @@ import 'package:finfx/features/brokers/presentation/providers/delta_provider.dar
 import 'package:finfx/features/brokers/presentation/screens/brokers_screen.dart';
 import 'package:finfx/features/brokers/domain/models/binance_balance.dart';
 import 'package:finfx/features/brokers/domain/models/delta_balance.dart';
-import 'package:finfx/features/home/data/models/bot_model.dart';
 import 'package:finfx/features/home/presentation/widgets/bot_card.dart';
-import 'package:finfx/features/groups/presentation/providers/groups_provider.dart';
-import 'package:finfx/features/groups/data/models/group_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,9 +13,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:finfx/screens/Message%20&%20Notification/Notifications.dart';
-import '../../bot/presentation/screen/bot_detail_screen.dart';
 import 'package:finfx/features/home/presentation/providers/bot_provider.dart';
-import 'package:finfx/services/binance_service.dart';
 import 'package:finfx/features/profile/presentation/providers/profile_provider.dart';
 
 import '../../../dark_mode.dart'; // Assuming Dark mode.dart is needed for theme colors
@@ -179,15 +173,13 @@ class HomeTabScreen extends StatefulWidget {
 
 class _HomeTabScreenState extends State<HomeTabScreen> {
   ColorNotifire notifier = ColorNotifire();
-  GroupModel? selectedGroup;
 
   @override
   void initState() {
     super.initState();
-    // Fetch groups when the screen loads
+    // Initialize broker providers and fetch bots
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<GroupsProvider>().fetchGroups();
-      // Initialize broker providers
+      context.read<BotProvider>().fetchBots();
       context.read<BinanceProvider>().initialize();
       context.read<DeltaProvider>().initialize();
     });
@@ -198,19 +190,9 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     notifier = Provider.of<ColorNotifire>(context, listen: true);
     final size = MediaQuery.sizeOf(context);
     final botProvider = Provider.of<BotProvider>(context, listen: true);
-    final groupsProvider = Provider.of<GroupsProvider>(context, listen: true);
 
     // Get greeting based on current time
     String greeting = _getTimeBasedGreeting();
-
-    // Set default selected group if not set and groups are available
-    if (selectedGroup == null && groupsProvider.groups.isNotEmpty) {
-      selectedGroup = groupsProvider.groups.first;
-      // Fetch bots for the first group
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        context.read<BotProvider>().fetchBotsByGroup(selectedGroup!.id);
-      });
-    }
 
     // Show error via Snackbar if there's an error
     if (botProvider.error != null) {
@@ -222,19 +204,6 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
           ),
         );
         botProvider.clearError();
-      });
-    }
-
-    // Show groups error via Snackbar if there's an error
-    if (groupsProvider.error != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(groupsProvider.error!),
-            backgroundColor: Colors.red,
-          ),
-        );
-        groupsProvider.clearError();
       });
     }
 
@@ -255,13 +224,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
           child: RefreshIndicator(
             onRefresh: () async {
               setState(() {});
-              // Refresh groups and bots
-              await context.read<GroupsProvider>().fetchGroups();
-              if (selectedGroup != null) {
-                await context
-                    .read<BotProvider>()
-                    .fetchBotsByGroup(selectedGroup!.id);
-              }
+              // Refresh bots
+              await context.read<BotProvider>().fetchBots();
               // Refresh broker balances
               final binanceProvider = context.read<BinanceProvider>();
               final deltaProvider = context.read<DeltaProvider>();
@@ -368,13 +332,6 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     ),
                     const SizedBox(height: 20),
 
-                    // Filter Tabs
-                    if (groupsProvider.isLoading)
-                      _buildShimmerFilterTabs()
-                    else
-                      _modernFilterTabs(groupsProvider.groups),
-                    const SizedBox(height: 20),
-
                     // Modern Bot List
                     if (botProvider.isLoading)
                       Column(
@@ -399,9 +356,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         ),
                         child: Center(
                           child: Text(
-                            selectedGroup != null
-                                ? 'No bots available for ${selectedGroup!.name}'
-                                : 'No bots available',
+                            "No bots available",
                             style: TextStyle(
                               color: notifier.textColor.withValues(alpha: 0.7),
                               fontSize: 14,
@@ -833,106 +788,6 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     return "0.00";
   }
 
-  // Modern filter tabs
-  Widget _modernFilterTabs(List<GroupModel> groups) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: groups.map((group) {
-          final isSelected = selectedGroup?.id == group.id;
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedGroup = group;
-              });
-              // Always fetch fresh bots for the selected group
-              context.read<BotProvider>().fetchBotsByGroup(group.id);
-            },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              decoration: BoxDecoration(
-                color: isSelected
-                    ? const Color(0xff2e9844).withValues(alpha: 0.12)
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(14),
-                border: isSelected
-                    ? Border.all(
-                        color: const Color(0xff2e9844).withValues(alpha: 0.3))
-                    : null,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    _getTabIcon(group.name),
-                    size: 15,
-                    color: isSelected
-                        ? const Color(0xff2e9844)
-                        : notifier.textColor.withValues(alpha: 0.7),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    group.name,
-                    style: TextStyle(
-                      color: isSelected
-                          ? const Color(0xff2e9844)
-                          : notifier.textColor.withValues(alpha: 0.7),
-                      fontSize: 13,
-                      fontWeight:
-                          isSelected ? FontWeight.w600 : FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget _buildShimmerFilterTabs() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: List.generate(4, (index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            decoration: BoxDecoration(
-              color: notifier.textColor.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 15,
-                  height: 15,
-                  decoration: BoxDecoration(
-                    color: notifier.textColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Container(
-                  width: 60,
-                  height: 13,
-                  decoration: BoxDecoration(
-                    color: notifier.textColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }),
-      ),
-    );
-  }
-
   Widget _buildShimmerBotCard() {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -1134,21 +989,6 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
         ),
       ),
     );
-  }
-
-  IconData _getTabIcon(String tabName) {
-    switch (tabName.toLowerCase()) {
-      case "commodities":
-        return Icons.inventory_2_outlined;
-      case "currency":
-        return Icons.currency_exchange_outlined;
-      case "stocks":
-        return Icons.trending_up_outlined;
-      case "crypto":
-        return Icons.currency_bitcoin_outlined;
-      default:
-        return Icons.category_outlined;
-    }
   }
 
   String _getTimeBasedGreeting() {
