@@ -4,6 +4,7 @@ import 'package:finfx/features/brokers/presentation/providers/delta_provider.dar
 import 'package:finfx/features/bot/presentation/providers/signals_provider.dart';
 import 'package:finfx/features/user_signals/presentation/providers/user_signals_provider.dart';
 import 'package:finfx/features/subscriptions/presentation/providers/subscriptions_provider.dart';
+import 'package:finfx/themes/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -172,13 +173,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.from(
-        useMaterial3: false,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xff2e9844),
-          // 2e9844
-        ),
-      ),
+      theme: MaterialTheme(TextTheme()).dark(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         ChartLocalization.delegate,

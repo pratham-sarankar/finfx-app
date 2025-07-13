@@ -1,17 +1,12 @@
 // Flutter imports:
 import 'package:finfx/features/brokers/presentation/screens/brokers_screen.dart';
 import 'package:finfx/features/subscriptions/presentation/screens/my_subscriptions_screen.dart';
-import 'package:finfx/screens/Home/portfolio.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:finfx/features/profile/presentation/profile.dart';
 import 'package:finfx/features/user_signals/presentation/screens/user_signals_screen.dart';
 import 'package:finfx/features/home/presentation/home_tab_screen.dart';
-import '../../../dark_mode.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,10 +17,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
-  ColorNotifire notifier = ColorNotifire();
+
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     // Create the HomeTabScreen first so it can use the callback
     final homeTab = HomeTabScreen(
       onSettingsTap: () {
@@ -64,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
       //   ),
       // ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: notifier.background,
+        backgroundColor: colorScheme.surface,
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
         elevation: 10,
@@ -78,18 +75,17 @@ class _HomeScreenState extends State<HomeScreen> {
             currentIndex = index;
           });
         },
-        unselectedItemColor: notifier.textColor,
-        selectedItemColor: notifier.textColor,
+        unselectedItemColor: colorScheme.onSurface.withValues(alpha: 0.6),
+        selectedItemColor: colorScheme.primary,
         unselectedLabelStyle: const TextStyle(
           fontFamily: "Manrope_bold",
           fontSize: 8,
           letterSpacing: 0.2,
         ),
-        selectedLabelStyle: TextStyle(
+        selectedLabelStyle: const TextStyle(
           fontFamily: "Manrope_bold",
           fontSize: 8,
           fontWeight: FontWeight.w700,
-          color: notifier.textColor,
           letterSpacing: 0.2,
         ),
         items: [
@@ -102,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                   child: Image.asset(
                     "assets/images/home.png",
-                    color: notifier.bottom,
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -116,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                   child: Image.asset(
                     "assets/images/home_fill.png",
-                    color: notifier.bottom,
+                    color: colorScheme.primary,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -133,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                   child: Image.asset(
                     "assets/images/Market_fill.png",
-                    color: notifier.bottom,
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -147,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                   child: Image.asset(
                     "assets/images/Market_fill.png",
-                    color: notifier.bottom,
+                    color: colorScheme.primary,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -164,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                   child: Image.asset(
                     "assets/images/Portfolio.png",
-                    color: notifier.bottom,
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -178,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                   child: Image.asset(
                     "assets/images/Portfolio_fill.png",
-                    color: notifier.bottom,
+                    color: colorScheme.primary,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -195,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                   child: Image.asset(
                     "assets/images/Portfolio.png",
-                    color: notifier.bottom,
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -209,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                   child: Image.asset(
                     "assets/images/Portfolio_fill.png",
-                    color: notifier.bottom,
+                    color: colorScheme.primary,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -226,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                   child: Image.asset(
                     "assets/images/Person.png",
-                    color: notifier.bottom,
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -240,7 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20,
                   child: Image.asset(
                     "assets/images/Person_fill.png",
-                    color: notifier.bottom,
+                    color: colorScheme.primary,
                   ),
                 ),
                 const SizedBox(height: 4),

@@ -2,9 +2,8 @@
 import 'package:finfx/features/brokers/presentation/providers/binance_provider.dart';
 import 'package:finfx/features/brokers/presentation/providers/delta_provider.dart';
 import 'package:finfx/features/brokers/presentation/screens/brokers_screen.dart';
-import 'package:finfx/features/brokers/domain/models/binance_balance.dart';
-import 'package:finfx/features/brokers/domain/models/delta_balance.dart';
 import 'package:finfx/features/home/presentation/widgets/bot_card.dart';
+import 'package:finfx/features/home/presentation/widgets/broker_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,8 +14,6 @@ import 'package:provider/provider.dart';
 import 'package:finfx/screens/Message%20&%20Notification/Notifications.dart';
 import 'package:finfx/features/home/presentation/providers/bot_provider.dart';
 import 'package:finfx/features/profile/presentation/providers/profile_provider.dart';
-
-import '../../../dark_mode.dart'; // Assuming Dark mode.dart is needed for theme colors
 
 // Custom painter for the line chart
 class LineChartPainter extends CustomPainter {
@@ -172,8 +169,6 @@ class HomeTabScreen extends StatefulWidget {
 }
 
 class _HomeTabScreenState extends State<HomeTabScreen> {
-  ColorNotifire notifier = ColorNotifire();
-
   @override
   void initState() {
     super.initState();
@@ -187,7 +182,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
     final botProvider = Provider.of<BotProvider>(context, listen: true);
 
@@ -210,16 +206,19 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness:
-            notifier.isDark ? Brightness.light : Brightness.dark,
-        statusBarBrightness:
-            notifier.isDark ? Brightness.dark : Brightness.light,
-        systemNavigationBarColor: notifier.background,
+        statusBarIconBrightness: colorScheme.brightness == Brightness.dark
+            ? Brightness.light
+            : Brightness.dark,
+        statusBarBrightness: colorScheme.brightness == Brightness.dark
+            ? Brightness.dark
+            : Brightness.light,
+        systemNavigationBarColor: colorScheme.surface,
         systemNavigationBarIconBrightness:
-            notifier.isDark ? Brightness.light : Brightness.dark,
+            colorScheme.brightness == Brightness.dark
+                ? Brightness.light
+                : Brightness.dark,
       ),
       child: Scaffold(
-        backgroundColor: notifier.background,
         body: SafeArea(
           child: RefreshIndicator(
             onRefresh: () async {
@@ -264,7 +263,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                                     Text(
                                       "${greeting} 👋",
                                       style: TextStyle(
-                                        color: notifier.textColor
+                                        color: colorScheme.onSurface
                                             .withValues(alpha: 0.7),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
@@ -285,7 +284,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           style: TextStyle(
-                                            color: notifier.textColor,
+                                            color: colorScheme.onSurface,
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                             height: 1,
@@ -312,7 +311,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     const SizedBox(height: 28),
 
                     // Broker Cards Section
-                    _brokerCardsSection(notifier),
+                    _brokerCardsSection(colorScheme),
                     const SizedBox(height: 28),
 
                     // Strategies Section (Horizontal Scroll)
@@ -322,7 +321,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         Text(
                           "Trending Strategies",
                           style: TextStyle(
-                            color: notifier.textColor,
+                            color: colorScheme.onSurface,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -335,8 +334,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                     // Modern Bot List
                     if (botProvider.isLoading)
                       Column(
-                        children:
-                            List.generate(3, (index) => _buildShimmerBotCard()),
+                        children: List.generate(
+                            3, (index) => _buildShimmerBotCard(colorScheme)),
                       )
                     else if (botProvider.bots.isNotEmpty)
                       Column(
@@ -349,16 +348,18 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         margin: const EdgeInsets.only(bottom: 12),
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: notifier.container,
+                          color: colorScheme.surfaceContainer,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                              color: notifier.textColor.withValues(alpha: 0.1)),
+                              color:
+                                  colorScheme.outline.withValues(alpha: 0.2)),
                         ),
                         child: Center(
                           child: Text(
                             "No bots available",
                             style: TextStyle(
-                              color: notifier.textColor.withValues(alpha: 0.7),
+                              color:
+                                  colorScheme.onSurface.withValues(alpha: 0.7),
                               fontSize: 14,
                             ),
                           ),
@@ -376,6 +377,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
 
   // Modern header icon button
   Widget _modernIconButton(IconData icon) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: () {
         if (icon == Icons.notifications_outlined) {
@@ -396,23 +398,23 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: notifier.container.withValues(alpha: 0.7),
+          color: colorScheme.surfaceContainer.withValues(alpha: 0.7),
           borderRadius: BorderRadius.circular(14),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
+              color: colorScheme.shadow.withValues(alpha: 0.04),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),
           ],
         ),
-        child: Icon(icon, color: notifier.textColor, size: 22),
+        child: Icon(icon, color: colorScheme.onSurface, size: 22),
       ),
     );
   }
 
   // Broker Cards Section
-  Widget _brokerCardsSection(ColorNotifire notifier) {
+  Widget _brokerCardsSection(ColorScheme colorScheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -422,7 +424,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
             Text(
               "Broker Connections",
               style: TextStyle(
-                color: notifier.textColor,
+                color: colorScheme.onSurface,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -431,14 +433,14 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               children: [
                 Icon(
                   Icons.swipe_left,
-                  color: notifier.textColor.withValues(alpha: 0.6),
+                  color: colorScheme.onSurface.withValues(alpha: 0.6),
                   size: 16,
                 ),
                 const SizedBox(width: 4),
                 Text(
                   "Swipe",
                   style: TextStyle(
-                    color: notifier.textColor.withValues(alpha: 0.6),
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
@@ -455,14 +457,9 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
             physics: const BouncingScrollPhysics(),
             clipBehavior: Clip.none,
             children: [
-              _buildBrokerCard(
+              BrokerCard(
                 brokerName: "Meta Trader 5",
                 logoPath: "assets/images/mt5.png",
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF00D4FF), Color(0xFF0099CC)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
                 isConnected: context.watch<DeltaProvider>().isConnected,
                 balance: context.watch<DeltaProvider>().balance,
                 isLoading: context.watch<DeltaProvider>().isLoading,
@@ -476,14 +473,9 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                 },
               ),
               const SizedBox(width: 12),
-              _buildBrokerCard(
+              BrokerCard(
                 brokerName: "Meta Trader 4",
                 logoPath: "assets/images/mt4.webp",
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFF7931A), Color(0xFFF8D147)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
                 isConnected: context.watch<BinanceProvider>().isConnected,
                 balance: context.watch<BinanceProvider>().balance,
                 isLoading: context.watch<BinanceProvider>().isLoading,
@@ -503,301 +495,16 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     );
   }
 
-  // Individual Broker Card
-  Widget _buildBrokerCard({
-    required String brokerName,
-    required String logoPath,
-    required LinearGradient gradient,
-    required bool isConnected,
-    dynamic balance,
-    required bool isLoading,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        width:
-            MediaQuery.of(context).size.width - 40, // Full width minus padding
-        clipBehavior: Clip.none,
-        decoration: BoxDecoration(
-          gradient: gradient,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: gradient.colors.first.withValues(alpha: 0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(16),
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.all(16), // Reduced from 20 to 16
-              child: Row(
-                children: [
-                  // Left side - Logo and status
-                  Row(
-                    children: [
-                      Container(
-                        width: 40, // Increased from 36 to 48
-                        height: 40, // Increased from 36 to 48
-                        padding: brokerName == "Delta"
-                            ? const EdgeInsets.all(0) // Less padding for Delta
-                            : const EdgeInsets.all(
-                                8), // Normal padding for others
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Changed to solid white
-                          borderRadius:
-                              BorderRadius.circular(12), // Increased radius
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.1),
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(8), // Adjusted for padding
-                          child: Image.asset(
-                            logoPath,
-                            fit: BoxFit
-                                .contain, // Changed to contain for better logo display
-                            width: brokerName == "Delta"
-                                ? 36
-                                : null, // Force width for Delta
-                            height: brokerName == "Delta"
-                                ? 36
-                                : null, // Force height for Delta
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment:
-                            MainAxisAlignment.center, // Center vertically
-                        children: [
-                          Text(
-                            brokerName,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16, // Reduced from 18 to 16
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 2), // Reduced from 4 to 2
-                          Row(
-                            children: [
-                              AnimatedContainer(
-                                duration: const Duration(milliseconds: 300),
-                                width: 8,
-                                height: 8,
-                                decoration: BoxDecoration(
-                                  color:
-                                      isConnected ? Colors.green : Colors.grey,
-                                  shape: BoxShape.circle,
-                                  boxShadow: isConnected
-                                      ? [
-                                          BoxShadow(
-                                            color: Colors.green
-                                                .withValues(alpha: 0.5),
-                                            blurRadius: 4,
-                                            spreadRadius: 1,
-                                          ),
-                                        ]
-                                      : null,
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                isConnected ? "Connected" : "Disconnected",
-                                style: TextStyle(
-                                  color: Colors.white.withValues(alpha: 0.8),
-                                  fontSize: 11, // Reduced from 12 to 11
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  // Right side - Balance or connection status
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // Center vertically
-                    children: [
-                      if (isConnected && balance != null)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            if (isLoading)
-                              _buildShimmerLoader()
-                            else
-                              Text(
-                                _formatBalance(balance),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18, // Reduced from 20 to 18
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            const SizedBox(height: 2), // Reduced from 4 to 2
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.check_circle,
-                                  color: Colors.white.withValues(alpha: 0.8),
-                                  size: 12, // Reduced from 14 to 12
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  "Active",
-                                  style: TextStyle(
-                                    color: Colors.white.withValues(alpha: 0.8),
-                                    fontSize: 11, // Reduced from 12 to 11
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      else
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Connect Now",
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 14, // Reduced from 16 to 14
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 2), // Reduced from 4 to 2
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.add_circle_outline,
-                                  color: Colors.white.withValues(alpha: 0.8),
-                                  size: 12, // Reduced from 14 to 12
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  "Tap to connect",
-                                  style: TextStyle(
-                                    color: Colors.white.withValues(alpha: 0.8),
-                                    fontSize: 11, // Reduced from 12 to 11
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Shimmer loading effect for balance
-  Widget _buildShimmerLoader() {
-    return Container(
-      width: 80,
-      height: 16,
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Stack(
-        children: [
-          Container(
-            width: 80,
-            height: 16,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              gradient: LinearGradient(
-                colors: [
-                  Colors.white.withValues(alpha: 0.1),
-                  Colors.white.withValues(alpha: 0.3),
-                  Colors.white.withValues(alpha: 0.1),
-                ],
-                stops: const [0.0, 0.5, 1.0],
-              ),
-            ),
-          ),
-          Positioned.fill(
-            child: TweenAnimationBuilder<double>(
-              tween: Tween(begin: -1.0, end: 1.0),
-              duration: const Duration(milliseconds: 1500),
-              builder: (context, value, child) {
-                return Transform.translate(
-                  offset: Offset(value * 80, 0),
-                  child: Container(
-                    width: 40,
-                    height: 16,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.transparent,
-                          Colors.white.withValues(alpha: 0.4),
-                          Colors.transparent,
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Format balance based on broker type
-  String _formatBalance(dynamic balance) {
-    if (balance is BinanceBalance) {
-      final totalBalance = balance.btcBalance + balance.btcLocked;
-      if (totalBalance >= 1) {
-        return "${totalBalance.toStringAsFixed(2)} BTC";
-      } else {
-        return "${(totalBalance * 1000).toStringAsFixed(0)} mBTC";
-      }
-    } else if (balance is DeltaBalance) {
-      return "${balance.availableBalance.toStringAsFixed(2)} ${balance.asset}";
-    }
-    return "0.00";
-  }
-
-  Widget _buildShimmerBotCard() {
+  Widget _buildShimmerBotCard(ColorScheme colorScheme) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: notifier.container,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: notifier.textColor.withValues(alpha: 0.1)),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
+            color: colorScheme.shadow.withValues(alpha: 0.1),
             blurRadius: 5,
             offset: const Offset(0, 4),
           ),
@@ -814,11 +521,11 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: notifier.textColor.withValues(alpha: 0.1),
+                    color: colorScheme.onSurface.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(Icons.show_chart,
-                      color: notifier.textColor, size: 20),
+                      color: colorScheme.onSurface, size: 20),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -831,8 +538,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                             child: Container(
                               height: 16,
                               decoration: BoxDecoration(
-                                color:
-                                    notifier.textColor.withValues(alpha: 0.1),
+                                color: colorScheme.onSurface
+                                    .withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
@@ -842,15 +549,16 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 4, vertical: 2),
                             decoration: BoxDecoration(
-                              color: notifier.textColor.withValues(alpha: 0.1),
+                              color:
+                                  colorScheme.onSurface.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Container(
                               height: 9,
                               width: 40,
                               decoration: BoxDecoration(
-                                color:
-                                    notifier.textColor.withValues(alpha: 0.1),
+                                color: colorScheme.onSurface
+                                    .withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                             ),
@@ -862,7 +570,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         height: 12,
                         width: 80,
                         decoration: BoxDecoration(
-                          color: notifier.textColor.withValues(alpha: 0.1),
+                          color: colorScheme.onSurface.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(6),
                         ),
                       ),
@@ -874,14 +582,14 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                   decoration: BoxDecoration(
-                    color: notifier.textColor.withValues(alpha: 0.1),
+                    color: colorScheme.onSurface.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Container(
                     height: 13,
                     width: 60,
                     decoration: BoxDecoration(
-                      color: notifier.textColor.withValues(alpha: 0.1),
+                      color: colorScheme.onSurface.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -897,7 +605,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: notifier.textColor.withValues(alpha: 0.05),
+                    color: colorScheme.onSurface.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -907,7 +615,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         height: 14,
                         width: 14,
                         decoration: BoxDecoration(
-                          color: notifier.textColor.withValues(alpha: 0.1),
+                          color: colorScheme.onSurface.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
@@ -916,7 +624,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         height: 11,
                         width: 40,
                         decoration: BoxDecoration(
-                          color: notifier.textColor.withValues(alpha: 0.1),
+                          color: colorScheme.onSurface.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -927,7 +635,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: notifier.textColor.withValues(alpha: 0.05),
+                    color: colorScheme.onSurface.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -937,7 +645,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         height: 14,
                         width: 14,
                         decoration: BoxDecoration(
-                          color: notifier.textColor.withValues(alpha: 0.1),
+                          color: colorScheme.onSurface.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
@@ -946,7 +654,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         height: 11,
                         width: 35,
                         decoration: BoxDecoration(
-                          color: notifier.textColor.withValues(alpha: 0.1),
+                          color: colorScheme.onSurface.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -957,7 +665,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: notifier.textColor.withValues(alpha: 0.1),
+                    color: colorScheme.onSurface.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -967,7 +675,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         height: 14,
                         width: 14,
                         decoration: BoxDecoration(
-                          color: notifier.textColor.withValues(alpha: 0.1),
+                          color: colorScheme.onSurface.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
@@ -976,7 +684,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                         height: 11,
                         width: 30,
                         decoration: BoxDecoration(
-                          color: notifier.textColor.withValues(alpha: 0.1),
+                          color: colorScheme.onSurface.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),

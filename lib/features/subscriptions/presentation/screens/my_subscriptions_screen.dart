@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:finfx/dark_mode.dart';
 import 'package:finfx/features/subscriptions/presentation/providers/subscriptions_provider.dart';
 import 'package:finfx/features/subscriptions/presentation/widgets/subscription_card.dart';
 
@@ -27,7 +26,8 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ColorNotifire notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final subscriptionsProvider =
         Provider.of<SubscriptionsProvider>(context, listen: true);
 
@@ -45,7 +45,7 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +55,7 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
               child: Text(
                 "My Subscriptions",
                 style: TextStyle(
-                  color: notifier.textColor,
+                  color: colorScheme.onSurface,
                   fontFamily: "Manrope-Bold",
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -67,15 +67,16 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
               margin: const EdgeInsets.all(16),
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: notifier.tabBar1,
+                color: colorScheme.surfaceContainer,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: notifier.getContainerBorder),
+                border: Border.all(
+                    color: colorScheme.outline.withValues(alpha: 0.2)),
               ),
               child: Row(
                 children: [
-                  _buildFilterChip('all', 'All', notifier),
-                  _buildFilterChip('active', 'Active', notifier),
-                  _buildFilterChip('cancelled', 'Cancelled', notifier),
+                  _buildFilterChip('all', 'All'),
+                  _buildFilterChip('active', 'Active'),
+                  _buildFilterChip('cancelled', 'Cancelled'),
                 ],
               ),
             ),
@@ -89,7 +90,7 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
                 child: subscriptionsProvider.isLoading
                     ? _buildShimmerList()
                     : subscriptionsProvider.subscriptions.isEmpty
-                        ? _buildEmptyState(notifier)
+                        ? _buildEmptyState()
                         : ListView.builder(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             itemCount:
@@ -109,7 +110,8 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
     );
   }
 
-  Widget _buildFilterChip(String filter, String label, ColorNotifire notifier) {
+  Widget _buildFilterChip(String filter, String label) {
+    final colorScheme = Theme.of(context).colorScheme;
     final isSelected = selectedFilter == filter;
     return Expanded(
       child: GestureDetector(
@@ -141,7 +143,7 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
             style: TextStyle(
               color: isSelected
                   ? const Color(0xff2e9844)
-                  : notifier.textColor.withValues(alpha: 0.7),
+                  : colorScheme.onSurface.withValues(alpha: 0.7),
               fontSize: 14,
               fontFamily: isSelected ? "Manrope-Bold" : "Manrope-Regular",
             ),
@@ -151,7 +153,8 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
     );
   }
 
-  Widget _buildEmptyState(ColorNotifire notifier) {
+  Widget _buildEmptyState() {
+    final colorScheme = Theme.of(context).colorScheme;
     String message;
     String subMessage;
 
@@ -180,13 +183,13 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
           Icon(
             Icons.sentiment_dissatisfied,
             size: 64,
-            color: notifier.textColor.withValues(alpha: 0.5),
+            color: colorScheme.onSurface.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
           Text(
             message,
             style: TextStyle(
-              color: notifier.textColor,
+              color: colorScheme.onSurface,
               fontSize: 20,
               fontFamily: "Manrope-Bold",
             ),
@@ -195,7 +198,7 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
           Text(
             subMessage,
             style: TextStyle(
-              color: notifier.textColor.withValues(alpha: 0.7),
+              color: colorScheme.onSurface.withValues(alpha: 0.7),
               fontSize: 14,
               fontFamily: "Manrope-Regular",
             ),
@@ -217,13 +220,13 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
   }
 
   Widget _buildShimmerCard() {
-    ColorNotifire notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: notifier.container,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: notifier.getContainerBorder),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -237,7 +240,7 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: notifier.textColor.withValues(alpha: 0.1),
+                    color: colorScheme.onSurface.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
@@ -252,8 +255,8 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
                             child: Container(
                               height: 18,
                               decoration: BoxDecoration(
-                                color:
-                                    notifier.textColor.withValues(alpha: 0.1),
+                                color: colorScheme.onSurface
+                                    .withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                             ),
@@ -263,7 +266,8 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
                             width: 80,
                             height: 24,
                             decoration: BoxDecoration(
-                              color: notifier.textColor.withValues(alpha: 0.1),
+                              color:
+                                  colorScheme.onSurface.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
@@ -273,7 +277,7 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
                       Container(
                         height: 14,
                         decoration: BoxDecoration(
-                          color: notifier.textColor.withValues(alpha: 0.1),
+                          color: colorScheme.onSurface.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -282,7 +286,7 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
                         height: 14,
                         width: 120,
                         decoration: BoxDecoration(
-                          color: notifier.textColor.withValues(alpha: 0.1),
+                          color: colorScheme.onSurface.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -296,7 +300,7 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
               width: double.infinity,
               height: 40,
               decoration: BoxDecoration(
-                color: notifier.textColor.withValues(alpha: 0.1),
+                color: colorScheme.onSurface.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
             ),

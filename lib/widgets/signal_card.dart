@@ -1,8 +1,6 @@
-import 'package:finfx/dark_mode.dart';
 import 'package:finfx/models/signal.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class SignalCard extends StatelessWidget {
   const SignalCard({
@@ -13,21 +11,20 @@ class SignalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = Provider.of<ColorNotifire>(context);
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: () {
         _showTradingDetailsBottomSheet(
           context: context,
           signal: signal,
-          notifier: notifier,
         );
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
-          color: notifier.container,
+          color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: notifier.textColor.withValues(alpha: 0.1)),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.1),
@@ -46,7 +43,7 @@ class SignalCard extends StatelessWidget {
                   Text(
                     signal.bot?.name ?? "Bot",
                     style: TextStyle(
-                      color: notifier.textColor,
+                      color: colorScheme.onSurface,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -59,13 +56,13 @@ class SignalCard extends StatelessWidget {
                         TextSpan(
                           text: " at ",
                           style: TextStyle(
-                            color: notifier.textColor,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         TextSpan(
                           text: signal.entryPrice.toStringAsFixed(2),
                           style: TextStyle(
-                            color: notifier.textColorGrey,
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         )
                       ],
@@ -99,7 +96,7 @@ class SignalCard extends StatelessWidget {
                     DateFormat('dd MMM yyyy hh:mm:ss a')
                         .format(signal.entryTime!),
                     style: TextStyle(
-                      color: notifier.textColorGrey,
+                      color: colorScheme.onSurfaceVariant,
                       fontSize: 12,
                     ),
                   ),
@@ -114,11 +111,11 @@ class SignalCard extends StatelessWidget {
   void _showTradingDetailsBottomSheet({
     required BuildContext context,
     required Signal signal,
-    required ColorNotifire notifier,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     showModalBottomSheet(
       context: context,
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
@@ -138,7 +135,7 @@ class SignalCard extends StatelessWidget {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: notifier.textColor.withValues(alpha: 0.2),
+                    color: colorScheme.outline.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -147,7 +144,7 @@ class SignalCard extends StatelessWidget {
                 Text(
                   "#${signal.tradeId}",
                   style: TextStyle(
-                    color: notifier.textColor.withValues(alpha: 0.7),
+                    color: colorScheme.onSurface.withValues(alpha: 0.7),
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
@@ -172,7 +169,7 @@ class SignalCard extends StatelessWidget {
                                   Text(
                                     signal.bot?.name ?? 'Bot',
                                     style: TextStyle(
-                                      color: notifier.textColor,
+                                      color: colorScheme.onSurface,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -186,14 +183,14 @@ class SignalCard extends StatelessWidget {
                                         TextSpan(
                                           text: " at ",
                                           style: TextStyle(
-                                            color: notifier.textColor,
+                                            color: colorScheme.onSurface,
                                           ),
                                         ),
                                         TextSpan(
                                           text: signal.entryPrice
                                               .toStringAsFixed(2),
                                           style: TextStyle(
-                                            color: notifier.textColorGrey,
+                                            color: colorScheme.onSurfaceVariant,
                                           ),
                                         )
                                       ],
@@ -227,7 +224,7 @@ class SignalCard extends StatelessWidget {
                                     DateFormat('dd MMM yyyy hh:mm:ss a')
                                         .format(signal.entryTime!),
                                     style: TextStyle(
-                                      color: notifier.textColorGrey,
+                                      color: colorScheme.onSurfaceVariant,
                                       fontSize: 12,
                                     ),
                                   ),
@@ -242,25 +239,25 @@ class SignalCard extends StatelessWidget {
                             "Open time",
                             DateFormat('dd MMM yyyy hh:mm:ss a')
                                 .format(signal.entryTime!),
-                            notifier: notifier,
+                            context: context,
                           ),
                         _buildDetailRow(
                           "Open Price",
                           signal.entryPrice.toStringAsFixed(2),
-                          notifier: notifier,
+                          context: context,
                         ),
                         if (signal.exitTime != null)
                           _buildDetailRow(
                             "Close time",
                             DateFormat('dd MMM yyyy hh:mm:ss a')
                                 .format(signal.exitTime!),
-                            notifier: notifier,
+                            context: context,
                           ),
                         if (signal.exitPrice != null)
                           _buildDetailRow(
                             "Close Price",
                             signal.exitPrice!.toStringAsFixed(2),
-                            notifier: notifier,
+                            context: context,
                           ),
                         const SizedBox(height: 32),
                         // Close Button
@@ -304,8 +301,9 @@ class SignalCard extends StatelessWidget {
   Widget _buildDetailRow(
     String label,
     String value, {
-    required ColorNotifire notifier,
+    required BuildContext context,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -314,7 +312,7 @@ class SignalCard extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              color: notifier.textColor.withValues(alpha: 0.7),
+              color: colorScheme.onSurface.withValues(alpha: 0.7),
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
@@ -322,7 +320,7 @@ class SignalCard extends StatelessWidget {
           Text(
             value,
             style: TextStyle(
-              color: notifier.textColor,
+              color: colorScheme.onSurface,
               fontSize: 14,
               fontWeight: FontWeight.w600,
             ),
