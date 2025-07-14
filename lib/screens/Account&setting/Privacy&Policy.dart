@@ -63,7 +63,7 @@ class _PolicyState extends State<Policy> {
                   borderRadius: BorderRadius.circular(16),
                   color: colorScheme.surfaceContainer,
                   border: Border.all(
-                    color: colorScheme.outline.withOpacity(0.2),
+                    color: colorScheme.outline.withValues(alpha: 0.2),
                     width: 1,
                   ),
                 ),
@@ -88,7 +88,7 @@ class _PolicyState extends State<Policy> {
                           borderRadius: BorderRadius.circular(12),
                           color: colorScheme.surface,
                           border: Border.all(
-                            color: colorScheme.outline.withOpacity(0.3),
+                            color: colorScheme.outline.withValues(alpha: 0.3),
                             width: 1,
                           ),
                         ),
@@ -182,7 +182,7 @@ class _PolicyState extends State<Policy> {
                           borderRadius: BorderRadius.circular(16),
                           color: colorScheme.primaryContainer,
                           border: Border.all(
-                            color: colorScheme.primary.withOpacity(0.2),
+                            color: colorScheme.primary.withValues(alpha: 0.2),
                             width: 1,
                           ),
                         ),

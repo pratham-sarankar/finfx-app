@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:finfx/dark_mode.dart';
 import 'package:finfx/screens/config/common.dart';
 import 'package:finfx/utils/api_error.dart';
 import '../../providers/kyc_provider.dart';
@@ -43,7 +42,6 @@ class CapitalManagementScreen extends StatefulWidget {
 }
 
 class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
-  ColorNotifire notifier = ColorNotifire();
   bool _isSubmitting = false;
 
   Future<void> _handleSubmit() async {
@@ -99,7 +97,8 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final kycProvider = context.watch<KYCProvider>();
 
     return SingleChildScrollView(
@@ -112,20 +111,21 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
             style: TextStyle(
               fontSize: 24,
               fontFamily: "Manrope-Bold",
-              color: notifier.textColor,
+              color: colorScheme.onSurface,
             ),
           ),
           AppConstants.Height(16),
-          const Text(
+          Text(
             "Help us understand your investment preferences and risk management",
             style: TextStyle(
               fontSize: 16,
-              color: Color(0xff64748B),
+              color: colorScheme.onSurface.withOpacity(0.6),
               fontFamily: "Manrope-Medium",
             ),
           ),
           AppConstants.Height(24),
           _buildQuestionSection(
+            context,
             "How much capital do you plan to automate initially?",
             ["\$500–\$1,000", "\$1,001–\$2,000", "\$2,001–\$5,000", "\$5,000+"],
             widget.selectedInitialCapital,
@@ -133,6 +133,7 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
           ),
           AppConstants.Height(16),
           _buildQuestionSection(
+            context,
             "Would you prefer small, frequent trades or high-confidence trades with fewer entries?",
             ["Small frequent", "Moderate", "Rare but high-impact"],
             widget.selectedTradePreference,
@@ -140,6 +141,7 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
           ),
           AppConstants.Height(16),
           _buildYesNoQuestion(
+            context,
             "Would you like to set a capital-based monthly risk limit?",
             widget.wantsRiskLimit,
             widget.onRiskLimitChanged,
@@ -147,6 +149,7 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
           if (widget.wantsRiskLimit == true) ...[
             AppConstants.Height(16),
             _buildTextField(
+              context: context,
               controller: widget.riskLimitController,
               label: "Risk Limit Percentage",
               hint: "Enter percentage (e.g., 5)",
@@ -155,6 +158,7 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
           ],
           AppConstants.Height(16),
           _buildYesNoQuestion(
+            context,
             "Should the system auto-disable if 2 stop-losses hit in a row?",
             widget.autoDisableOnStopLoss,
             widget.onAutoDisableChanged,
@@ -168,10 +172,10 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: const Color(0xff2e9844),
+                color: colorScheme.primary,
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xff2e9844).withValues(alpha: 0.3),
+                    color: colorScheme.primary.withOpacity(0.3),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -179,20 +183,20 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
               ),
               child: Center(
                 child: (kycProvider.isLoading || _isSubmitting)
-                    ? const SizedBox(
+                    ? SizedBox(
                         width: 24,
                         height: 24,
                         child: CircularProgressIndicator(
-                          color: Colors.white,
+                          color: colorScheme.onPrimary,
                           strokeWidth: 2,
                         ),
                       )
-                    : const Text(
+                    : Text(
                         "Submit KYC",
                         style: TextStyle(
                           fontSize: 16,
                           fontFamily: "Manrope-SemiBold",
-                          color: Colors.white,
+                          color: colorScheme.onPrimary,
                         ),
                       ),
               ),
@@ -204,11 +208,13 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
   }
 
   Widget _buildQuestionSection(
+    BuildContext context,
     String question,
     List<String> options,
     String? selectedValue,
     Function(String?) onSelect,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -217,29 +223,33 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
           style: TextStyle(
             fontSize: 16,
             fontFamily: "Manrope-SemiBold",
-            color: notifier.textColor,
+            color: colorScheme.onSurface,
           ),
         ),
         AppConstants.Height(12),
         ...options.map((option) => Padding(
               padding: const EdgeInsets.only(bottom: 8),
-              child: _buildOptionTile(
-                  option, selectedValue == option, () => onSelect(option)),
+              child: _buildOptionTile(context, option, selectedValue == option,
+                  () => onSelect(option)),
             )),
       ],
     );
   }
 
-  Widget _buildOptionTile(String option, bool isSelected, VoidCallback onTap) {
+  Widget _buildOptionTile(BuildContext context, String option, bool isSelected,
+      VoidCallback onTap) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xffF8F5FF) : notifier.textField,
+          color: isSelected
+              ? colorScheme.primary.withOpacity(0.08)
+              : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? const Color(0xff2e9844) : Colors.transparent,
+            color: isSelected ? colorScheme.primary : Colors.transparent,
             width: 1.5,
           ),
         ),
@@ -251,16 +261,16 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? const Color(0xff2e9844) : Colors.grey,
+                  color: isSelected ? colorScheme.primary : colorScheme.outline,
                   width: 2,
                 ),
               ),
               child: isSelected
-                  ? const Center(
+                  ? Center(
                       child: Icon(
                         Icons.check,
                         size: 14,
-                        color: Color(0xff2e9844),
+                        color: colorScheme.primary,
                       ),
                     )
                   : null,
@@ -271,7 +281,7 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
                 option,
                 style: TextStyle(
                   color:
-                      isSelected ? const Color(0xff2e9844) : notifier.textColor,
+                      isSelected ? colorScheme.primary : colorScheme.onSurface,
                   fontFamily: "Manrope-Medium",
                 ),
               ),
@@ -283,11 +293,13 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
   }
 
   Widget _buildTextField({
+    required BuildContext context,
     required TextEditingController controller,
     required String label,
     required String hint,
     TextInputType? keyboardType,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -296,22 +308,23 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
           style: TextStyle(
             fontSize: 14,
             fontFamily: "Manrope-SemiBold",
-            color: notifier.textColor,
+            color: colorScheme.onSurface,
           ),
         ),
         AppConstants.Height(8),
         Container(
           decoration: BoxDecoration(
-            color: notifier.textField,
+            color: colorScheme.surfaceContainer,
             borderRadius: BorderRadius.circular(12),
           ),
           child: TextField(
             controller: controller,
             keyboardType: keyboardType,
-            style: TextStyle(color: notifier.textColor),
+            style: TextStyle(color: colorScheme.onSurface),
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: TextStyle(color: notifier.textFieldHintText),
+              hintStyle:
+                  TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
               border: InputBorder.none,
               contentPadding: const EdgeInsets.all(16),
             ),
@@ -322,10 +335,12 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
   }
 
   Widget _buildYesNoQuestion(
+    BuildContext context,
     String question,
     bool? value,
     Function(bool?) onChanged,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -334,7 +349,7 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
           style: TextStyle(
             fontSize: 16,
             fontFamily: "Manrope-SemiBold",
-            color: notifier.textColor,
+            color: colorScheme.onSurface,
           ),
         ),
         AppConstants.Height(12),
@@ -342,12 +357,12 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
           children: [
             Expanded(
               child: _buildYesNoOption(
-                  "Yes", value == true, () => onChanged(true)),
+                  context, "Yes", value == true, () => onChanged(true)),
             ),
             AppConstants.Width(16),
             Expanded(
               child: _buildYesNoOption(
-                  "No", value == false, () => onChanged(false)),
+                  context, "No", value == false, () => onChanged(false)),
             ),
           ],
         ),
@@ -355,16 +370,20 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
     );
   }
 
-  Widget _buildYesNoOption(String label, bool isSelected, VoidCallback onTap) {
+  Widget _buildYesNoOption(
+      BuildContext context, String label, bool isSelected, VoidCallback onTap) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xffF8F5FF) : notifier.textField,
+          color: isSelected
+              ? colorScheme.primary.withOpacity(0.08)
+              : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? const Color(0xff2e9844) : Colors.transparent,
+            color: isSelected ? colorScheme.primary : Colors.transparent,
             width: 1.5,
           ),
         ),
@@ -372,7 +391,7 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
           child: Text(
             label,
             style: TextStyle(
-              color: isSelected ? const Color(0xff2e9844) : notifier.textColor,
+              color: isSelected ? colorScheme.primary : colorScheme.onSurface,
               fontFamily: "Manrope-SemiBold",
             ),
           ),

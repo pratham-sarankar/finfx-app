@@ -37,16 +37,17 @@ class SubscriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorNotifire notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final formattedDate =
         DateFormat('MMM d, yyyy').format(subscription.subscribedAt);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: notifier.container,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: notifier.getContainerBorder),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
       ),
       child: Material(
         color: Colors.transparent,
@@ -86,7 +87,7 @@ class SubscriptionCard extends StatelessWidget {
                                 child: Text(
                                   subscription.bot.name,
                                   style: TextStyle(
-                                    color: notifier.textColor,
+                                    color: colorScheme.onSurface,
                                     fontSize: 18,
                                     fontFamily: "Manrope-Bold",
                                   ),
@@ -135,7 +136,8 @@ class SubscriptionCard extends StatelessWidget {
                           Text(
                             subscription.bot.description,
                             style: TextStyle(
-                              color: notifier.textColor.withValues(alpha: 0.7),
+                              color:
+                                  colorScheme.onSurface.withValues(alpha: 0.7),
                               fontSize: 14,
                               fontFamily: "Manrope-Regular",
                             ),
@@ -146,15 +148,15 @@ class SubscriptionCard extends StatelessWidget {
                               Icon(
                                 Icons.calendar_today,
                                 size: 16,
-                                color:
-                                    notifier.textColor.withValues(alpha: 0.5),
+                                color: colorScheme.onSurface
+                                    .withValues(alpha: 0.5),
                               ),
                               const SizedBox(width: 4),
                               Text(
                                 'Subscribed: ',
                                 style: TextStyle(
-                                  color:
-                                      notifier.textColor.withValues(alpha: 0.6),
+                                  color: colorScheme.onSurface
+                                      .withValues(alpha: 0.6),
                                   fontSize: 12,
                                   fontFamily: "Manrope-Regular",
                                 ),
@@ -162,7 +164,7 @@ class SubscriptionCard extends StatelessWidget {
                               Text(
                                 formattedDate,
                                 style: TextStyle(
-                                  color: notifier.textColor,
+                                  color: colorScheme.onSurface,
                                   fontSize: 12,
                                   fontFamily: "Manrope-SemiBold",
                                 ),
@@ -181,14 +183,15 @@ class SubscriptionCard extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () => _showCancelDialog(context),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red.withValues(alpha: 0.1),
-                        foregroundColor: Colors.red,
+                        backgroundColor:
+                            colorScheme.error.withValues(alpha: 0.1),
+                        foregroundColor: colorScheme.error,
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                           side: BorderSide(
-                              color: Colors.red.withValues(alpha: 0.3)),
+                              color: colorScheme.error.withValues(alpha: 0.3)),
                         ),
                       ),
                       child: const Text(

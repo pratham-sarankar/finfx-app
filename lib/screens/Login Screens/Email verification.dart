@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:finfx/features/onboarding/presentation/kyc/kyc_screen.dart';
 import 'package:finfx/features/profile/presentation/providers/profile_provider.dart';
-import '../../dark_mode.dart';
 import '../../services/auth_service.dart';
 import '../../services/auth_storage_service.dart';
 import '../../utils/api_error.dart';
@@ -34,7 +33,6 @@ class EmailVerification extends StatefulWidget {
 }
 
 class _EmailVerificationState extends State<EmailVerification> {
-  ColorNotifire notifier = ColorNotifire();
   late final AuthService _authService;
   final AuthStorageService _authStorage = AuthStorageService();
   bool _isLoading = false;
@@ -57,11 +55,6 @@ class _EmailVerificationState extends State<EmailVerification> {
   void dispose() {
     _resendTimer?.cancel();
     super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   void _startResendCountdown() {
@@ -226,9 +219,9 @@ class _EmailVerificationState extends State<EmailVerification> {
     }
   }
 
-  Widget _buildLoadingScreen(String message) {
+  Widget _buildLoadingScreen(String message, ColorScheme colorScheme) {
     return Container(
-      color: notifier.background,
+      color: colorScheme.surface,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -238,11 +231,11 @@ class _EmailVerificationState extends State<EmailVerification> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                color: notifier.background,
+                color: colorScheme.surface,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xff2e9844).withValues(alpha: 0.2),
+                    color: colorScheme.primary.withOpacity(0.2),
                     blurRadius: 20,
                     spreadRadius: 5,
                   ),
@@ -257,7 +250,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                     height: 60,
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        const Color(0xff2e9844).withValues(alpha: 0.2),
+                        colorScheme.primary.withOpacity(0.2),
                       ),
                       strokeWidth: 3,
                     ),
@@ -274,14 +267,13 @@ class _EmailVerificationState extends State<EmailVerification> {
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
-                            color:
-                                const Color(0xff2e9844).withValues(alpha: 0.1),
+                            color: colorScheme.primary.withOpacity(0.1),
                             shape: BoxShape.circle,
                           ),
                           child: Center(
                             child: Icon(
                               Icons.email_outlined,
-                              color: const Color(0xff2e9844),
+                              color: colorScheme.primary,
                               size: 24,
                             ),
                           ),
@@ -308,7 +300,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                         Text(
                           message,
                           style: TextStyle(
-                            color: notifier.textColor,
+                            color: colorScheme.onSurface,
                             fontSize: 18,
                             fontFamily: "Manrope-SemiBold",
                             height: 1.5,
@@ -319,7 +311,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                         Text(
                           'Please wait...',
                           style: TextStyle(
-                            color: notifier.textColor.withValues(alpha: 0.7),
+                            color: colorScheme.onSurface.withOpacity(0.7),
                             fontSize: 14,
                             fontFamily: "Manrope-Medium",
                           ),
@@ -339,27 +331,28 @@ class _EmailVerificationState extends State<EmailVerification> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     var width = MediaQuery.of(context).size.width;
 
     // Show full screen loading when sending OTP
     if (_isSendingOtp) {
       return Scaffold(
-        backgroundColor: notifier.background,
+        backgroundColor: colorScheme.surface,
         body: _buildLoadingScreen(
-            'Sending verification code to ${widget.email}...'),
+            'Sending verification code to ${widget.email}...', colorScheme),
       );
     }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: notifier.background,
+        backgroundColor: colorScheme.surface,
         elevation: 0,
         leading: GestureDetector(
           onTap: () => Navigator.pop(context),
-          child: Icon(Icons.close, color: notifier.textColor, size: 25),
+          child: Icon(Icons.close, color: colorScheme.onSurface, size: 25),
         ),
       ),
       body: Stack(
@@ -375,15 +368,15 @@ class _EmailVerificationState extends State<EmailVerification> {
                   style: TextStyle(
                     fontSize: 24,
                     fontFamily: "Manrope-SemiBold",
-                    color: notifier.textColor,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 AppConstants.Height(10),
-                const Text(
+                Text(
                   "We've sent a verification code to your email address.\nPlease enter the 6-digit code below.",
                   style: TextStyle(
                     fontSize: 15,
-                    color: Color(0xff64748B),
+                    color: colorScheme.onSurface.withOpacity(0.6),
                     fontFamily: "Manrope-Medium",
                   ),
                 ),
@@ -396,13 +389,13 @@ class _EmailVerificationState extends State<EmailVerification> {
                   fieldStyle: FieldStyle.box,
                   outlineBorderRadius: 10,
                   otpFieldStyle: OtpFieldStyle(
-                    backgroundColor: notifier.textField,
-                    borderColor: notifier.getContainerBorder,
+                    backgroundColor: colorScheme.surfaceContainer,
+                    borderColor: colorScheme.outline,
                   ),
                   style: TextStyle(
                     fontSize: 19,
                     fontWeight: FontWeight.bold,
-                    color: notifier.textColor,
+                    color: colorScheme.onSurface,
                   ),
                   onChanged: (pin) {
                     setState(() {
@@ -425,7 +418,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                         style: TextStyle(
                           fontSize: 14,
                           fontFamily: "Manrope-SemiBold",
-                          color: notifier.textColor,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                       TextButton(
@@ -437,8 +430,8 @@ class _EmailVerificationState extends State<EmailVerification> {
                           style: TextStyle(
                             fontSize: 14,
                             color: _canResendOtp
-                                ? const Color(0xff2e9844)
-                                : const Color(0xff64748B),
+                                ? colorScheme.primary
+                                : colorScheme.onSurface.withOpacity(0.6),
                             fontFamily: "Manrope-SemiBold",
                           ),
                         ),
@@ -455,21 +448,21 @@ class _EmailVerificationState extends State<EmailVerification> {
                         ? _verifyOtp
                         : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff2e9844),
+                      backgroundColor: colorScheme.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       disabledBackgroundColor:
-                          const Color(0xff2e9844).withValues(alpha: 0.5),
+                          colorScheme.primary.withOpacity(0.7),
                       disabledForegroundColor:
-                          Colors.white.withValues(alpha: 0.5),
+                          colorScheme.onPrimary.withOpacity(1),
                     ),
                     child: Text(
                       _isLoading ? "Verifying..." : "Verify Email",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
-                        color: Colors.white,
+                        color: colorScheme.onPrimary,
                         fontFamily: "Manrope-Bold",
                       ),
                     ),
@@ -480,8 +473,9 @@ class _EmailVerificationState extends State<EmailVerification> {
           ),
           if (_isLoading)
             Container(
-              color: notifier.background,
-              child: _buildLoadingScreen('Verifying your email...'),
+              color: colorScheme.surface,
+              child:
+                  _buildLoadingScreen('Verifying your email...', colorScheme),
             ),
         ],
       ),

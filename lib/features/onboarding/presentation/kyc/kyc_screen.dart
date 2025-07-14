@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:finfx/dark_mode.dart';
 import 'package:finfx/features/onboarding/presentation/kyc/sections/experience_screen.dart';
 import 'package:finfx/screens/Login%20Screens/Verify%20success.dart';
 import 'sections/basic_info_screen.dart';
@@ -35,7 +34,6 @@ class _KYCOnboardingContent extends StatefulWidget {
 }
 
 class _KYCOnboardingContentState extends State<_KYCOnboardingContent> {
-  ColorNotifire notifier = ColorNotifire();
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
@@ -104,30 +102,28 @@ class _KYCOnboardingContentState extends State<_KYCOnboardingContent> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Scaffold(
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: notifier.background,
+        backgroundColor: colorScheme.surface,
         elevation: 0,
         actions: [
           Center(
             child: OutlinedButton(
               onPressed: _skipKYC,
-              style: ButtonStyle(
-                side: WidgetStatePropertyAll(
-                  BorderSide(color: notifier.outlinedButtonColor),
-                ),
-                padding: const WidgetStatePropertyAll(
-                  EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                ),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: colorScheme.outline),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               ),
               child: Text(
                 "Skip KYC",
                 style: TextStyle(
                   fontSize: 16,
-                  color: notifier.outlinedButtonColor,
+                  color: colorScheme.outline,
                   fontFamily: "Manrope-SemiBold",
                 ),
               ),

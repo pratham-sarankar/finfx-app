@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../dark_mode.dart';
 import '../../services/auth_service.dart';
 
 class Forget extends StatefulWidget {
@@ -21,7 +20,6 @@ class Forget extends StatefulWidget {
 }
 
 class _ForgetState extends State<Forget> {
-  ColorNotifire notifier = ColorNotifire();
   bool _isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
@@ -63,18 +61,19 @@ class _ForgetState extends State<Forget> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: notifier.background,
+        backgroundColor: colorScheme.surface,
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.close, color: notifier.textColor, size: 25),
+          child: Icon(Icons.close, color: colorScheme.onSurface, size: 25),
         ),
       ),
       body: SafeArea(
@@ -91,15 +90,15 @@ class _ForgetState extends State<Forget> {
                   style: TextStyle(
                     fontSize: 27,
                     fontFamily: "Manrope-SemiBold",
-                    color: notifier.textColor,
+                    color: colorScheme.onSurface,
                   ),
                 ),
                 SizedBox(height: height * 0.02),
                 Text(
                   "Enter your email to receive a password reset link.",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
-                    color: Color(0xff64748B),
+                    color: colorScheme.onSurface.withOpacity(0.6),
                     fontFamily: "Manrope-Medium",
                   ),
                 ),
@@ -108,13 +107,14 @@ class _ForgetState extends State<Forget> {
                   controller: _emailController,
                   decoration: InputDecoration(
                     hintText: "Email",
-                    fillColor: notifier.textField,
+                    fillColor: colorScheme.surfaceContainer,
                     filled: true,
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    hintStyle: TextStyle(color: notifier.textFieldHintText),
+                    hintStyle: TextStyle(
+                        color: colorScheme.onSurface.withOpacity(0.6)),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -134,7 +134,7 @@ class _ForgetState extends State<Forget> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff2e9844),
+                    backgroundColor: colorScheme.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -148,14 +148,14 @@ class _ForgetState extends State<Forget> {
                         ? SizedBox.square(
                             dimension: 20,
                             child: CircularProgressIndicator(
-                              color: Colors.white,
+                              color: colorScheme.onPrimary,
                               strokeWidth: 2,
                             ),
                           )
-                        : const Text(
+                        : Text(
                             "Send Reset Link",
                             style: TextStyle(
-                              color: Color(0xffFFFFFF),
+                              color: colorScheme.onPrimary,
                               fontSize: 15,
                               fontFamily: "Manrope-Bold",
                             ),

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:finfx/dark_mode.dart';
 import 'package:finfx/screens/config/common.dart';
 import 'package:finfx/utils/api_error.dart';
 
@@ -53,7 +52,6 @@ class RiskProfilingScreen extends StatefulWidget {
 }
 
 class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
-  ColorNotifire notifier = ColorNotifire();
   bool _isSubmitting = false;
 
   Future<void> _handleSubmit() async {
@@ -110,7 +108,8 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final kycProvider = context.watch<KYCProvider>();
 
     return SingleChildScrollView(
@@ -123,20 +122,21 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
             style: TextStyle(
               fontSize: 24,
               fontFamily: "Manrope-Bold",
-              color: notifier.textColor,
+              color: colorScheme.onSurface,
             ),
           ),
           AppConstants.Height(16),
-          const Text(
+          Text(
             "Help us understand your investment preferences and risk tolerance",
             style: TextStyle(
               fontSize: 16,
-              color: Color(0xff64748B),
+              color: colorScheme.onSurface.withOpacity(0.6),
               fontFamily: "Manrope-Medium",
             ),
           ),
           AppConstants.Height(24),
           _buildQuestionSection(
+            context,
             "What is your total monthly income?",
             [
               "Less than ₹50,000",
@@ -149,6 +149,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
           ),
           AppConstants.Height(16),
           _buildQuestionSection(
+            context,
             "What percentage of your wealth are you investing in crypto?",
             ["Less than 10%", "10–25%", "More than 25%"],
             widget.selectedCryptoPercentage,
@@ -156,6 +157,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
           ),
           AppConstants.Height(16),
           _buildQuestionSection(
+            context,
             "How would you rate your experience in crypto trading?",
             ["Beginner", "Intermediate", "Expert"],
             widget.selectedExperience,
@@ -163,6 +165,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
           ),
           AppConstants.Height(16),
           _buildQuestionSection(
+            context,
             "If your portfolio dropped 30% in one week, what would you do?",
             ["Panic and exit", "Hold and wait", "Invest more"],
             widget.selectedReaction,
@@ -170,6 +173,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
           ),
           AppConstants.Height(16),
           _buildQuestionSection(
+            context,
             "How long can you stay invested without needing your capital?",
             [
               "Less than 6 months",
@@ -182,12 +186,14 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
           ),
           AppConstants.Height(16),
           _buildYesNoQuestion(
+            context,
             "Are you aware that crypto markets are unregulated in India?",
             widget.isAwareOfRegulation,
             widget.onRegulationAwarenessChanged,
           ),
           AppConstants.Height(16),
           _buildYesNoQuestion(
+            context,
             "Do you understand that automated trades may cause losses and are irreversible?",
             widget.isAwareOfRisks,
             widget.onRisksAwarenessChanged,
@@ -201,10 +207,10 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: const Color(0xff2e9844),
+                color: colorScheme.primary,
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xff2e9844).withValues(alpha: 0.3),
+                    color: colorScheme.primary.withOpacity(0.3),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -212,20 +218,20 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
               ),
               child: Center(
                 child: (kycProvider.isLoading || _isSubmitting)
-                    ? const SizedBox(
+                    ? SizedBox(
                         width: 24,
                         height: 24,
                         child: CircularProgressIndicator(
-                          color: Colors.white,
+                          color: colorScheme.onPrimary,
                           strokeWidth: 2,
                         ),
                       )
-                    : const Text(
+                    : Text(
                         "Continue",
                         style: TextStyle(
                           fontSize: 16,
                           fontFamily: "Manrope-SemiBold",
-                          color: Colors.white,
+                          color: colorScheme.onPrimary,
                         ),
                       ),
               ),
@@ -237,11 +243,13 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
   }
 
   Widget _buildQuestionSection(
+    BuildContext context,
     String question,
     List<String> options,
     String? selectedValue,
     Function(String?) onSelect,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -250,29 +258,33 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
           style: TextStyle(
             fontSize: 16,
             fontFamily: "Manrope-SemiBold",
-            color: notifier.textColor,
+            color: colorScheme.onSurface,
           ),
         ),
         AppConstants.Height(12),
         ...options.map((option) => Padding(
               padding: const EdgeInsets.only(bottom: 8),
-              child: _buildOptionTile(
-                  option, selectedValue == option, () => onSelect(option)),
+              child: _buildOptionTile(context, option, selectedValue == option,
+                  () => onSelect(option)),
             )),
       ],
     );
   }
 
-  Widget _buildOptionTile(String option, bool isSelected, VoidCallback onTap) {
+  Widget _buildOptionTile(BuildContext context, String option, bool isSelected,
+      VoidCallback onTap) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xffF8F5FF) : notifier.textField,
+          color: isSelected
+              ? colorScheme.primary.withOpacity(0.08)
+              : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? const Color(0xff2e9844) : Colors.transparent,
+            color: isSelected ? colorScheme.primary : Colors.transparent,
             width: 1.5,
           ),
         ),
@@ -284,16 +296,16 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? const Color(0xff2e9844) : Colors.grey,
+                  color: isSelected ? colorScheme.primary : colorScheme.outline,
                   width: 2,
                 ),
               ),
               child: isSelected
-                  ? const Center(
+                  ? Center(
                       child: Icon(
                         Icons.check,
                         size: 14,
-                        color: Color(0xff2e9844),
+                        color: colorScheme.primary,
                       ),
                     )
                   : null,
@@ -304,7 +316,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
                 option,
                 style: TextStyle(
                   color:
-                      isSelected ? const Color(0xff2e9844) : notifier.textColor,
+                      isSelected ? colorScheme.primary : colorScheme.onSurface,
                   fontFamily: "Manrope-Medium",
                 ),
               ),
@@ -316,10 +328,12 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
   }
 
   Widget _buildYesNoQuestion(
+    BuildContext context,
     String question,
     bool? value,
     Function(bool?) onChanged,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -328,7 +342,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
           style: TextStyle(
             fontSize: 16,
             fontFamily: "Manrope-SemiBold",
-            color: notifier.textColor,
+            color: colorScheme.onSurface,
           ),
         ),
         AppConstants.Height(12),
@@ -336,12 +350,12 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
           children: [
             Expanded(
               child: _buildYesNoOption(
-                  "Yes", value == true, () => onChanged(true)),
+                  context, "Yes", value == true, () => onChanged(true)),
             ),
             AppConstants.Width(16),
             Expanded(
               child: _buildYesNoOption(
-                  "No", value == false, () => onChanged(false)),
+                  context, "No", value == false, () => onChanged(false)),
             ),
           ],
         ),
@@ -349,16 +363,20 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
     );
   }
 
-  Widget _buildYesNoOption(String label, bool isSelected, VoidCallback onTap) {
+  Widget _buildYesNoOption(
+      BuildContext context, String label, bool isSelected, VoidCallback onTap) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xffF8F5FF) : notifier.textField,
+          color: isSelected
+              ? colorScheme.primary.withOpacity(0.08)
+              : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? const Color(0xff2e9844) : Colors.transparent,
+            color: isSelected ? colorScheme.primary : Colors.transparent,
             width: 1.5,
           ),
         ),
@@ -366,7 +384,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
           child: Text(
             label,
             style: TextStyle(
-              color: isSelected ? const Color(0xff2e9844) : notifier.textColor,
+              color: isSelected ? colorScheme.primary : colorScheme.onSurface,
               fontFamily: "Manrope-SemiBold",
             ),
           ),

@@ -50,7 +50,7 @@ class _Reffle_codeState extends State<Reffle_code> {
                   borderRadius: BorderRadius.circular(16),
                   color: colorScheme.surfaceContainer,
                   border: Border.all(
-                    color: colorScheme.outline.withOpacity(0.2),
+                    color: colorScheme.outline.withValues(alpha: 0.2),
                     width: 1,
                   ),
                 ),
@@ -91,7 +91,7 @@ class _Reffle_codeState extends State<Reffle_code> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: colorScheme.outline.withOpacity(0.3),
+                            color: colorScheme.outline.withValues(alpha: 0.3),
                             width: 1,
                           ),
                           color: colorScheme.surface,
@@ -202,7 +202,7 @@ class _Reffle_codeState extends State<Reffle_code> {
                                             Divider(
                                               thickness: 1,
                                               color: colorScheme.outline
-                                                  .withOpacity(0.2),
+                                                  .withValues(alpha: 0.2),
                                             ),
                                             const SizedBox(height: 16),
                                             Container(
@@ -212,7 +212,7 @@ class _Reffle_codeState extends State<Reffle_code> {
                                                     BorderRadius.circular(16),
                                                 border: Border.all(
                                                   color: colorScheme.outline
-                                                      .withOpacity(0.3),
+                                                      .withValues(alpha: 0.3),
                                                 ),
                                                 color: colorScheme
                                                     .surfaceContainer,
@@ -499,7 +499,7 @@ class _Reffle_codeState extends State<Reffle_code> {
               borderRadius: BorderRadius.circular(28),
               color: colorScheme.surfaceContainer,
               border: Border.all(
-                color: colorScheme.outline.withOpacity(0.2),
+                color: colorScheme.outline.withValues(alpha: 0.2),
               ),
             ),
             child: Icon(

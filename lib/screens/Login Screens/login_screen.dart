@@ -33,7 +33,6 @@ class _LoginState extends State<Login> {
   bool value = false;
   bool _obsecuretext = true;
   bool _isLoading = false;
-  ColorNotifire notifier = ColorNotifire();
   late final AuthService _authService;
   final AuthStorageService _authStorage = AuthStorageService();
   final _formKey = GlobalKey<FormBuilderState>();
@@ -169,18 +168,22 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
     var size = MediaQuery.sizeOf(context);
     final height = size.height;
     final width = size.width;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.light,
+        statusBarColor: colorScheme.surface,
+        statusBarIconBrightness: colorScheme.brightness == Brightness.dark
+            ? Brightness.light
+            : Brightness.dark,
       ),
       child: Scaffold(
-        backgroundColor: notifier.background,
+        backgroundColor: colorScheme.surface,
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
@@ -192,23 +195,30 @@ class _LoginState extends State<Login> {
                     Container(
                         height: height / 2.6,
                         width: width,
-                        color: const Color(0xff0F172A),
                         child: Column(
                           children: [
                             const Spacer(),
-                            Image.asset("assets/images/app-icon.png",
-                                color: notifier.isDark ? Colors.white : null,
-                                height: height / 6),
-                            const Text('Welcome Back!',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontFamily: "Manrope-Bold")),
-                            const Text('Sign in to your account',
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 18,
-                                    fontFamily: "Manrope-Medium")),
+                            Image.asset(
+                              "assets/images/app-icon.png",
+                              color: colorScheme.primary,
+                              height: height / 6,
+                            ),
+                            Text(
+                              'Welcome Back!',
+                              style: TextStyle(
+                                color: colorScheme.primary,
+                                fontSize: 24,
+                                fontFamily: "Manrope-Bold",
+                              ),
+                            ),
+                            Text(
+                              'Sign in to your account',
+                              style: TextStyle(
+                                  color: colorScheme.primary
+                                      .withValues(alpha: 0.7),
+                                  fontSize: 18,
+                                  fontFamily: "Manrope-Medium"),
+                            ),
                             const SizedBox(
                               height: 20,
                             )
@@ -224,23 +234,25 @@ class _LoginState extends State<Login> {
                             AppConstants.Height(10),
                             FormBuilderTextField(
                               name: 'email',
-                              style: TextStyle(color: notifier.textColor),
+                              style: TextStyle(color: colorScheme.onSurface),
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
                                 hintText: "Email",
-                                fillColor: notifier.textField,
+                                fillColor: colorScheme.surfaceContainer,
                                 prefixIcon: Icon(IconlyLight.message),
-                                prefixIconColor: notifier.textFieldHintText,
+                                prefixIconColor: colorScheme.onSurface
+                                    .withValues(alpha: 0.6),
                                 filled: true,
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 hintStyle: TextStyle(
-                                  color: notifier.textFieldHintText,
+                                  color: colorScheme.onSurface
+                                      .withValues(alpha: 0.6),
                                 ),
-                                errorStyle: const TextStyle(
-                                  color: Colors.red,
+                                errorStyle: TextStyle(
+                                  color: colorScheme.error,
                                   fontSize: 12,
                                 ),
                               ),
@@ -254,22 +266,24 @@ class _LoginState extends State<Login> {
                             AppConstants.Height(15),
                             FormBuilderTextField(
                               name: 'password',
-                              style: TextStyle(color: notifier.textColor),
+                              style: TextStyle(color: colorScheme.onSurface),
                               obscureText: _obsecuretext,
                               decoration: InputDecoration(
                                 hintText: "Password",
-                                fillColor: notifier.textField,
+                                fillColor: colorScheme.surfaceContainer,
                                 prefixIcon: Icon(IconlyLight.lock),
-                                prefixIconColor: notifier.textFieldHintText,
+                                prefixIconColor: colorScheme.onSurface
+                                    .withValues(alpha: 0.6),
                                 filled: true,
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 hintStyle: TextStyle(
-                                    color: notifier.textFieldHintText),
-                                errorStyle: const TextStyle(
-                                  color: Colors.red,
+                                    color: colorScheme.onSurface
+                                        .withValues(alpha: 0.6)),
+                                errorStyle: TextStyle(
+                                  color: colorScheme.error,
                                   fontSize: 12,
                                 ),
                                 suffixIcon: IconButton(
@@ -286,7 +300,8 @@ class _LoginState extends State<Login> {
                                           IconlyLight.hide,
                                         ),
                                 ),
-                                suffixIconColor: notifier.textFieldHintText,
+                                suffixIconColor: colorScheme.onSurface
+                                    .withValues(alpha: 0.6),
                               ),
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(
@@ -312,11 +327,11 @@ class _LoginState extends State<Login> {
                                                 const Forget(),
                                           ));
                                     },
-                                    child: const Text(
+                                    child: Text(
                                       "Forgot Password?",
                                       style: TextStyle(
                                           fontSize: 14,
-                                          color: Color(0xff2e9844),
+                                          color: colorScheme.primary,
                                           fontFamily: "Manrope-Bold"),
                                     ),
                                   )
@@ -326,7 +341,7 @@ class _LoginState extends State<Login> {
                             TextButton(
                               onPressed: _login,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xff2e9844),
+                                backgroundColor: colorScheme.primary,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
@@ -336,10 +351,10 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               child: Center(
-                                child: const Text(
+                                child: Text(
                                   "Sign In",
                                   style: TextStyle(
-                                    color: Color(0xffFFFFFF),
+                                    color: colorScheme.onPrimary,
                                     fontSize: 15,
                                     fontFamily: "Manrope-Bold",
                                   ),
@@ -351,11 +366,11 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     AppConstants.Height(20),
-                    const Text(
+                    Text(
                       "--------------- Or sign in with ---------------",
                       style: TextStyle(
                           fontSize: 13,
-                          color: Color(0xff64748B),
+                          color: colorScheme.onSurface.withValues(alpha: 0.6),
                           fontFamily: "Manrope-Medium"),
                     ),
                     AppConstants.Height(10),
@@ -366,7 +381,7 @@ class _LoginState extends State<Login> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(13),
                           ),
-                          side: BorderSide(color: notifier.getContainerBorder),
+                          side: BorderSide(color: colorScheme.outline),
                           minimumSize: Size(double.infinity, 56),
                         ),
                         onPressed: _loginWithGoogle,
@@ -382,9 +397,7 @@ class _LoginState extends State<Login> {
                             Text(
                               "Google",
                               style: TextStyle(
-                                color: notifier.isDark
-                                    ? Colors.white
-                                    : Colors.black,
+                                color: colorScheme.onSurface,
                                 fontFamily: "Manrope-SemiBold",
                                 fontSize: 16,
                               ),
@@ -397,11 +410,12 @@ class _LoginState extends State<Login> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           "Don't have an account?",
                           style: TextStyle(
                               fontFamily: "Manrope-Medium",
-                              color: Color(0xff64748B)),
+                              color:
+                                  colorScheme.onSurface.withValues(alpha: 0.6)),
                         ),
                         GestureDetector(
                             onTap: () {
@@ -411,11 +425,11 @@ class _LoginState extends State<Login> {
                                     builder: (context) => const Sign(),
                                   ));
                             },
-                            child: const Text(
+                            child: Text(
                               "Sign Up",
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Color(0xff2e9844),
+                                  color: colorScheme.primary,
                                   fontFamily: "Manrope-Bold"),
                             )),
                       ],
@@ -427,16 +441,16 @@ class _LoginState extends State<Login> {
             // Loading Overlay
             if (_isLoading)
               Container(
-                color: Colors.black.withValues(alpha: 0.5),
+                color: colorScheme.shadow.withValues(alpha: 0.5),
                 child: Center(
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: notifier.background,
+                      color: colorScheme.surface,
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.1),
+                          color: colorScheme.shadow.withValues(alpha: 0.1),
                           blurRadius: 10,
                           spreadRadius: 2,
                         ),
@@ -445,16 +459,16 @@ class _LoginState extends State<Login> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const CircularProgressIndicator(
+                        CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            Color(0xff2e9844),
+                            colorScheme.primary,
                           ),
                         ),
                         const SizedBox(height: 15),
                         Text(
                           'Signing in...',
                           style: TextStyle(
-                            color: notifier.textColor,
+                            color: colorScheme.onSurface,
                             fontSize: 16,
                             fontFamily: "Manrope-Medium",
                           ),

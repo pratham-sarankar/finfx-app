@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:finfx/dark_mode.dart';
 import 'package:finfx/utils/api_error.dart';
 import '../../../../../screens/config/common.dart';
 import '../../providers/kyc_provider.dart';
@@ -36,7 +35,6 @@ class BasicInfoScreen extends StatefulWidget {
 }
 
 class _BasicInfoScreenState extends State<BasicInfoScreen> {
-  ColorNotifire notifier = ColorNotifire();
   bool _isSubmitting = false;
 
   Future<void> _handleSubmit() async {
@@ -98,7 +96,8 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final kycProvider = context.watch<KYCProvider>();
 
     return SingleChildScrollView(
@@ -111,26 +110,28 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
             style: TextStyle(
               fontSize: 24,
               fontFamily: "Manrope-Bold",
-              color: notifier.textColor,
+              color: colorScheme.onSurface,
             ),
           ),
           AppConstants.Height(16),
-          const Text(
+          Text(
             "Please provide your basic identification details for KYC verification",
             style: TextStyle(
               fontSize: 16,
-              color: Color(0xff64748B),
+              color: colorScheme.onSurface.withOpacity(0.6),
               fontFamily: "Manrope-Medium",
             ),
           ),
           AppConstants.Height(24),
           _buildTextField(
+            context: context,
             controller: widget.fullNameController,
             label: "Full Name (as per PAN/Aadhaar)",
             hint: "Enter your full name",
           ),
           AppConstants.Height(16),
           _buildTextField(
+            context: context,
             controller: widget.dobController,
             label: "Date of Birth",
             hint: "DD/MM/YYYY",
@@ -142,12 +143,12 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 lastDate: DateTime.now(),
                 builder: (context, child) {
                   return Theme(
-                    data: Theme.of(context).copyWith(
-                      colorScheme: ColorScheme.light(
-                        primary: const Color(0xff2e9844),
-                        onPrimary: Colors.white,
-                        surface: notifier.background,
-                        onSurface: notifier.textColor,
+                    data: theme.copyWith(
+                      colorScheme: colorScheme.copyWith(
+                        primary: colorScheme.primary,
+                        onPrimary: colorScheme.onPrimary,
+                        surface: colorScheme.surface,
+                        onSurface: colorScheme.onSurface,
                       ),
                     ),
                     child: child!,
@@ -164,15 +165,17 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
             readOnly: true,
           ),
           AppConstants.Height(16),
-          _buildGenderSelector(),
+          _buildGenderSelector(context),
           AppConstants.Height(16),
           _buildTextField(
+            context: context,
             controller: widget.panController,
             label: "PAN Number",
             hint: "Enter your PAN number",
           ),
           AppConstants.Height(16),
           _buildTextField(
+            context: context,
             controller: widget.aadhaarController,
             label: "Aadhaar Number (Optional)",
             hint: "Enter your Aadhaar number",
@@ -186,10 +189,10 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: const Color(0xff2e9844),
+                color: colorScheme.primary,
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xff2e9844).withValues(alpha: 0.3),
+                    color: colorScheme.primary.withOpacity(0.3),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -197,20 +200,20 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
               ),
               child: Center(
                 child: (kycProvider.isLoading || _isSubmitting)
-                    ? const SizedBox(
+                    ? SizedBox(
                         width: 24,
                         height: 24,
                         child: CircularProgressIndicator(
-                          color: Colors.white,
+                          color: colorScheme.onPrimary,
                           strokeWidth: 2,
                         ),
                       )
-                    : const Text(
+                    : Text(
                         "Continue",
                         style: TextStyle(
                           fontSize: 16,
                           fontFamily: "Manrope-SemiBold",
-                          color: Colors.white,
+                          color: colorScheme.onPrimary,
                         ),
                       ),
               ),
@@ -222,6 +225,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
   }
 
   Widget _buildTextField({
+    required BuildContext context,
     required TextEditingController controller,
     required String label,
     required String hint,
@@ -229,6 +233,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
     TextInputType? keyboardType,
     bool readOnly = false,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -237,23 +242,24 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
           style: TextStyle(
             fontSize: 14,
             fontFamily: "Manrope-SemiBold",
-            color: notifier.textColor,
+            color: colorScheme.onSurface,
           ),
         ),
         AppConstants.Height(8),
         Container(
           decoration: BoxDecoration(
-            color: notifier.textField,
+            color: colorScheme.surfaceContainer,
             borderRadius: BorderRadius.circular(12),
           ),
           child: TextField(
             controller: controller,
             onTap: onTap,
             keyboardType: keyboardType,
-            style: TextStyle(color: notifier.textColor),
+            style: TextStyle(color: colorScheme.onSurface),
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: TextStyle(color: notifier.textFieldHintText),
+              hintStyle:
+                  TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
               border: InputBorder.none,
               contentPadding: const EdgeInsets.all(16),
             ),
@@ -264,7 +270,8 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
     );
   }
 
-  Widget _buildGenderSelector() {
+  Widget _buildGenderSelector(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -273,22 +280,22 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
           style: TextStyle(
             fontSize: 14,
             fontFamily: "Manrope-SemiBold",
-            color: notifier.textColor,
+            color: colorScheme.onSurface,
           ),
         ),
         AppConstants.Height(8),
         Row(
           children: [
             Expanded(
-              child: _buildGenderOption("Male", "male"),
+              child: _buildGenderOption(context, "Male", "male"),
             ),
             AppConstants.Width(16),
             Expanded(
-              child: _buildGenderOption("Female", "female"),
+              child: _buildGenderOption(context, "Female", "female"),
             ),
             AppConstants.Width(16),
             Expanded(
-              child: _buildGenderOption("Other", "other"),
+              child: _buildGenderOption(context, "Other", "other"),
             ),
           ],
         ),
@@ -296,17 +303,20 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
     );
   }
 
-  Widget _buildGenderOption(String label, String value) {
+  Widget _buildGenderOption(BuildContext context, String label, String value) {
+    final colorScheme = Theme.of(context).colorScheme;
     final isSelected = widget.selectedGender == value;
     return GestureDetector(
       onTap: () => widget.onGenderSelected(value),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xffF8F5FF) : notifier.textField,
+          color: isSelected
+              ? colorScheme.primary.withOpacity(0.08)
+              : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? const Color(0xff2e9844) : Colors.transparent,
+            color: isSelected ? colorScheme.primary : Colors.transparent,
             width: 1.5,
           ),
         ),
@@ -314,7 +324,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
           child: Text(
             label,
             style: TextStyle(
-              color: isSelected ? const Color(0xff2e9844) : notifier.textColor,
+              color: isSelected ? colorScheme.primary : colorScheme.onSurface,
               fontFamily: "Manrope-SemiBold",
             ),
           ),
