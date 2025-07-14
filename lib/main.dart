@@ -38,142 +38,183 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ColorNotifire()),
-        Provider<AuthStorageService>(
-          create: (_) => AuthStorageService(),
-        ),
-        Provider<ApiService>(
-          create: (context) {
-            const debugApiUrl = String.fromEnvironment('DEBUG_API_URL');
-            const productionApiUrl =
-                String.fromEnvironment('PRODUCTION_API_URL');
-            return ApiService(
-              baseUrl: kDebugMode ? debugApiUrl : productionApiUrl,
-              authStorage: context.read<AuthStorageService>(),
-            );
-          },
-        ),
-        Provider<BinanceService>(
-          create: (context) {
-            return BinanceService(
-              apiService: context.read<ApiService>(),
-            );
-          },
-        ),
-        Provider<DeltaService>(
-          create: (context) {
-            return DeltaService(
-              apiService: context.read<ApiService>(),
-            );
-          },
-        ),
-        Provider<SignalRepository>(
-          create: (context) {
-            return SignalRepository(
-              apiService: context.read<ApiService>(),
-            );
-          },
-        ),
-        Provider<BotSubscriptionService>(
-          create: (context) {
-            return BotSubscriptionService(
-              apiService: context.read<ApiService>(),
-            );
-          },
-        ),
-        Provider<AuthService>(
-          create: (context) => AuthService(
-            context.read<ApiService>(),
+    ThemeSwitcher(
+      child: MultiProvider(
+        providers: [
+          Provider<AuthStorageService>(
+            create: (_) => AuthStorageService(),
           ),
-        ),
-        ChangeNotifierProvider(
-          create: (context) {
-            return BinanceProvider(
-              binanceService: context.read<BinanceService>(),
-              authStorage: context.read<AuthStorageService>(),
-            );
-          },
-        ),
-        ChangeNotifierProvider(
-          create: (context) {
-            return DeltaProvider(
-              deltaService: context.read<DeltaService>(),
-              authStorage: context.read<AuthStorageService>(),
-            );
-          },
-        ),
-        ChangeNotifierProvider(
-          create: (context) {
-            return SignalsProvider(
-              signalRepository: context.read<SignalRepository>(),
-            );
-          },
-        ),
-        ChangeNotifierProvider(
-          create: (context) {
-            return KYCProvider(KYCRepositoryImpl(context.read<ApiService>()));
-          },
-        ),
-        ChangeNotifierProvider(
-          create: (context) {
-            return ProfileProvider(
-              ProfileRepositoryImpl(context.read<ApiService>()),
-            );
-          },
-        ),
-        ChangeNotifierProvider(
-          create: (context) {
-            return BotProvider(
+          Provider<ApiService>(
+            create: (context) {
+              const debugApiUrl = String.fromEnvironment('DEBUG_API_URL');
+              const productionApiUrl =
+                  String.fromEnvironment('PRODUCTION_API_URL');
+              return ApiService(
+                baseUrl: kDebugMode ? debugApiUrl : productionApiUrl,
+                authStorage: context.read<AuthStorageService>(),
+              );
+            },
+          ),
+          Provider<BinanceService>(
+            create: (context) {
+              return BinanceService(
+                apiService: context.read<ApiService>(),
+              );
+            },
+          ),
+          Provider<DeltaService>(
+            create: (context) {
+              return DeltaService(
+                apiService: context.read<ApiService>(),
+              );
+            },
+          ),
+          Provider<SignalRepository>(
+            create: (context) {
+              return SignalRepository(
+                apiService: context.read<ApiService>(),
+              );
+            },
+          ),
+          Provider<BotSubscriptionService>(
+            create: (context) {
+              return BotSubscriptionService(
+                apiService: context.read<ApiService>(),
+              );
+            },
+          ),
+          Provider<AuthService>(
+            create: (context) => AuthService(
               context.read<ApiService>(),
-            );
-          },
-        ),
-        ChangeNotifierProvider(
-          create: (context) {
-            return BotDetailsProvider(
-              subscriptionService: context.read<BotSubscriptionService>(),
-              apiService: context.read<ApiService>(),
-            );
-          },
-        ),
-        ChangeNotifierProvider(
-          create: (context) {
-            return UserSignalsProvider(
-              userSignalsRepository: UserSignalsRepositoryImpl(
-                userSignalsService: UserSignalsService(
-                  apiService: context.read<ApiService>(),
+            ),
+          ),
+          ChangeNotifierProvider(
+            create: (context) {
+              return BinanceProvider(
+                binanceService: context.read<BinanceService>(),
+                authStorage: context.read<AuthStorageService>(),
+              );
+            },
+          ),
+          ChangeNotifierProvider(
+            create: (context) {
+              return DeltaProvider(
+                deltaService: context.read<DeltaService>(),
+                authStorage: context.read<AuthStorageService>(),
+              );
+            },
+          ),
+          ChangeNotifierProvider(
+            create: (context) {
+              return SignalsProvider(
+                signalRepository: context.read<SignalRepository>(),
+              );
+            },
+          ),
+          ChangeNotifierProvider(
+            create: (context) {
+              return KYCProvider(KYCRepositoryImpl(context.read<ApiService>()));
+            },
+          ),
+          ChangeNotifierProvider(
+            create: (context) {
+              return ProfileProvider(
+                ProfileRepositoryImpl(context.read<ApiService>()),
+              );
+            },
+          ),
+          ChangeNotifierProvider(
+            create: (context) {
+              return BotProvider(
+                context.read<ApiService>(),
+              );
+            },
+          ),
+          ChangeNotifierProvider(
+            create: (context) {
+              return BotDetailsProvider(
+                subscriptionService: context.read<BotSubscriptionService>(),
+                apiService: context.read<ApiService>(),
+              );
+            },
+          ),
+          ChangeNotifierProvider(
+            create: (context) {
+              return UserSignalsProvider(
+                userSignalsRepository: UserSignalsRepositoryImpl(
+                  userSignalsService: UserSignalsService(
+                    apiService: context.read<ApiService>(),
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
-        ChangeNotifierProvider(
-          create: (context) {
-            return SubscriptionsProvider(
-              context.read<ApiService>(),
-            );
-          },
-        ),
-      ],
-      child: const MyApp(),
+              );
+            },
+          ),
+          ChangeNotifierProvider(
+            create: (context) {
+              return SubscriptionsProvider(
+                context.read<ApiService>(),
+              );
+            },
+          ),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }
 
-class MyApp extends StatefulWidget {
+/// Global theme switcher using ValueNotifier
+class ThemeSwitcher extends StatefulWidget {
+  final Widget child;
+  static final ValueNotifier<ThemeMode> themeModeNotifier =
+      ValueNotifier(ThemeMode.dark);
+  const ThemeSwitcher({super.key, required this.child});
+
+  static ThemeMode get themeMode => themeModeNotifier.value;
+  static setThemeMode(ThemeMode mode) => themeModeNotifier.value = mode;
+
+  @override
+  State<ThemeSwitcher> createState() => _ThemeSwitcherState();
+}
+
+class _ThemeSwitcherState extends State<ThemeSwitcher> {
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: ThemeSwitcher.themeModeNotifier,
+      builder: (context, mode, _) {
+        return InheritedThemeSwitcher(
+          themeMode: mode,
+          child: widget.child,
+        );
+      },
+    );
+  }
+}
+
+class InheritedThemeSwitcher extends InheritedWidget {
+  final ThemeMode themeMode;
+  const InheritedThemeSwitcher(
+      {required this.themeMode, required Widget child, Key? key})
+      : super(key: key, child: child);
+  static InheritedThemeSwitcher? of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<InheritedThemeSwitcher>();
+  @override
+  bool updateShouldNotify(covariant InheritedThemeSwitcher oldWidget) =>
+      oldWidget.themeMode != themeMode;
+}
+
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
   Widget build(BuildContext context) {
+    final themeMode =
+        InheritedThemeSwitcher.of(context)?.themeMode ?? ThemeMode.system;
     return MaterialApp(
-      theme: MaterialTheme(TextTheme()).dark(),
+      theme: MaterialTheme(TextTheme()).light(),
+      darkTheme: MaterialTheme(TextTheme()).dark(),
+      themeMode: themeMode,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         ChartLocalization.delegate,

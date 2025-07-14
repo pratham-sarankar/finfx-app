@@ -18,7 +18,6 @@ class UserSignalsTab extends StatefulWidget {
 }
 
 class _UserSignalsTabState extends State<UserSignalsTab> {
-  ColorNotifire notifier = ColorNotifire();
   late ScrollController _scrollController;
 
   @override
@@ -47,8 +46,6 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
-
     return Consumer<UserSignalsProvider>(
       builder: (context, userSignalsProvider, child) {
         return RefreshIndicator(
@@ -62,10 +59,12 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
   }
 
   Widget _buildSignalList(UserSignalsProvider userSignalsProvider) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     if (userSignalsProvider.isLoading(widget.status)) {
       return Center(
         child: CircularProgressIndicator(
-          color: notifier.textColor,
+          color: colorScheme.primary,
         ),
       );
     }
@@ -83,17 +82,17 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
             const SizedBox(height: 16),
             Text(
               'Error loading signals',
-              style: TextStyle(
-                color: notifier.textColor,
-                fontSize: 18,
+              style: textTheme.titleMedium?.copyWith(
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               userSignalsProvider.getError(widget.status)!,
-              style: TextStyle(
-                color: notifier.textColor.withValues(alpha: 0.7),
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurface.withOpacity(0.7),
                 fontSize: 14,
               ),
               textAlign: TextAlign.center,
@@ -119,23 +118,23 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
           children: [
             Icon(
               Icons.signal_cellular_alt_outlined,
-              color: notifier.textColor.withValues(alpha: 0.5),
+              color: colorScheme.onSurface.withOpacity(0.5),
               size: 48,
             ),
             const SizedBox(height: 16),
             Text(
               'No ${widget.status} signals found',
-              style: TextStyle(
-                color: notifier.textColor,
-                fontSize: 18,
+              style: textTheme.titleMedium?.copyWith(
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
+                fontSize: 18,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               'You don\'t have any ${widget.status} signals yet.',
-              style: TextStyle(
-                color: notifier.textColor.withValues(alpha: 0.7),
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurface.withOpacity(0.7),
                 fontSize: 14,
               ),
               textAlign: TextAlign.center,
@@ -176,6 +175,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
   }
 
   Widget _buildLoadingMoreIndicator(bool isLoadingMore) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       child: Center(
@@ -188,7 +188,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
                 height: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  color: notifier.textColor,
+                  color: colorScheme.primary,
                 ),
               ),
               const SizedBox(width: 12),
@@ -197,10 +197,10 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
               isLoadingMore
                   ? 'Loading more signals...'
                   : 'More signals available',
-              style: TextStyle(
-                color: notifier.textColor.withValues(alpha: 0.7),
-                fontSize: 14,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurface.withOpacity(0.7),
+                    fontSize: 14,
+                  ),
             ),
           ],
         ),
@@ -209,6 +209,8 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
   }
 
   Widget _buildPerformanceCard(UserSignalsProvider userSignalsProvider) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     // If we have performance overview data from the API, use the new widget
     final performanceOverview =
         userSignalsProvider.getPerformanceOverview(widget.status);
@@ -222,9 +224,9 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: notifier.container,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: notifier.textColor.withValues(alpha: 0.1)),
+        border: Border.all(color: colorScheme.onSurface.withOpacity(0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,10 +238,10 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
                 children: [
                   Text(
                     'Performance Overview',
-                    style: TextStyle(
-                      color: notifier.textColor,
-                      fontSize: 16,
+                    style: textTheme.titleMedium?.copyWith(
+                      color: colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
                   ),
                   if (userSignalsProvider.hasActiveFilters) ...[
@@ -248,15 +250,15 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: const Color(0xff2e9844).withValues(alpha: 0.1),
+                        color: colorScheme.primary.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
                         'Filtered',
-                        style: TextStyle(
-                          color: const Color(0xff2e9844),
-                          fontSize: 10,
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colorScheme.primary,
                           fontWeight: FontWeight.w500,
+                          fontSize: 10,
                         ),
                       ),
                     ),
@@ -265,8 +267,8 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
               ),
               Text(
                 '${userSignalsProvider.getCurrentPage(widget.status)}/${userSignalsProvider.getTotalPages(widget.status)}',
-                style: TextStyle(
-                  color: notifier.textColor.withValues(alpha: 0.7),
+                style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurface.withOpacity(0.7),
                   fontSize: 12,
                 ),
               ),
@@ -280,16 +282,16 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
                   'Total PnL',
                   '\$${userSignalsProvider.getTotalPnL(widget.status).toStringAsFixed(2)}',
                   userSignalsProvider.getTotalPnL(widget.status) >= 0
-                      ? Colors.green
-                      : Colors.red),
+                      ? colorScheme.primary
+                      : colorScheme.error),
               _buildPerformanceMetric(
                   'Win Rate',
                   '${userSignalsProvider.getWinRate(widget.status).toStringAsFixed(1)}%',
-                  const Color(0xff2e9844)),
+                  colorScheme.primary),
               _buildPerformanceMetric(
                   'Avg ROI',
                   '${userSignalsProvider.getAverageROI(widget.status).toStringAsFixed(2)}%',
-                  const Color(0xff2e9844)),
+                  colorScheme.primary),
             ],
           ),
         ],
@@ -298,23 +300,25 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
   }
 
   Widget _buildPerformanceMetric(String label, String value, Color valueColor) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: TextStyle(
-            color: notifier.textColor.withValues(alpha: 0.7),
+          style: textTheme.bodySmall?.copyWith(
+            color: colorScheme.onSurface.withOpacity(0.7),
             fontSize: 12,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           value,
-          style: TextStyle(
+          style: textTheme.titleMedium?.copyWith(
             color: valueColor,
-            fontSize: 16,
             fontWeight: FontWeight.bold,
+            fontSize: 16,
           ),
         ),
       ],

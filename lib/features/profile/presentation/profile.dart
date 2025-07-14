@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:finfx/dark_mode.dart';
 import 'package:finfx/features/brokers/presentation/screens/brokers_screen.dart';
 import 'package:finfx/features/profile/presentation/personal_data.dart';
 import 'package:finfx/features/profile/presentation/widgets/profile_tile.dart';
@@ -23,6 +24,7 @@ import '../../../utils/api_error.dart';
 import '../../../utils/toast_utils.dart';
 import '../../../themes/theme.dart';
 import 'providers/profile_provider.dart';
+import 'package:finfx/main.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -385,10 +387,10 @@ class _ProfileState extends State<Profile> {
                           name: "Light/Dark Mode",
                           description: "Mode",
                           switchValue:
-                              colorScheme.brightness == Brightness.dark,
+                              Theme.of(context).brightness == Brightness.dark,
                           onSwitchChanged: (bool value) {
-                            // TODO: Implement theme switching
-                            // This would need to be handled by a theme provider
+                            ThemeSwitcher.themeModeNotifier.value =
+                                value ? ThemeMode.dark : ThemeMode.light;
                           },
                           imageScale: 20,
                           centerImage: true,
