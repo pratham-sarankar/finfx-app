@@ -1,28 +1,29 @@
+// Project imports:
 import 'package:finfx/utils/api_error.dart';
 
-class GroupModel {
+class BrokerModel {
   final String id;
   final String name;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  GroupModel({
+  BrokerModel({
     required this.id,
     required this.name,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory GroupModel.fromJson(Map<String, dynamic> json) {
+  factory BrokerModel.fromJson(Map<String, dynamic> json) {
     try {
-      return GroupModel(
+      return BrokerModel(
         id: json['id'] as String,
         name: json['name'] as String,
         createdAt: DateTime.parse(json['createdAt'] as String),
         updatedAt: DateTime.parse(json['updatedAt'] as String),
       );
     } catch (e) {
-      throw ApiError.fromString('Failed to parse group data');
+      throw ApiError.fromString('Failed to parse broker data');
     }
   }
 
@@ -34,4 +35,7 @@ class GroupModel {
       'updatedAt': updatedAt.toIso8601String(),
     };
   }
+
+  @override
+  String toString() => name;
 }

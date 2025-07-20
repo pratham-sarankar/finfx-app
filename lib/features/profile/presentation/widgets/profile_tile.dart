@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../../dark_mode.dart';
-import '../../../../screens/config/common.dart';
 
 enum TileType {
   regular,
@@ -138,25 +135,26 @@ class ProfileTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     switch (tileType) {
       case TileType.logout:
-        return _buildLogoutTile(notifier);
+        return _buildLogoutTile(colorScheme);
       default:
-        return _buildRegularTile(notifier);
+        return _buildRegularTile(colorScheme);
     }
   }
 
-  Widget _buildLogoutTile(ColorNotifire notifier) {
+  Widget _buildLogoutTile(ColorScheme colorScheme) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         height: 60,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: notifier.background,
-          border: Border.all(color: notifier.getContainerBorder),
+          color: colorScheme.surface,
+          border: Border.all(color: colorScheme.outline),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -165,7 +163,7 @@ class ProfileTile extends StatelessWidget {
             children: [
               Icon(
                 Icons.logout,
-                color: notifier.textColor,
+                color: colorScheme.onSurface,
                 size: 24,
               ),
               const SizedBox(width: 15),
@@ -175,13 +173,13 @@ class ProfileTile extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontFamily: "Manrope-Bold",
                   fontSize: 16,
-                  color: notifier.textColor,
+                  color: colorScheme.onSurface,
                 ),
               ),
               const Spacer(),
               Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: notifier.tabBarText2,
+                color: colorScheme.onSurfaceVariant,
                 size: 18,
               ),
             ],
@@ -191,7 +189,7 @@ class ProfileTile extends StatelessWidget {
     );
   }
 
-  Widget _buildRegularTile(ColorNotifire notifier) {
+  Widget _buildRegularTile(ColorScheme colorScheme) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 14),
       child: GestureDetector(
@@ -200,19 +198,19 @@ class ProfileTile extends StatelessWidget {
           height: 75,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: notifier.getContainerBorder),
+            border: Border.all(color: colorScheme.outline),
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: Row(
               children: [
-                _buildIconContainer(notifier),
+                _buildIconContainer(colorScheme),
                 const SizedBox(width: 20),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      AppConstants.Height(20),
                       Row(
                         children: [
                           Text(
@@ -221,7 +219,7 @@ class ProfileTile extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               fontFamily: "Manrope_bold",
                               fontSize: 14,
-                              color: notifier.textColor,
+                              color: colorScheme.onSurface,
                             ),
                           ),
                           if (badge != null) ...[
@@ -230,21 +228,20 @@ class ProfileTile extends StatelessWidget {
                           ],
                         ],
                       ),
-                      const SizedBox(height: 7),
                       Text(
                         description,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontFamily: "Manrope_bold",
                           fontSize: 12,
                           letterSpacing: 0.2,
-                          color: Color(0xff64748B),
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
                   ),
                 ),
-                _buildTrailingWidget(notifier),
+                _buildTrailingWidget(colorScheme),
               ],
             ),
           ),
@@ -253,26 +250,26 @@ class ProfileTile extends StatelessWidget {
     );
   }
 
-  Widget _buildIconContainer(ColorNotifire notifier) {
+  Widget _buildIconContainer(ColorScheme colorScheme) {
     return Container(
       height: 40,
       width: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: notifier.tabBar1,
+        color: colorScheme.surfaceContainer,
       ),
       child: centerImage
           ? Center(
               child: Image.asset(
                 image,
                 scale: imageScale,
-                color: notifier.passwordIcon,
+                color: colorScheme.onSurfaceVariant,
               ),
             )
           : Image.asset(
               image,
               scale: imageScale,
-              color: notifier.passwordIcon,
+              color: colorScheme.onSurfaceVariant,
             ),
     );
   }
@@ -298,7 +295,7 @@ class ProfileTile extends StatelessWidget {
     );
   }
 
-  Widget _buildTrailingWidget(ColorNotifire notifier) {
+  Widget _buildTrailingWidget(ColorScheme colorScheme) {
     if (trailingWidget != null) {
       return trailingWidget!;
     }
@@ -315,7 +312,7 @@ class ProfileTile extends StatelessWidget {
                 child: Image.asset(countryFlagImage!),
               ),
               const SizedBox(width: 8),
-              _buildArrowIcon(notifier),
+              _buildArrowIcon(colorScheme),
             ],
           );
         }
@@ -329,17 +326,17 @@ class ProfileTile extends StatelessWidget {
         break;
     }
 
-    return _buildArrowIcon(notifier);
+    return _buildArrowIcon(colorScheme);
   }
 
-  Widget _buildArrowIcon(ColorNotifire notifier) {
+  Widget _buildArrowIcon(ColorScheme colorScheme) {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Icon(
           Icons.arrow_forward_ios_rounded,
-          color: notifier.tabBarText2,
+          color: colorScheme.onSurfaceVariant,
           size: 18,
         ),
       ),

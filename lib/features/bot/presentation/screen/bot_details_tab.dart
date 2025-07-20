@@ -1,9 +1,10 @@
-import 'package:finfx/dark_mode.dart';
+import 'package:finfx/features/bot/presentation/screen/bot_connection_success_screen.dart';
 import 'package:finfx/features/home/data/models/bot_model.dart';
+import 'package:finfx/features/subscriptions/presentation/screens/lot_size_screen.dart';
+import 'package:finfx/features/subscriptions/presentation/screens/package_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/bot_details_provider.dart';
-import '../../../../utils/toast_utils.dart';
 
 class BotDetailsTab extends StatefulWidget {
   const BotDetailsTab({super.key, required this.bot});
@@ -14,8 +15,6 @@ class BotDetailsTab extends StatefulWidget {
 
 class _BotDetailsTabState extends State<BotDetailsTab>
     with WidgetsBindingObserver {
-  ColorNotifire notifier = ColorNotifire();
-
   @override
   void initState() {
     super.initState();
@@ -43,11 +42,11 @@ class _BotDetailsTabState extends State<BotDetailsTab>
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final colorScheme = Theme.of(context).colorScheme;
     return Consumer<BotDetailsProvider>(
       builder: (context, botDetailsProvider, child) {
         return Scaffold(
-          backgroundColor: notifier.background,
+          backgroundColor: colorScheme.surface,
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -58,7 +57,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: notifier.tabBar1,
+                    color: colorScheme.surfaceContainer,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Column(
@@ -87,7 +86,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                 Text(
                                   widget.bot.name,
                                   style: TextStyle(
-                                    color: notifier.textColor,
+                                    color: colorScheme.onSurface,
                                     fontSize: 20,
                                     fontFamily: "Manrope-Bold",
                                   ),
@@ -96,8 +95,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                 Text(
                                   'Trading Bot',
                                   style: TextStyle(
-                                    color: notifier.textColor
-                                        .withValues(alpha: 0.7),
+                                    color: colorScheme.onSurfaceVariant,
                                     fontSize: 14,
                                     fontFamily: "Manrope-Regular",
                                   ),
@@ -114,7 +112,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: notifier.background,
+                            color: colorScheme.surface,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Column(
@@ -127,7 +125,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                   Text(
                                     'Subscription Status',
                                     style: TextStyle(
-                                      color: notifier.textColor,
+                                      color: colorScheme.onSurface,
                                       fontSize: 16,
                                       fontFamily: "Manrope-Bold",
                                     ),
@@ -180,8 +178,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                 Text(
                                   'Subscribed: ${_formatDate(botDetailsProvider.subscriptionStatus!.subscription!.subscribedAt)}',
                                   style: TextStyle(
-                                    color: notifier.textColor
-                                        .withValues(alpha: 0.7),
+                                    color: colorScheme.onSurfaceVariant,
                                     fontSize: 12,
                                     fontFamily: "Manrope-Regular",
                                   ),
@@ -192,8 +189,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                   Text(
                                     'Cancelled: ${_formatDate(botDetailsProvider.subscriptionStatus!.subscription!.cancelledAt!)}',
                                     style: TextStyle(
-                                      color: notifier.textColor
-                                          .withValues(alpha: 0.7),
+                                      color: colorScheme.onSurfaceVariant,
                                       fontSize: 12,
                                       fontFamily: "Manrope-Regular",
                                     ),
@@ -213,7 +209,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: notifier.tabBar1,
+                    color: colorScheme.surfaceContainer,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Column(
@@ -222,7 +218,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                       Text(
                         'About This Bot',
                         style: TextStyle(
-                          color: notifier.textColor,
+                          color: colorScheme.onSurface,
                           fontSize: 18,
                           fontFamily: "Manrope-Bold",
                         ),
@@ -231,7 +227,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                       Text(
                         widget.bot.description,
                         style: TextStyle(
-                          color: notifier.textColor.withValues(alpha: 0.8),
+                          color: colorScheme.onSurfaceVariant,
                           fontSize: 14,
                           fontFamily: "Manrope-Regular",
                           height: 1.5,
@@ -248,7 +244,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: notifier.tabBar1,
+                    color: colorScheme.surfaceContainer,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Column(
@@ -257,7 +253,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                       Text(
                         'Performance Overview',
                         style: TextStyle(
-                          color: notifier.textColor,
+                          color: colorScheme.onSurface,
                           fontSize: 18,
                           fontFamily: "Manrope-Bold",
                         ),
@@ -266,7 +262,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
 
                       // Performance Metrics
                       if (botDetailsProvider.isLoadingPerformance)
-                        _buildPerformanceShimmer()
+                        _buildPerformanceShimmer(colorScheme)
                       else if (botDetailsProvider.performanceOverview !=
                           null) ...[
                         Row(
@@ -279,6 +275,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                     .toString(),
                                 color: Colors.orange,
                                 icon: Icons.swap_horiz,
+                                colorScheme: colorScheme,
                               ),
                             ),
                             const SizedBox(width: 12),
@@ -291,6 +288,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                     .performanceOverview!.totalReturnColor,
                                 icon: botDetailsProvider
                                     .performanceOverview!.totalReturnIcon,
+                                colorScheme: colorScheme,
                               ),
                             ),
                           ],
@@ -307,6 +305,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                     .performanceOverview!.winRateColor,
                                 icon: botDetailsProvider
                                     .performanceOverview!.winRateIcon,
+                                colorScheme: colorScheme,
                               ),
                             ),
                             const SizedBox(width: 12),
@@ -319,6 +318,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                     .performanceOverview!.profitFactorColor,
                                 icon: botDetailsProvider
                                     .performanceOverview!.profitFactorIcon,
+                                colorScheme: colorScheme,
                               ),
                             ),
                           ],
@@ -354,22 +354,20 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: notifier.textColor.withValues(alpha: 0.1),
+                            color: colorScheme.onSurface.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
                             children: [
                               Icon(Icons.info_outline,
-                                  color:
-                                      notifier.textColor.withValues(alpha: 0.7),
+                                  color: colorScheme.onSurfaceVariant,
                                   size: 20),
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
                                   'No performance data available',
                                   style: TextStyle(
-                                    color: notifier.textColor
-                                        .withValues(alpha: 0.7),
+                                    color: colorScheme.onSurfaceVariant,
                                     fontSize: 14,
                                     fontFamily: "Manrope-Regular",
                                   ),
@@ -391,29 +389,51 @@ class _BotDetailsTabState extends State<BotDetailsTab>
             onPressed: botDetailsProvider.isToggling
                 ? null
                 : () async {
-                    final success = await botDetailsProvider
-                        .toggleSubscription(widget.bot.id);
-                    if (success) {
-                      if (botDetailsProvider.isSubscribed) {
-                        ToastUtils.showSuccess(
-                          context: context,
-                          message:
-                              'Successfully subscribed to ${widget.bot.name}!',
-                        );
-                      } else {
-                        ToastUtils.showInfo(
-                          context: context,
-                          message:
-                              'Subscription cancelled for ${widget.bot.name}',
-                        );
-                      }
-                    } else {
-                      ToastUtils.showError(
-                        context: context,
-                        message: botDetailsProvider.error ??
-                            'Failed to toggle subscription',
-                      );
-                    }
+                    final selectedLotSize =
+                        await Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) {
+                        return LotSizeScreen();
+                      },
+                      fullscreenDialog: true,
+                    ));
+                    if (selectedLotSize == null) return;
+                    print(selectedLotSize);
+                    final selectedPackage =
+                        await Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) {
+                        return PackageSelectionScreen();
+                      },
+                    ));
+                    if (selectedPackage == null) return;
+                    print(selectedPackage);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) {
+                        return BotConnectionSuccessScreen();
+                      },
+                    ));
+                    // final success = await botDetailsProvider
+                    //     .toggleSubscription(widget.bot.id);
+                    // if (success) {
+                    //   if (botDetailsProvider.isSubscribed) {
+                    //     ToastUtils.showSuccess(
+                    //       context: context,
+                    //       message:
+                    //           'Successfully subscribed to ${widget.bot.name}!',
+                    //     );
+                    //   } else {
+                    //     ToastUtils.showInfo(
+                    //       context: context,
+                    //       message:
+                    //           'Subscription cancelled for ${widget.bot.name}',
+                    //     );
+                    //   }
+                    // } else {
+                    //   ToastUtils.showError(
+                    //     context: context,
+                    //     message: botDetailsProvider.error ??
+                    //         'Failed to toggle subscription',
+                    //   );
+                    // }
                   },
             backgroundColor: botDetailsProvider.isSubscribed
                 ? Colors.red
@@ -458,11 +478,12 @@ class _BotDetailsTabState extends State<BotDetailsTab>
     required String value,
     required Color color,
     required IconData icon,
+    required ColorScheme colorScheme,
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: notifier.background,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -475,7 +496,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
               Text(
                 title,
                 style: TextStyle(
-                  color: notifier.textColor.withValues(alpha: 0.7),
+                  color: colorScheme.onSurfaceVariant,
                   fontSize: 12,
                   fontFamily: "Manrope-Regular",
                 ),
@@ -500,17 +521,17 @@ class _BotDetailsTabState extends State<BotDetailsTab>
     return '${date.day}/${date.month}/${date.year}';
   }
 
-  Widget _buildPerformanceShimmer() {
+  Widget _buildPerformanceShimmer(ColorScheme colorScheme) {
     return Column(
       children: [
         Row(
           children: [
             Expanded(
-              child: _buildShimmerMetricCard(),
+              child: _buildShimmerMetricCard(colorScheme),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: _buildShimmerMetricCard(),
+              child: _buildShimmerMetricCard(colorScheme),
             ),
           ],
         ),
@@ -518,11 +539,11 @@ class _BotDetailsTabState extends State<BotDetailsTab>
         Row(
           children: [
             Expanded(
-              child: _buildShimmerMetricCard(),
+              child: _buildShimmerMetricCard(colorScheme),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: _buildShimmerMetricCard(),
+              child: _buildShimmerMetricCard(colorScheme),
             ),
           ],
         ),
@@ -530,11 +551,11 @@ class _BotDetailsTabState extends State<BotDetailsTab>
     );
   }
 
-  Widget _buildShimmerMetricCard() {
+  Widget _buildShimmerMetricCard(ColorScheme colorScheme) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: notifier.background,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -546,7 +567,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                 width: 20,
                 height: 20,
                 decoration: BoxDecoration(
-                  color: notifier.textColor.withValues(alpha: 0.1),
+                  color: colorScheme.onSurface.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
@@ -555,7 +576,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                 width: 60,
                 height: 12,
                 decoration: BoxDecoration(
-                  color: notifier.textColor.withValues(alpha: 0.1),
+                  color: colorScheme.onSurface.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
@@ -566,7 +587,7 @@ class _BotDetailsTabState extends State<BotDetailsTab>
             width: 80,
             height: 18,
             decoration: BoxDecoration(
-              color: notifier.textColor.withValues(alpha: 0.1),
+              color: colorScheme.onSurface.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(4),
             ),
           ),

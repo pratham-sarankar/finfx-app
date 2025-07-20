@@ -3,6 +3,7 @@ import 'package:finfx/features/brokers/presentation/screens/brokers_screen.dart'
 import 'package:finfx/features/profile/presentation/personal_data.dart';
 import 'package:finfx/features/profile/presentation/widgets/profile_tile.dart';
 import 'package:finfx/features/settings/change-password/presentation/change_password.dart';
+import 'package:finfx/screens/Account&setting/Refferal%20Code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
@@ -13,18 +14,16 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:finfx/screens/Login%20Screens/login_screen.dart';
-import '../../../dark_mode.dart';
 import '../../../screens/Account&setting/About App.dart';
-import '../../../screens/Account&setting/Help Center.dart';
-import '../../../screens/Account&setting/Identify_Verification.dart';
 import '../../../screens/Account&setting/Privacy&Policy.dart';
-import '../../../screens/Account&setting/Refferal Code.dart';
 import '../../../screens/Account&setting/Terms&conditions.dart';
 import '../../../screens/config/common.dart';
 import '../../../services/auth_service.dart';
 import '../../../utils/api_error.dart';
 import '../../../utils/toast_utils.dart';
+import '../../../themes/theme.dart';
 import 'providers/profile_provider.dart';
+import 'package:finfx/main.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -34,8 +33,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  ColorNotifire notifier = ColorNotifire();
-
   @override
   void initState() {
     super.initState();
@@ -76,6 +73,23 @@ class _ProfileState extends State<Profile> {
         );
       }
     }
+  }
+
+  // Generate theme-based gradient for profile header
+  LinearGradient _getProfileHeaderGradient(
+      BuildContext context, ColorScheme colorScheme) {
+    final profileHeaderColors =
+        Theme.of(context).extension<ProfileHeaderColors>();
+
+    return LinearGradient(
+      colors: [
+        profileHeaderColors?.primary ?? const Color(0xFF00D4FF),
+        profileHeaderColors?.secondary ?? const Color(0xFF0099CC),
+        profileHeaderColors?.tertiary ?? const Color(0xFF0066FF),
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
   }
 
   Future<void> _showLogoutConfirmationDialog() async {
@@ -136,7 +150,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
@@ -160,17 +175,14 @@ class _ProfileState extends State<Profile> {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
           child: Scaffold(
-            backgroundColor: notifier.background,
+            backgroundColor: colorScheme.surface,
             body: SingleChildScrollView(
               child: Column(
                 children: [
                   Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/Background (2).png"),
-                        fit: BoxFit.cover,
-                      ),
+                    decoration: BoxDecoration(
+                      gradient: _getProfileHeaderGradient(context, colorScheme),
                     ),
                     child: SafeArea(
                       child: Padding(
@@ -285,29 +297,30 @@ class _ProfileState extends State<Profile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AppConstants.Height(12),
-                        const Text(
+                        Text(
                           "Profile",
                           style: TextStyle(
                             fontSize: 11,
-                            color: Color(0xff64748B),
+                            color: colorScheme.onSurface.withValues(alpha: 0.6),
                             fontFamily: "Manrope-Bold",
                           ),
                         ),
-                        AppConstants.Height(6),
+                        AppConstants.Height(2),
                         Text(
                           "Account Details",
                           style: TextStyle(
                             fontFamily: "Manrope-Bold",
-                            color: notifier.textColor,
+                            color: colorScheme.onSurface,
                             fontSize: 16,
                           ),
                         ),
                         AppConstants.Height(15),
-                        ProfileTile.withBadge(
+                        // Use ProfileTile.withBadge if you uncomment badge.
+                        ProfileTile.regular(
                           image: 'assets/images/Person.png',
                           name: 'Personal Details',
                           description: 'Your account information',
-                          badge: ProfileTileBadge.verified,
+                          // badge: ProfileTileBadge.verified,
                           onTap: () {
                             Navigator.push(
                               context,
@@ -351,7 +364,7 @@ class _ProfileState extends State<Profile> {
                           "Settings",
                           style: TextStyle(
                               fontFamily: "Manrope-Bold",
-                              color: notifier.textColor,
+                              color: colorScheme.onSurface,
                               fontSize: 16),
                         ),
                         AppConstants.Height(12),
@@ -373,9 +386,11 @@ class _ProfileState extends State<Profile> {
                           image: "assets/images/light dark mode.png",
                           name: "Light/Dark Mode",
                           description: "Mode",
-                          switchValue: notifier.isDark,
+                          switchValue:
+                              Theme.of(context).brightness == Brightness.dark,
                           onSwitchChanged: (bool value) {
-                            notifier.isavalable(value);
+                            ThemeSwitcher.themeModeNotifier.value =
+                                value ? ThemeMode.dark : ThemeMode.light;
                           },
                           imageScale: 20,
                           centerImage: true,
@@ -398,23 +413,11 @@ class _ProfileState extends State<Profile> {
                           "Others",
                           style: TextStyle(
                               fontFamily: "Manrope-Bold",
-                              color: notifier.textColor,
+                              color: colorScheme.onSurface,
                               fontSize: 16),
                         ),
                         AppConstants.Height(12),
-                        ProfileTile.regular(
-                          image: "assets/images/question-circle-outlined.png",
-                          name: "Help Center",
-                          description: "Get supports",
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Help_Center(),
-                              ),
-                            );
-                          },
-                        ),
+
                         ProfileTile.regular(
                           image: "assets/images/Terms&condition.png",
                           name: "Terms & Conditions",
@@ -439,18 +442,18 @@ class _ProfileState extends State<Profile> {
                                 ));
                           },
                         ),
-                        // ProfileTile.regular(
-                        //   image: "assets/images/card.png",
-                        //   name: "Refferal Code",
-                        //   description: "Refferal Program",
-                        //   onTap: () {
-                        //     Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //           builder: (context) => const Reffle_code(),
-                        //         ));
-                        //   },
-                        // ),
+                        ProfileTile.regular(
+                          image: "assets/images/card.png",
+                          name: "Refferal Code",
+                          description: "Refferal Program",
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Reffle_code(),
+                                ));
+                          },
+                        ),
 
                         ProfileTile.regular(
                           image: "assets/images/app-icon.png",

@@ -5,10 +5,8 @@ import 'package:finfx/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../dark_mode.dart';
 import '../config/common.dart';
 
 class Success extends StatefulWidget {
@@ -19,13 +17,13 @@ class Success extends StatefulWidget {
 }
 
 class _Succcess extends State<Success> {
-  ColorNotifire notifier = ColorNotifire();
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       body: Padding(
         padding:
             const EdgeInsets.only(top: 50, bottom: 20, left: 10, right: 10),
@@ -42,7 +40,7 @@ class _Succcess extends State<Success> {
                     },
                     child: Icon(
                       Icons.close,
-                      color: notifier.textColor,
+                      color: colorScheme.onSurface,
                       size: 25,
                     ),
                   ),
@@ -70,19 +68,19 @@ class _Succcess extends State<Success> {
                 style: TextStyle(
                     fontSize: 24,
                     fontFamily: "Manrope-Bold",
-                    color: notifier.textColor),
+                    color: colorScheme.onSurface),
               ),
             ),
             AppConstants.Height(10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: const Text(
+              child: Text(
                 "We are reviewing your Aadhar Card and PAN Card. Please wait while we verify your documents.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: "Manrope-Regular",
-                    color: Color(0xff64748B)),
+                    color: colorScheme.onSurface.withOpacity(0.6)),
               ),
             ),
             const Spacer(),
@@ -104,14 +102,14 @@ class _Succcess extends State<Success> {
                 height: 56,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: const Color(0xff2e9844)),
-                child: const Center(
+                    color: colorScheme.primary),
+                child: Center(
                   child: Text(
                     "Continue",
                     style: TextStyle(
                       fontFamily: "Manrope-Bold",
                       fontSize: 18,
-                      color: Color(0xffFFFFFF),
+                      color: colorScheme.onPrimary,
                     ),
                   ),
                 ),

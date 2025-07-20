@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../../dark_mode.dart';
 import 'package:finfx/utils/api_error.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -21,7 +20,6 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
-  ColorNotifire notifier = ColorNotifire();
   final _formKey = GlobalKey<FormState>();
   final _currentPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
@@ -80,21 +78,23 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: notifier.background,
+        backgroundColor: colorScheme.surface,
         elevation: 0,
         leading: IconButton(
-          icon:
-              Icon(Icons.arrow_back_ios_new_rounded, color: notifier.textColor),
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
+              color: colorScheme.onSurface),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Change Password',
           style: TextStyle(
-            color: notifier.textColor,
+            color: colorScheme.onSurface,
             fontFamily: 'Manrope-Bold',
             fontSize: 20,
           ),
@@ -111,7 +111,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 Text(
                   'Enter your current password and choose a new password',
                   style: TextStyle(
-                    color: notifier.textColor.withValues(alpha: 0.7),
+                    color: colorScheme.onSurfaceVariant,
                     fontSize: 14,
                     fontFamily: 'Manrope-Regular',
                   ),
@@ -120,23 +120,30 @@ class _ChangePasswordState extends State<ChangePassword> {
                 TextFormField(
                   controller: _currentPasswordController,
                   obscureText: _obscureCurrentPassword,
-                  style: TextStyle(color: notifier.textColor),
+                  style: TextStyle(color: colorScheme.onSurface),
                   decoration: InputDecoration(
                     labelText: 'Current Password',
-                    labelStyle: TextStyle(color: notifier.textColor),
+                    labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                     filled: true,
-                    fillColor: notifier.background,
+                    fillColor: colorScheme.surfaceContainer,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide:
-                          BorderSide(color: notifier.getContainerBorder),
+                      borderSide: BorderSide(color: colorScheme.outline),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: colorScheme.outline),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: colorScheme.primary),
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscureCurrentPassword
                             ? Icons.visibility_off
                             : Icons.visibility,
-                        color: notifier.textColor.withValues(alpha: 0.5),
+                        color: colorScheme.onSurfaceVariant,
                       ),
                       onPressed: () {
                         setState(() {
@@ -156,23 +163,30 @@ class _ChangePasswordState extends State<ChangePassword> {
                 TextFormField(
                   controller: _newPasswordController,
                   obscureText: _obscureNewPassword,
-                  style: TextStyle(color: notifier.textColor),
+                  style: TextStyle(color: colorScheme.onSurface),
                   decoration: InputDecoration(
                     labelText: 'New Password',
-                    labelStyle: TextStyle(color: notifier.textColor),
+                    labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                     filled: true,
-                    fillColor: notifier.background,
+                    fillColor: colorScheme.surfaceContainer,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide:
-                          BorderSide(color: notifier.getContainerBorder),
+                      borderSide: BorderSide(color: colorScheme.outline),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: colorScheme.outline),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: colorScheme.primary),
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscureNewPassword
                             ? Icons.visibility_off
                             : Icons.visibility,
-                        color: notifier.textColor.withValues(alpha: 0.5),
+                        color: colorScheme.onSurfaceVariant,
                       ),
                       onPressed: () {
                         setState(() {
@@ -195,23 +209,30 @@ class _ChangePasswordState extends State<ChangePassword> {
                 TextFormField(
                   controller: _confirmPasswordController,
                   obscureText: _obscureConfirmPassword,
-                  style: TextStyle(color: notifier.textColor),
+                  style: TextStyle(color: colorScheme.onSurface),
                   decoration: InputDecoration(
                     labelText: 'Confirm New Password',
-                    labelStyle: TextStyle(color: notifier.textColor),
+                    labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                     filled: true,
-                    fillColor: notifier.background,
+                    fillColor: colorScheme.surfaceContainer,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide:
-                          BorderSide(color: notifier.getContainerBorder),
+                      borderSide: BorderSide(color: colorScheme.outline),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: colorScheme.outline),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: colorScheme.primary),
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscureConfirmPassword
                             ? Icons.visibility_off
                             : Icons.visibility,
-                        color: notifier.textColor.withValues(alpha: 0.5),
+                        color: colorScheme.onSurfaceVariant,
                       ),
                       onPressed: () {
                         setState(() {
@@ -237,25 +258,25 @@ class _ChangePasswordState extends State<ChangePassword> {
                   child: ElevatedButton(
                     onPressed: _isLoading ? null : _changePassword,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff2e9844),
+                      backgroundColor: colorScheme.primary,
+                      foregroundColor: colorScheme.onPrimary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     child: _isLoading
-                        ? const SizedBox(
+                        ? SizedBox(
                             height: 20,
                             width: 20,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  colorScheme.onPrimary),
                             ),
                           )
                         : const Text(
                             'Change Password',
                             style: TextStyle(
-                              color: Colors.white,
                               fontSize: 16,
                               fontFamily: 'Manrope-Bold',
                             ),

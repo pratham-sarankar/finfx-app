@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:finfx/dark_mode.dart';
 import 'package:finfx/screens/config/common.dart';
 import 'package:finfx/utils/api_error.dart';
 import '../../providers/kyc_provider.dart';
@@ -63,8 +62,6 @@ class _ReasonState extends State<ExperienceScreen> {
     "Dogecoin"
   ];
 
-  ColorNotifire notifier = ColorNotifire();
-
   Future<void> _handleSubmit() async {
     if (selectedExperienceYears.isEmpty ||
         selectedInvestmentCapacity.isEmpty ||
@@ -117,12 +114,14 @@ class _ReasonState extends State<ExperienceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final kycProvider = context.watch<KYCProvider>();
 
     return Scaffold(
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: notifier.background,
+        backgroundColor: colorScheme.surface,
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
@@ -130,7 +129,7 @@ class _ReasonState extends State<ExperienceScreen> {
           },
           child: Icon(
             Icons.close,
-            color: notifier.textColor,
+            color: colorScheme.onSurface,
             size: 25,
           ),
         ),
@@ -143,25 +142,26 @@ class _ReasonState extends State<ExperienceScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppConstants.Height(10),
-              indicator(value: 0.6),
+              indicator(context, value: 0.6),
               AppConstants.Height(20),
               Text(
                 "What's your year of experience?",
                 style: TextStyle(
                     fontSize: 24,
                     fontFamily: "Manrope-Bold",
-                    color: notifier.textColor),
+                    color: colorScheme.onSurface),
               ),
               AppConstants.Height(10),
-              const Text(
+              Text(
                 "Select your experience level in trading and investments",
                 style: TextStyle(
                     fontSize: 16,
-                    color: Color(0xff64748B),
+                    color: colorScheme.onSurface.withOpacity(0.6),
                     fontFamily: "Manrope-Regular"),
               ),
               AppConstants.Height(30),
               _buildSelectionSection(
+                context,
                 "Years of Experience",
                 experienceYears,
                 (index) => selectedExperienceYears.contains(index),
@@ -175,6 +175,7 @@ class _ReasonState extends State<ExperienceScreen> {
               ),
               AppConstants.Height(12),
               _buildSelectionSection(
+                context,
                 "Investment Capacity",
                 investmentCapacity,
                 (index) => selectedInvestmentCapacity.contains(index),
@@ -188,6 +189,7 @@ class _ReasonState extends State<ExperienceScreen> {
               ),
               AppConstants.Height(12),
               _buildSelectionSection(
+                context,
                 "Interested Coins",
                 interestedCoins,
                 (index) => selectedCoins.contains(index),
@@ -206,7 +208,7 @@ class _ReasonState extends State<ExperienceScreen> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
         child: SizedBox(
           height: 56,
           child: ElevatedButton(
@@ -216,25 +218,25 @@ class _ReasonState extends State<ExperienceScreen> {
                   Radius.circular(20),
                 ),
               ),
-              backgroundColor: const Color(0xff2e9844),
+              backgroundColor: colorScheme.primary,
             ),
             onPressed:
                 kycProvider.isLoading || _isSubmitting ? null : _handleSubmit,
             child: (kycProvider.isLoading || _isSubmitting)
-                ? const SizedBox(
+                ? SizedBox(
                     width: 24,
                     height: 24,
                     child: CircularProgressIndicator(
-                      color: Colors.white,
+                      color: colorScheme.onPrimary,
                       strokeWidth: 2,
                     ),
                   )
-                : const Text(
+                : Text(
                     "Continue",
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: "Manrope-SemiBold",
-                      color: Colors.white,
+                      color: colorScheme.onPrimary,
                     ),
                   ),
           ),
@@ -244,15 +246,17 @@ class _ReasonState extends State<ExperienceScreen> {
   }
 
   Widget _buildSelectionSection(
+    BuildContext context,
     String title,
     List<String> items,
     bool Function(int) isSelected,
     Function(int) onTap,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: notifier.textField.withValues(alpha: 0.5),
+        color: colorScheme.surfaceContainer.withOpacity(0.5),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -263,7 +267,7 @@ class _ReasonState extends State<ExperienceScreen> {
             style: TextStyle(
               fontSize: 18,
               fontFamily: "Manrope-Bold",
-              color: notifier.textColor,
+              color: colorScheme.onSurface,
             ),
           ),
           AppConstants.Height(8),
@@ -280,11 +284,11 @@ class _ReasonState extends State<ExperienceScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: isSelected(index)
-                        ? const Color(0xffF8F5FF)
-                        : notifier.textField,
+                        ? colorScheme.primary.withOpacity(0.08)
+                        : colorScheme.surfaceContainer,
                     border: Border.all(
                       color: isSelected(index)
-                          ? const Color(0xff2e9844)
+                          ? colorScheme.primary
                           : Colors.transparent,
                       width: 1.5,
                     ),
@@ -295,8 +299,8 @@ class _ReasonState extends State<ExperienceScreen> {
                       fontFamily: "Manrope-SemiBold",
                       fontSize: 13,
                       color: isSelected(index)
-                          ? const Color(0xff2e9844)
-                          : Colors.grey,
+                          ? colorScheme.primary
+                          : colorScheme.onSurface.withOpacity(0.6),
                     ),
                   ),
                 ),
@@ -308,11 +312,12 @@ class _ReasonState extends State<ExperienceScreen> {
     );
   }
 
-  Widget indicator({required double value}) {
+  Widget indicator(BuildContext context, {required double value}) {
+    final colorScheme = Theme.of(context).colorScheme;
     return LinearProgressIndicator(
       value: value,
-      color: const Color(0xff2e9844),
-      backgroundColor: notifier.linerIndicator,
+      color: colorScheme.primary,
+      backgroundColor: colorScheme.surfaceContainer,
     );
   }
 }

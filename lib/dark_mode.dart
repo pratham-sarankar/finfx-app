@@ -65,7 +65,7 @@ class ColorNotifire with ChangeNotifier {
   bool _isDark = true;
   bool get isDark => _isDark;
 
-  void isavalable(bool value) {
+  void darkMode(bool value) {
     _isDark = value;
     notifyListeners();
   }

@@ -9,7 +9,6 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../dark_mode.dart';
 import '../../services/auth_service.dart';
 import '../../utils/api_error.dart';
 import '../config/common.dart';
@@ -25,7 +24,6 @@ class Sign extends StatefulWidget {
 
 class _SignState extends State<Sign> {
   bool _obsecuretext1 = true;
-  ColorNotifire notifier = ColorNotifire();
   bool _isLoading = false;
   final _formKey = GlobalKey<FormBuilderState>();
   late final AuthService _authService;
@@ -109,13 +107,15 @@ class _SignState extends State<Sign> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: notifier.background,
+        backgroundColor: colorScheme.surface,
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
@@ -123,7 +123,7 @@ class _SignState extends State<Sign> {
           },
           child: Icon(
             Icons.close,
-            color: notifier.textColor,
+            color: colorScheme.onSurface,
             size: 25,
           ),
         ),
@@ -144,34 +144,36 @@ class _SignState extends State<Sign> {
                       style: TextStyle(
                         fontSize: 24,
                         fontFamily: "Manrope-SemiBold",
-                        color: notifier.isDark ? Colors.white : null,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     AppConstants.Height(10),
-                    const Text(
+                    Text(
                       "Let's get started with a free Financy account.",
                       style: TextStyle(
                         fontSize: 14,
-                        color: Color(0xff64748B),
+                        color: colorScheme.onSurface.withValues(alpha: 0.6),
                         fontFamily: "Manrope-Medium",
                       ),
                     ),
                     AppConstants.Height(20),
                     FormBuilderTextField(
                       name: 'fullName',
-                      style: TextStyle(color: notifier.textColor),
+                      style: TextStyle(color: colorScheme.onSurface),
                       decoration: InputDecoration(
                         hintText: "Full Name",
-                        fillColor: notifier.textField,
+                        fillColor: colorScheme.surfaceContainer,
                         filled: true,
                         prefixIcon: const Icon(IconlyLight.profile),
                         border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        hintStyle: TextStyle(color: notifier.textFieldHintText),
-                        errorStyle: const TextStyle(
-                          color: Colors.red,
+                        hintStyle: TextStyle(
+                            color:
+                                colorScheme.onSurface.withValues(alpha: 0.6)),
+                        errorStyle: TextStyle(
+                          color: colorScheme.error,
                           fontSize: 12,
                         ),
                       ),
@@ -188,20 +190,22 @@ class _SignState extends State<Sign> {
                     AppConstants.Height(15),
                     FormBuilderTextField(
                       name: 'email',
-                      style: TextStyle(color: notifier.textColor),
+                      style: TextStyle(color: colorScheme.onSurface),
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         hintText: "Email",
-                        fillColor: notifier.textField,
+                        fillColor: colorScheme.surfaceContainer,
                         filled: true,
                         prefixIcon: const Icon(IconlyLight.message),
                         border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        hintStyle: TextStyle(color: notifier.textFieldHintText),
-                        errorStyle: const TextStyle(
-                          color: Colors.red,
+                        hintStyle: TextStyle(
+                            color:
+                                colorScheme.onSurface.withValues(alpha: 0.6)),
+                        errorStyle: TextStyle(
+                          color: colorScheme.error,
                           fontSize: 12,
                         ),
                       ),
@@ -217,20 +221,22 @@ class _SignState extends State<Sign> {
                     AppConstants.Height(15),
                     FormBuilderTextField(
                       name: 'password',
-                      style: TextStyle(color: notifier.textColor),
+                      style: TextStyle(color: colorScheme.onSurface),
                       obscureText: _obsecuretext1,
                       decoration: InputDecoration(
                         hintText: "Password",
-                        fillColor: notifier.textField,
+                        fillColor: colorScheme.surfaceContainer,
                         filled: true,
                         prefixIcon: const Icon(IconlyLight.lock),
                         border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        hintStyle: TextStyle(color: notifier.textFieldHintText),
-                        errorStyle: const TextStyle(
-                          color: Colors.red,
+                        hintStyle: TextStyle(
+                            color:
+                                colorScheme.onSurface.withValues(alpha: 0.6)),
+                        errorStyle: TextStyle(
+                          color: colorScheme.error,
                           fontSize: 12,
                         ),
                         suffixIcon: IconButton(
@@ -262,15 +268,15 @@ class _SignState extends State<Sign> {
                         style: TextStyle(
                           fontSize: 12,
                           fontFamily: "Manrope-Medium",
-                          color: notifier.textColor,
+                          color: colorScheme.onSurface,
                         ),
                       ),
-                      activeColor: const Color(0xff2e9844),
-                      checkColor: Colors.white,
+                      activeColor: colorScheme.primary,
+                      checkColor: colorScheme.onPrimary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      side: const BorderSide(color: Color(0xff334155)),
+                      side: BorderSide(color: colorScheme.outline),
                       validator: FormBuilderValidators.equal(
                         true,
                         errorText: 'You must accept the terms to continue',
@@ -283,16 +289,16 @@ class _SignState extends State<Sign> {
                       child: ElevatedButton(
                         onPressed: signUp,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff2e9844),
+                          backgroundColor: colorScheme.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 15),
                         ),
-                        child: const Text(
+                        child: Text(
                           "Sign Up",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: colorScheme.onPrimary,
                             fontSize: 15,
                             fontFamily: "Manrope-Bold",
                           ),
@@ -300,51 +306,45 @@ class _SignState extends State<Sign> {
                       ),
                     ),
                     AppConstants.Height(20),
-                    const Center(
+                    Center(
                       child: Text(
                         "--------------- Or sign in with ---------------",
                         style: TextStyle(
                           fontSize: 15,
-                          color: Color(0xff64748B),
+                          color: colorScheme.onSurface.withValues(alpha: 0.6),
                           fontFamily: "Manrope-Medium",
                         ),
                       ),
                     ),
                     AppConstants.Height(10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 56,
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(13),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(13),
+                          ),
+                          side: BorderSide(color: colorScheme.outline),
+                        ),
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Image(
+                              image: AssetImage("assets/images/google.png"),
+                              height: 19,
+                              width: 16,
                             ),
-                            side:
-                                BorderSide(color: notifier.getContainerBorder),
-                          ),
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Image(
-                                image: AssetImage("assets/images/google.png"),
-                                height: 19,
-                                width: 16,
+                            Text(
+                              " Google",
+                              style: TextStyle(
+                                color: colorScheme.onSurface,
+                                fontFamily: "Manrope-SemiBold",
+                                fontSize: 16,
                               ),
-                              Text(
-                                " Google",
-                                style: TextStyle(
-                                  color: notifier.isDark
-                                      ? Colors.white
-                                      : Colors.black,
-                                  fontFamily: "Manrope-SemiBold",
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -352,11 +352,11 @@ class _SignState extends State<Sign> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           "Already have an account?",
                           style: TextStyle(
                             fontFamily: "Manrope-Medium",
-                            color: Color(0xff64748B),
+                            color: colorScheme.onSurface.withValues(alpha: 0.6),
                           ),
                         ),
                         GestureDetector(
@@ -368,11 +368,11 @@ class _SignState extends State<Sign> {
                               ),
                             );
                           },
-                          child: const Text(
+                          child: Text(
                             "Sign In",
                             style: TextStyle(
                               fontSize: 14,
-                              color: Color(0xff2e9844),
+                              color: colorScheme.primary,
                               fontFamily: "Manrope-Medium",
                             ),
                           ),
@@ -388,16 +388,16 @@ class _SignState extends State<Sign> {
           // Loading Overlay
           if (_isLoading)
             Container(
-              color: Colors.black.withValues(alpha: 0.5),
+              color: colorScheme.shadow.withValues(alpha: 0.5),
               child: Center(
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: colorScheme.surface,
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
+                        color: colorScheme.shadow.withValues(alpha: 0.1),
                         blurRadius: 10,
                         spreadRadius: 2,
                       ),
@@ -406,16 +406,16 @@ class _SignState extends State<Sign> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const CircularProgressIndicator(
+                      CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Color(0xff2e9844),
+                          colorScheme.primary,
                         ),
                       ),
                       const SizedBox(height: 15),
                       Text(
                         'Creating account...',
                         style: TextStyle(
-                          color: notifier.textColor,
+                          color: colorScheme.onSurface,
                           fontSize: 16,
                           fontFamily: "Manrope-Medium",
                         ),

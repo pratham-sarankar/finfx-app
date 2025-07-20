@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:finfx/dark_mode.dart';
 import 'package:finfx/models/signal.dart';
 
 class PerformanceOverviewWidget extends StatefulWidget {
@@ -54,16 +52,17 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
 
   @override
   Widget build(BuildContext context) {
-    final notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final overview = widget.performanceOverview;
 
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: notifier.container,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: notifier.textColor.withValues(alpha: 0.1)),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.1),
@@ -111,7 +110,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
                         Text(
                           'Performance Overview',
                           style: TextStyle(
-                            color: notifier.textColor,
+                            color: colorScheme.onSurface,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -127,7 +126,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
                                 Text(
                                   'Total P&L: ',
                                   style: TextStyle(
-                                    color: notifier.textColorGrey,
+                                    color: colorScheme.onSurfaceVariant,
                                     fontSize: 14,
                                   ),
                                 ),
@@ -150,7 +149,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
                                 Text(
                                   'Win Rate: ',
                                   style: TextStyle(
-                                    color: notifier.textColorGrey,
+                                    color: colorScheme.onSurfaceVariant,
                                     fontSize: 14,
                                   ),
                                 ),
@@ -175,7 +174,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
                     duration: const Duration(milliseconds: 300),
                     child: Icon(
                       Icons.keyboard_arrow_down,
-                      color: notifier.textColorGrey,
+                      color: colorScheme.onSurfaceVariant,
                       size: 24,
                     ),
                   ),
@@ -183,6 +182,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
               ),
             ),
           ),
+
           // Expandable content
           SizeTransition(
             sizeFactor: _animation,
@@ -195,14 +195,14 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
                   // Divider
                   Container(
                     height: 1,
-                    color: notifier.textColor.withValues(alpha: 0.1),
+                    color: colorScheme.outline.withValues(alpha: 0.1),
                   ),
                   const SizedBox(height: 20),
                   // Performance metrics grid
-                  _buildMetricsGrid(notifier, overview),
+                  _buildMetricsGrid(colorScheme, overview),
                   const SizedBox(height: 20),
                   // Additional details
-                  _buildAdditionalDetails(notifier, overview),
+                  _buildAdditionalDetails(colorScheme, overview),
                 ],
               ),
             ),
@@ -213,7 +213,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
   }
 
   Widget _buildMetricsGrid(
-      ColorNotifire notifier, PerformanceOverview overview) {
+      ColorScheme colorScheme, PerformanceOverview overview) {
     return Column(
       children: [
         // First row
@@ -221,7 +221,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
           children: [
             Expanded(
               child: _buildMetricCard(
-                notifier,
+                colorScheme,
                 'Total Signals',
                 overview.totalSignals.toString(),
                 Icons.analytics,
@@ -231,7 +231,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
             const SizedBox(width: 12),
             Expanded(
               child: _buildMetricCard(
-                notifier,
+                colorScheme,
                 'Long Signals',
                 overview.totalLongSignals.toString(),
                 Icons.trending_up,
@@ -246,7 +246,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
           children: [
             Expanded(
               child: _buildMetricCard(
-                notifier,
+                colorScheme,
                 'Short Signals',
                 overview.totalShortSignals.toString(),
                 Icons.trending_down,
@@ -256,7 +256,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
             const SizedBox(width: 12),
             Expanded(
               child: _buildMetricCard(
-                notifier,
+                colorScheme,
                 'Loss Rate',
                 '${overview.lossRate.toStringAsFixed(1)}%',
                 Icons.warning,
@@ -270,7 +270,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
   }
 
   Widget _buildMetricCard(
-    ColorNotifire notifier,
+    ColorScheme colorScheme,
     String title,
     String value,
     IconData icon,
@@ -307,7 +307,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
                 child: Text(
                   title,
                   style: TextStyle(
-                    color: notifier.textColorGrey,
+                    color: colorScheme.onSurfaceVariant,
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
                   ),
@@ -320,7 +320,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
           Text(
             value,
             style: TextStyle(
-              color: notifier.textColor,
+              color: colorScheme.onSurface,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -332,33 +332,33 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
   }
 
   Widget _buildAdditionalDetails(
-      ColorNotifire notifier, PerformanceOverview overview) {
+      ColorScheme colorScheme, PerformanceOverview overview) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         _buildDetailRow(
-          notifier,
+          colorScheme,
           'Highest Profit',
           '\$${overview.highestProfit.toStringAsFixed(2)}',
           Colors.green,
         ),
         const SizedBox(height: 12),
         _buildDetailRow(
-          notifier,
+          colorScheme,
           'Highest Loss',
           '\$${overview.highestLoss.toStringAsFixed(2)}',
           Colors.red,
         ),
         const SizedBox(height: 12),
         _buildDetailRow(
-          notifier,
+          colorScheme,
           'Consecutive Wins',
           overview.consecutiveWins.toString(),
           Colors.green,
         ),
         const SizedBox(height: 12),
         _buildDetailRow(
-          notifier,
+          colorScheme,
           'Consecutive Losses',
           overview.consecutiveLosses.toString(),
           Colors.red,
@@ -368,7 +368,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
   }
 
   Widget _buildDetailRow(
-    ColorNotifire notifier,
+    ColorScheme colorScheme,
     String label,
     String value,
     Color valueColor,
@@ -380,7 +380,7 @@ class _PerformanceOverviewWidgetState extends State<PerformanceOverviewWidget>
           child: Text(
             label,
             style: TextStyle(
-              color: notifier.textColorGrey,
+              color: colorScheme.onSurfaceVariant,
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),

@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:finfx/features/bot/presentation/screen/bot_signals_screen.dart';
 import 'package:finfx/features/bot/presentation/providers/bot_details_provider.dart';
-import '../../../../dark_mode.dart';
 
 class BotDetailsScreen extends StatefulWidget {
   final BotModel bot;
@@ -26,13 +25,15 @@ class BotDetailsScreen extends StatefulWidget {
 class _BotDetailsScreenState extends State<BotDetailsScreen>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late TabController _tabController;
-  ColorNotifire notifier = ColorNotifire();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -53,7 +54,8 @@ class _BotDetailsScreenState extends State<BotDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     // Refresh subscription status when the screen is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -65,18 +67,18 @@ class _BotDetailsScreenState extends State<BotDetailsScreen>
     });
 
     return Scaffold(
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: notifier.background,
+        backgroundColor: colorScheme.surface,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: notifier.textColor),
+          icon: Icon(Icons.arrow_back, color: colorScheme.onSurface),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           widget.bot.name,
           style: TextStyle(
-            color: notifier.textColor,
+            color: colorScheme.onSurface,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -84,23 +86,27 @@ class _BotDetailsScreenState extends State<BotDetailsScreen>
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
             decoration: BoxDecoration(
-              color: notifier.container.withValues(alpha: 0.5),
+              color: colorScheme.surfaceContainer.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12),
               border:
-                  Border.all(color: notifier.textColor.withValues(alpha: 0.1)),
+                  Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
             ),
             child: TabBar(
               controller: _tabController,
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: const Color(0xff2e9844).withValues(alpha: 0.1),
+                color: colorScheme.primary.withValues(alpha: 0.1),
                 border: Border.all(
-                    color: const Color(0xff2e9844).withValues(alpha: 0.3)),
+                  color: colorScheme.primary.withValues(alpha: 0.3),
+                ),
               ),
-              labelColor: const Color(0xff2e9844),
-              unselectedLabelColor: notifier.textColor.withValues(alpha: 0.7),
+              indicatorSize: TabBarIndicatorSize.tab,
+              dividerColor: Colors.transparent,
+              labelColor: colorScheme.primary,
+              unselectedLabelColor:
+                  colorScheme.onSurface.withValues(alpha: 0.7),
               labelStyle: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -112,27 +118,31 @@ class _BotDetailsScreenState extends State<BotDetailsScreen>
                 letterSpacing: 0.5,
               ),
               tabs: [
-                Tab(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.analytics_outlined, size: 18),
-                      const SizedBox(width: 8),
-                      const Text('Details'),
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.analytics_outlined,
+                        size: 18,
+                        color: _tabController.index == 0
+                            ? colorScheme.primary
+                            : colorScheme.onSurface.withValues(alpha: 0.7)),
+                    const SizedBox(width: 8),
+                    const Text('Details'),
+                  ],
                 ),
-                Tab(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.notifications_active_outlined, size: 18),
-                      const SizedBox(width: 8),
-                      const Text('Signals'),
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.notifications_active_outlined,
+                        size: 18,
+                        color: _tabController.index == 1
+                            ? colorScheme.primary
+                            : colorScheme.onSurface.withValues(alpha: 0.7)),
+                    const SizedBox(width: 8),
+                    const Text('Signals'),
+                  ],
                 ),
-              ],
+              ].map((child) => Tab(child: child)).toList(),
             ),
           ),
         ),

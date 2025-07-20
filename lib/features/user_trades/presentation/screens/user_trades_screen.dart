@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:finfx/dark_mode.dart';
-import 'package:finfx/features/user_signals/presentation/providers/user_signals_provider.dart';
-import 'package:finfx/features/user_signals/presentation/widgets/user_signals_tab.dart';
+import 'package:finfx/features/user_trades/presentation/providers/user_signals_provider.dart';
+import 'package:finfx/features/user_trades/presentation/widgets/user_signals_tab.dart';
 
-class UserSignalsScreen extends StatefulWidget {
-  const UserSignalsScreen({super.key});
+class UserTradesScreen extends StatefulWidget {
+  const UserTradesScreen({super.key});
 
   @override
-  State<UserSignalsScreen> createState() => _UserSignalsScreenState();
+  State<UserTradesScreen> createState() => _UserTradesScreenState();
 }
 
-class _UserSignalsScreenState extends State<UserSignalsScreen>
+class _UserTradesScreenState extends State<UserTradesScreen>
     with SingleTickerProviderStateMixin {
-  ColorNotifire notifier = ColorNotifire();
   late TabController _tabController;
 
   @override
@@ -52,10 +50,11 @@ class _UserSignalsScreenState extends State<UserSignalsScreen>
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Scaffold(
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         centerTitle: true,
@@ -65,9 +64,9 @@ class _UserSignalsScreenState extends State<UserSignalsScreen>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Signals',
+              'Trades',
               style: TextStyle(
-                color: notifier.textColor,
+                color: colorScheme.onSurface,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 height: 1.8,
@@ -95,7 +94,7 @@ class _UserSignalsScreenState extends State<UserSignalsScreen>
                 return Text(
                   displayText,
                   style: TextStyle(
-                    color: notifier.textColorGrey,
+                    color: colorScheme.onSurface.withValues(alpha: 0.7),
                     fontSize: 15,
                     height: 1.2,
                   ),
@@ -131,7 +130,7 @@ class _UserSignalsScreenState extends State<UserSignalsScreen>
                     onPressed: () => _showFilterBottomSheet(),
                     icon: Icon(
                       Icons.filter_list,
-                      color: notifier.textColor,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ],
@@ -146,23 +145,25 @@ class _UserSignalsScreenState extends State<UserSignalsScreen>
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
             decoration: BoxDecoration(
-              color: notifier.container.withValues(alpha: 0.5),
+              color: colorScheme.surfaceContainer.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(12),
               border:
-                  Border.all(color: notifier.textColor.withValues(alpha: 0.1)),
+                  Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
             ),
             child: TabBar(
               controller: _tabController,
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: const Color(0xff2e9844).withValues(alpha: 0.1),
+                color: colorScheme.primary.withValues(alpha: 0.1),
                 border: Border.all(
-                  color: const Color(0xff2e9844).withValues(alpha: 0.3),
+                  color: colorScheme.primary.withValues(alpha: 0.3),
                 ),
               ),
               indicatorSize: TabBarIndicatorSize.tab,
-              labelColor: const Color(0xff2e9844),
-              unselectedLabelColor: notifier.textColor.withValues(alpha: 0.7),
+              dividerColor: Colors.transparent,
+              labelColor: colorScheme.primary,
+              unselectedLabelColor:
+                  colorScheme.onSurface.withValues(alpha: 0.7),
               labelStyle: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -180,8 +181,8 @@ class _UserSignalsScreenState extends State<UserSignalsScreen>
                     Icon(Icons.radio_button_checked,
                         size: 18,
                         color: _tabController.index == 0
-                            ? const Color(0xff2e9844)
-                            : notifier.textColor.withValues(alpha: 0.7)),
+                            ? colorScheme.primary
+                            : colorScheme.onSurface.withValues(alpha: 0.7)),
                     const SizedBox(width: 8),
                     const Text('Open'),
                   ],
@@ -192,8 +193,8 @@ class _UserSignalsScreenState extends State<UserSignalsScreen>
                     Icon(Icons.check_circle_outline,
                         size: 18,
                         color: _tabController.index == 1
-                            ? const Color(0xff2e9844)
-                            : notifier.textColor.withValues(alpha: 0.7)),
+                            ? colorScheme.primary
+                            : colorScheme.onSurface.withValues(alpha: 0.7)),
                     const SizedBox(width: 8),
                     const Text('Closed'),
                   ],
@@ -216,9 +217,10 @@ class _UserSignalsScreenState extends State<UserSignalsScreen>
   }
 
   void _showFilterBottomSheet() {
+    final colorScheme = Theme.of(context).colorScheme;
     showModalBottomSheet(
       context: context,
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
@@ -238,8 +240,6 @@ class _FilterBottomSheet extends StatefulWidget {
 }
 
 class _FilterBottomSheetState extends State<_FilterBottomSheet> {
-  ColorNotifire notifier = ColorNotifire();
-
   // Filter state
   String? _selectedDirection;
   String? _selectedDateFilter;
@@ -307,7 +307,7 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -321,7 +321,7 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: notifier.textColor.withValues(alpha: 0.2),
+              color: colorScheme.onSurface.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -334,9 +334,9 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Filter Signals',
+                  'Filter Trades',
                   style: TextStyle(
-                    color: notifier.textColor,
+                    color: colorScheme.onSurface,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -471,10 +471,11 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
   }
 
   Widget _buildSectionTitle(String title) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Text(
       title,
       style: TextStyle(
-        color: notifier.textColor,
+        color: colorScheme.onSurface,
         fontSize: 16,
         fontWeight: FontWeight.w600,
       ),
@@ -482,6 +483,7 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
   }
 
   Widget _buildChip(String label, String? value, String? selectedValue) {
+    final colorScheme = Theme.of(context).colorScheme;
     final isSelected = value == selectedValue;
     return GestureDetector(
       onTap: () {
@@ -505,18 +507,20 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xff2e9844) : notifier.container,
+          color: isSelected
+              ? const Color(0xff2e9844)
+              : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected
                 ? const Color(0xff2e9844)
-                : notifier.textColor.withValues(alpha: 0.2),
+                : colorScheme.onSurface.withValues(alpha: 0.2),
           ),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : notifier.textColor,
+            color: isSelected ? Colors.white : colorScheme.onSurface,
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -527,6 +531,7 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
 
   Widget _buildDateButton(String label, DateTime? selectedDate,
       Function(DateTime?) onDateSelected) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: () async {
         final date = await showDatePicker(
@@ -540,8 +545,8 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
                 colorScheme: ColorScheme.light(
                   primary: const Color(0xff2e9844),
                   onPrimary: Colors.white,
-                  surface: notifier.background,
-                  onSurface: notifier.textColor,
+                  surface: colorScheme.surface,
+                  onSurface: colorScheme.onSurface,
                 ),
               ),
               child: child!,
@@ -556,10 +561,10 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: notifier.container,
+          color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: notifier.textColor.withValues(alpha: 0.2),
+            color: colorScheme.onSurface.withValues(alpha: 0.2),
           ),
         ),
         child: Row(
@@ -571,15 +576,15 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
                   : label,
               style: TextStyle(
                 color: selectedDate != null
-                    ? notifier.textColor
-                    : notifier.textColor.withValues(alpha: 0.7),
+                    ? colorScheme.onSurface
+                    : colorScheme.onSurface.withValues(alpha: 0.7),
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
               ),
             ),
             Icon(
               Icons.calendar_today,
-              color: notifier.textColor.withValues(alpha: 0.5),
+              color: colorScheme.onSurface.withValues(alpha: 0.5),
               size: 20,
             ),
           ],

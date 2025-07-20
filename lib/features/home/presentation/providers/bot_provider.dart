@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:finfx/features/home/data/models/bot_model.dart';
-import 'package:finfx/utils/api_error.dart';
 import 'package:finfx/services/api_service.dart';
 
 class BotProvider extends ChangeNotifier {
@@ -18,13 +17,13 @@ class BotProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  Future<void> fetchBotsByGroup(String groupId) async {
+  Future<void> fetchBots() async {
     try {
       _isLoading = true;
       _error = null;
       notifyListeners();
 
-      final response = await _apiService.get('/api/bots?groupId=$groupId');
+      final response = await _apiService.get('/api/bots');
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -56,9 +55,5 @@ class BotProvider extends ChangeNotifier {
   void clearError() {
     _error = null;
     notifyListeners();
-  }
-
-  List<BotModel> getBotsByGroup(String groupName) {
-    return _bots.where((bot) => bot.group.name == groupName).toList();
   }
 }

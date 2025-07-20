@@ -7,9 +7,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 // Project imports:
 import 'package:finfx/screens/Login%20Screens/login_screen.dart';
-import 'package:finfx/screens/config/common.dart';
 import 'package:finfx/services/auth_storage_service.dart';
-import '../../../../dark_mode.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -45,70 +43,169 @@ class _SplashState extends State<Splash> {
     );
   }
 
-  ColorNotifire notifier = ColorNotifire();
-
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: notifier.background,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image(
-              image: const AssetImage(
-                "assets/images/app-icon.png",
-              ),
-              color: notifier.isDark ? Colors.white : null,
-              width: size.height * 0.2,
-            ),
-            Text(
-              "FinFx",
-              style: TextStyle(
-                color: notifier.textColor,
-                fontFamily: "Manrope-Bold",
-                fontSize: size.width * 0.08,
-                height: 1,
-              ),
-            )
-          ],
+      backgroundColor: colorScheme.surface,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              colorScheme.surface,
+              colorScheme.surfaceContainer,
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: notifier.background,
-        elevation: 0,
-        height: 75,
-        child: Center(
+        child: SafeArea(
           child: Column(
             children: [
-              Text(
-                "where automation meets assurance",
-                style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: "Manrope-Bold",
-                  color: notifier.textColor,
-                  wordSpacing: 5,
+              // Main content area
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // App Icon with container
+                      Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24),
+                          color: colorScheme.primaryContainer,
+                          boxShadow: [
+                            BoxShadow(
+                              color: colorScheme.primary.withValues(alpha: 0.1),
+                              blurRadius: 20,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
+                        ),
+                        child: Image(
+                          image: const AssetImage(
+                            "assets/images/app-icon.png",
+                          ),
+                          color: isDark ? Colors.white : null,
+                          width: size.height * 0.15,
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      // App Name
+                      Text(
+                        "FinFX",
+                        style: TextStyle(
+                          color: colorScheme.onSurface,
+                          fontFamily: "Manrope-Bold",
+                          fontSize: size.width * 0.08,
+                          height: 1,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      // Tagline
+                      Text(
+                        "Where automation meets assurance",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: "Manrope-Regular",
+                          color: colorScheme.onSurfaceVariant,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 48),
+                      // Loading indicator
+                      SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              AppConstants.Height(5),
-              FutureBuilder<PackageInfo>(
-                future: PackageInfo.fromPlatform(),
-                builder: (context, snapshot) {
-                  final version = snapshot.hasData
-                      ? 'Version ${snapshot.data!.version}'
-                      : 'Version ...';
-                  return Text(
-                    version,
-                    style: const TextStyle(
-                      color: Color(0xffD1D1D1),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Manrope_semibold",
-                      letterSpacing: 0.3,
+              // Bottom section with version info
+              Container(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: colorScheme.surfaceContainer,
+                        border: Border.all(
+                          color: colorScheme.outline.withValues(alpha: 0.2),
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.security,
+                                size: 16,
+                                color: colorScheme.primary,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                "Secure & Reliable",
+                                style: TextStyle(
+                                  color: colorScheme.primary,
+                                  fontSize: 14,
+                                  fontFamily: "Manrope-Bold",
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          FutureBuilder<PackageInfo>(
+                            future: PackageInfo.fromPlatform(),
+                            builder: (context, snapshot) {
+                              final version = snapshot.hasData
+                                  ? 'Version ${snapshot.data!.version}'
+                                  : 'Version ...';
+                              return Text(
+                                version,
+                                style: TextStyle(
+                                  color: colorScheme.onSurfaceVariant,
+                                  fontSize: 12,
+                                  fontFamily: "Manrope-Regular",
+                                  letterSpacing: 0.3,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  );
-                },
+                    const SizedBox(height: 16),
+                    Text(
+                      "© 2025 FinFX. All rights reserved.",
+                      style: TextStyle(
+                        color:
+                            colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+                        fontSize: 11,
+                        fontFamily: "Manrope-Regular",
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

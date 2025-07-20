@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../../dark_mode.dart';
 import '../../../../utils/toast_utils.dart';
+import '../widgets/broker_selection_form_field.dart';
 
 class BrokersScreen extends StatefulWidget {
   final int initialTab;
@@ -21,7 +21,6 @@ class BrokersScreen extends StatefulWidget {
 class _BrokersScreenState extends State<BrokersScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  ColorNotifire notifier = ColorNotifire();
 
   // Controllers for text fields
   final TextEditingController _binanceApiKeyController =
@@ -56,45 +55,76 @@ class _BrokersScreenState extends State<BrokersScreen>
 
   @override
   Widget build(BuildContext context) {
-    notifier = Provider.of<ColorNotifire>(context, listen: true);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Scaffold(
-      backgroundColor: notifier.background,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: Text(
-          'API Connection',
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: "Manrope-Bold",
-          ),
-        ),
-        backgroundColor: const Color(0xff2e9844),
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
         elevation: 0,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'API Connection',
+              style: TextStyle(
+                color: colorScheme.onSurface,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                height: 1.8,
+              ),
+            ),
+            Consumer2<BinanceProvider, DeltaProvider>(
+              builder: (context, binanceProvider, deltaProvider, child) {
+                final totalConnections = (binanceProvider.isConnected ? 1 : 0) +
+                    (deltaProvider.isConnected ? 1 : 0);
+                String displayText;
+                if (totalConnections == 0) {
+                  displayText = 'No Connected Brokers';
+                } else if (totalConnections == 1) {
+                  displayText = '1 Broker Connected';
+                } else {
+                  displayText = '$totalConnections Brokers Connected';
+                }
+                return Text(
+                  displayText,
+                  style: TextStyle(
+                    color: colorScheme.onSurface.withValues(alpha: 0.7),
+                    fontSize: 15,
+                    height: 1.2,
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: SafeArea(
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.only(
-                top: 20,
-                left: 16,
-                right: 16,
-              ),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
               decoration: BoxDecoration(
-                color: notifier.container.withValues(alpha: 0.5),
+                color: colorScheme.surfaceContainer.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                    color: notifier.textColor.withValues(alpha: 0.1)),
+                    color: colorScheme.outline.withValues(alpha: 0.2)),
               ),
               child: TabBar(
                 controller: _tabController,
                 indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: const Color(0xff2e9844).withValues(alpha: 0.1),
+                  color: colorScheme.primary.withValues(alpha: 0.1),
                   border: Border.all(
-                      color: const Color(0xff2e9844).withValues(alpha: 0.3)),
+                    color: colorScheme.primary.withValues(alpha: 0.3),
+                  ),
                 ),
-                labelColor: const Color(0xff2e9844),
-                unselectedLabelColor: notifier.textColor.withValues(alpha: 0.7),
+                indicatorSize: TabBarIndicatorSize.tab,
+                dividerColor: Colors.transparent,
+                labelColor: colorScheme.primary,
+                unselectedLabelColor:
+                    colorScheme.onSurface.withValues(alpha: 0.7),
                 labelStyle: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -106,27 +136,31 @@ class _BrokersScreenState extends State<BrokersScreen>
                   letterSpacing: 0.5,
                 ),
                 tabs: [
-                  Tab(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.currency_exchange_outlined, size: 18),
-                        const SizedBox(width: 8),
-                        const Text('MT5'),
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.currency_exchange_outlined,
+                          size: 18,
+                          color: _tabController.index == 0
+                              ? colorScheme.primary
+                              : colorScheme.onSurface.withValues(alpha: 0.7)),
+                      const SizedBox(width: 8),
+                      const Text('MT5'),
+                    ],
                   ),
-                  Tab(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.account_balance_wallet_outlined, size: 18),
-                        const SizedBox(width: 8),
-                        const Text('MT4'),
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.account_balance_wallet_outlined,
+                          size: 18,
+                          color: _tabController.index == 1
+                              ? colorScheme.primary
+                              : colorScheme.onSurface.withValues(alpha: 0.7)),
+                      const SizedBox(width: 8),
+                      const Text('MT4'),
+                    ],
                   ),
-                ],
+                ].map((child) => Tab(child: child)).toList(),
               ),
             ),
             Expanded(
@@ -154,7 +188,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                   width: double.infinity,
                                   padding: const EdgeInsets.all(20),
                                   decoration: BoxDecoration(
-                                    color: notifier.tabBar1,
+                                    color: colorScheme.surfaceContainer,
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Column(
@@ -176,7 +210,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                       Text(
                                         'Connect${deltaProvider.isConnected ? "ed" : ""} to Meta Trader 5',
                                         style: TextStyle(
-                                          color: notifier.textColor,
+                                          color: colorScheme.onSurface,
                                           fontSize: 22,
                                           fontFamily: "Manrope-Bold",
                                         ),
@@ -188,7 +222,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                             : 'Enter your Meta Trader 5 API credentials to connect your account',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          color: notifier.textColor
+                                          color: colorScheme.onSurface
                                               .withValues(alpha: 0.7),
                                           fontSize: 14,
                                           fontFamily: "Manrope-Regular",
@@ -245,7 +279,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                     padding: const EdgeInsets.all(20),
                                     margin: const EdgeInsets.only(bottom: 16),
                                     decoration: BoxDecoration(
-                                      color: notifier.tabBar1,
+                                      color: colorScheme.surfaceContainer,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Column(
@@ -259,7 +293,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                             Text(
                                               'Current Balance',
                                               style: TextStyle(
-                                                color: notifier.textColor,
+                                                color: colorScheme.onSurface,
                                                 fontSize: 18,
                                                 fontFamily: "Manrope-Bold",
                                               ),
@@ -285,7 +319,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                           width: double.infinity,
                                           padding: const EdgeInsets.all(16),
                                           decoration: BoxDecoration(
-                                            color: notifier.background,
+                                            color: colorScheme.surface,
                                             borderRadius:
                                                 BorderRadius.circular(12),
                                           ),
@@ -296,7 +330,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                               Text(
                                                 'Available ${deltaProvider.balance!.asset}',
                                                 style: TextStyle(
-                                                  color: notifier.textColor
+                                                  color: colorScheme.onSurface
                                                       .withValues(alpha: 0.7),
                                                   fontSize: 12,
                                                   fontFamily: "Manrope-Regular",
@@ -306,7 +340,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                               Text(
                                                 '${deltaProvider.balance!.availableBalance.toStringAsFixed(2)} ${deltaProvider.balance!.asset}',
                                                 style: TextStyle(
-                                                  color: notifier.textColor,
+                                                  color: colorScheme.onSurface,
                                                   fontSize: 16,
                                                   fontFamily: "Manrope-Bold",
                                                 ),
@@ -323,7 +357,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                   Container(
                                     padding: const EdgeInsets.all(24),
                                     decoration: BoxDecoration(
-                                      color: notifier.tabBar1,
+                                      color: colorScheme.surfaceContainer,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Column(
@@ -333,27 +367,19 @@ class _BrokersScreenState extends State<BrokersScreen>
                                         Text(
                                           'API Credentials',
                                           style: TextStyle(
-                                            color: notifier.textColor,
+                                            color: colorScheme.onSurface,
                                             fontSize: 18,
                                             fontFamily: "Manrope-Bold",
                                           ),
                                         ),
                                         const SizedBox(height: 16),
-                                        TextField(
-                                          decoration: InputDecoration(
-                                            labelText: 'Broker',
-                                            labelStyle: TextStyle(
-                                                color: notifier.textColor),
-                                            filled: true,
-                                            fillColor: notifier.background,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                          ),
-                                          style: TextStyle(
-                                              color: notifier.textColor),
+                                        BrokerSelectionFormField(
+                                          labelText: 'Broker',
+                                          onChanged: (broker) {
+                                            // Handle broker selection for Delta
+                                            print(
+                                                'Selected Delta broker: ${broker?.name}');
+                                          },
                                         ),
                                         const SizedBox(height: 16),
                                         TextField(
@@ -361,9 +387,9 @@ class _BrokersScreenState extends State<BrokersScreen>
                                           decoration: InputDecoration(
                                             labelText: 'Login ID',
                                             labelStyle: TextStyle(
-                                                color: notifier.textColor),
+                                                color: colorScheme.onSurface),
                                             filled: true,
-                                            fillColor: notifier.background,
+                                            fillColor: colorScheme.surface,
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -371,7 +397,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                             ),
                                           ),
                                           style: TextStyle(
-                                              color: notifier.textColor),
+                                              color: colorScheme.onSurface),
                                         ),
                                         const SizedBox(height: 12),
                                         TextField(
@@ -379,9 +405,9 @@ class _BrokersScreenState extends State<BrokersScreen>
                                           decoration: InputDecoration(
                                             labelText: 'Password',
                                             labelStyle: TextStyle(
-                                                color: notifier.textColor),
+                                                color: colorScheme.onSurface),
                                             filled: true,
-                                            fillColor: notifier.background,
+                                            fillColor: colorScheme.surface,
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -390,7 +416,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                           ),
                                           obscureText: true,
                                           style: TextStyle(
-                                              color: notifier.textColor),
+                                              color: colorScheme.onSurface),
                                         ),
                                         const SizedBox(height: 16),
                                         TextField(
@@ -398,9 +424,9 @@ class _BrokersScreenState extends State<BrokersScreen>
                                           decoration: InputDecoration(
                                             labelText: 'Broker Server',
                                             labelStyle: TextStyle(
-                                                color: notifier.textColor),
+                                                color: colorScheme.onSurface),
                                             filled: true,
-                                            fillColor: notifier.background,
+                                            fillColor: colorScheme.surface,
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -408,7 +434,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                             ),
                                           ),
                                           style: TextStyle(
-                                              color: notifier.textColor),
+                                              color: colorScheme.onSurface),
                                         ),
                                         const SizedBox(height: 24),
                                         SizedBox(
@@ -501,7 +527,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                     width: double.infinity,
                                     padding: const EdgeInsets.all(24),
                                     decoration: BoxDecoration(
-                                      color: notifier.tabBar1,
+                                      color: colorScheme.surfaceContainer,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Column(
@@ -511,7 +537,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                         Text(
                                           'Connection Status',
                                           style: TextStyle(
-                                            color: notifier.textColor,
+                                            color: colorScheme.onSurface,
                                             fontSize: 18,
                                             fontFamily: "Manrope-Bold",
                                           ),
@@ -614,7 +640,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                   width: double.infinity,
                                   padding: const EdgeInsets.all(20),
                                   decoration: BoxDecoration(
-                                    color: notifier.tabBar1,
+                                    color: colorScheme.surfaceContainer,
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Column(
@@ -636,7 +662,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                       Text(
                                         'Connect${binanceProvider.isConnected ? "ed" : ""} to Meta Trader 4',
                                         style: TextStyle(
-                                          color: notifier.textColor,
+                                          color: colorScheme.onSurface,
                                           fontSize: 22,
                                           fontFamily: "Manrope-Bold",
                                         ),
@@ -648,7 +674,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                             : 'Enter your Meta Trader 4 API credentials to connect your account',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          color: notifier.textColor
+                                          color: colorScheme.onSurface
                                               .withValues(alpha: 0.7),
                                           fontSize: 14,
                                           fontFamily: "Manrope-Regular",
@@ -705,7 +731,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                     padding: const EdgeInsets.all(20),
                                     margin: const EdgeInsets.only(bottom: 16),
                                     decoration: BoxDecoration(
-                                      color: notifier.tabBar1,
+                                      color: colorScheme.surfaceContainer,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Column(
@@ -719,7 +745,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                             Text(
                                               'Current Balance',
                                               style: TextStyle(
-                                                color: notifier.textColor,
+                                                color: colorScheme.onSurface,
                                                 fontSize: 18,
                                                 fontFamily: "Manrope-Bold",
                                               ),
@@ -748,7 +774,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                                 padding:
                                                     const EdgeInsets.all(16),
                                                 decoration: BoxDecoration(
-                                                  color: notifier.background,
+                                                  color: colorScheme.surface,
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                 ),
@@ -759,8 +785,8 @@ class _BrokersScreenState extends State<BrokersScreen>
                                                     Text(
                                                       'Available BTC',
                                                       style: TextStyle(
-                                                        color: notifier
-                                                            .textColor
+                                                        color: colorScheme
+                                                            .onSurface
                                                             .withValues(
                                                                 alpha: 0.7),
                                                         fontSize: 12,
@@ -772,8 +798,8 @@ class _BrokersScreenState extends State<BrokersScreen>
                                                     Text(
                                                       '${binanceProvider.balance!.btcBalance.toStringAsFixed(8)} BTC',
                                                       style: TextStyle(
-                                                        color:
-                                                            notifier.textColor,
+                                                        color: colorScheme
+                                                            .onSurface,
                                                         fontSize: 16,
                                                         fontFamily:
                                                             "Manrope-Bold",
@@ -789,7 +815,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                                 padding:
                                                     const EdgeInsets.all(16),
                                                 decoration: BoxDecoration(
-                                                  color: notifier.background,
+                                                  color: colorScheme.surface,
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                 ),
@@ -800,8 +826,8 @@ class _BrokersScreenState extends State<BrokersScreen>
                                                     Text(
                                                       'Locked BTC',
                                                       style: TextStyle(
-                                                        color: notifier
-                                                            .textColor
+                                                        color: colorScheme
+                                                            .onSurface
                                                             .withValues(
                                                                 alpha: 0.7),
                                                         fontSize: 12,
@@ -813,8 +839,8 @@ class _BrokersScreenState extends State<BrokersScreen>
                                                     Text(
                                                       '${binanceProvider.balance!.btcLocked.toStringAsFixed(8)} BTC',
                                                       style: TextStyle(
-                                                        color:
-                                                            notifier.textColor,
+                                                        color: colorScheme
+                                                            .onSurface,
                                                         fontSize: 16,
                                                         fontFamily:
                                                             "Manrope-Bold",
@@ -835,7 +861,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                   Container(
                                     padding: const EdgeInsets.all(24),
                                     decoration: BoxDecoration(
-                                      color: notifier.tabBar1,
+                                      color: colorScheme.surfaceContainer,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Column(
@@ -845,27 +871,20 @@ class _BrokersScreenState extends State<BrokersScreen>
                                         Text(
                                           'API Credentials',
                                           style: TextStyle(
-                                            color: notifier.textColor,
+                                            color: colorScheme.onSurface,
                                             fontSize: 18,
                                             fontFamily: "Manrope-Bold",
                                           ),
                                         ),
                                         const SizedBox(height: 16),
-                                        TextField(
-                                          decoration: InputDecoration(
-                                            labelText: 'Broker',
-                                            labelStyle: TextStyle(
-                                                color: notifier.textColor),
-                                            filled: true,
-                                            fillColor: notifier.background,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                          ),
-                                          style: TextStyle(
-                                              color: notifier.textColor),
+                                        BrokerSelectionFormField(
+                                          labelText: 'Broker',
+                                          key: ObjectKey('MT5'),
+                                          onChanged: (broker) {
+                                            // Handle broker selection for Delta
+                                            print(
+                                                'Selected Delta broker: ${broker?.name}');
+                                          },
                                         ),
                                         const SizedBox(height: 16),
                                         TextField(
@@ -873,9 +892,9 @@ class _BrokersScreenState extends State<BrokersScreen>
                                           decoration: InputDecoration(
                                             labelText: 'Login ID',
                                             labelStyle: TextStyle(
-                                                color: notifier.textColor),
+                                                color: colorScheme.onSurface),
                                             filled: true,
-                                            fillColor: notifier.background,
+                                            fillColor: colorScheme.surface,
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -883,7 +902,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                             ),
                                           ),
                                           style: TextStyle(
-                                              color: notifier.textColor),
+                                              color: colorScheme.onSurface),
                                         ),
                                         const SizedBox(height: 12),
                                         TextField(
@@ -892,9 +911,9 @@ class _BrokersScreenState extends State<BrokersScreen>
                                           decoration: InputDecoration(
                                             labelText: 'Password',
                                             labelStyle: TextStyle(
-                                                color: notifier.textColor),
+                                                color: colorScheme.onSurface),
                                             filled: true,
-                                            fillColor: notifier.background,
+                                            fillColor: colorScheme.surface,
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -903,16 +922,16 @@ class _BrokersScreenState extends State<BrokersScreen>
                                           ),
                                           obscureText: true,
                                           style: TextStyle(
-                                              color: notifier.textColor),
+                                              color: colorScheme.onSurface),
                                         ),
                                         const SizedBox(height: 16),
                                         TextField(
                                           decoration: InputDecoration(
                                             labelText: 'Broker Server',
                                             labelStyle: TextStyle(
-                                                color: notifier.textColor),
+                                                color: colorScheme.onSurface),
                                             filled: true,
-                                            fillColor: notifier.background,
+                                            fillColor: colorScheme.surface,
                                             border: OutlineInputBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -920,7 +939,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                             ),
                                           ),
                                           style: TextStyle(
-                                              color: notifier.textColor),
+                                              color: colorScheme.onSurface),
                                         ),
                                         const SizedBox(height: 24),
                                         SizedBox(
@@ -1013,7 +1032,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                     width: double.infinity,
                                     padding: const EdgeInsets.all(24),
                                     decoration: BoxDecoration(
-                                      color: notifier.tabBar1,
+                                      color: colorScheme.surfaceContainer,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: Column(
@@ -1023,7 +1042,7 @@ class _BrokersScreenState extends State<BrokersScreen>
                                         Text(
                                           'Connection Status',
                                           style: TextStyle(
-                                            color: notifier.textColor,
+                                            color: colorScheme.onSurface,
                                             fontSize: 18,
                                             fontFamily: "Manrope-Bold",
                                           ),

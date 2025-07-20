@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:finfx/services/api_service.dart';
-import 'package:finfx/features/user_signals/data/models/user_signals_response_model.dart';
+import 'package:finfx/features/user_trades/data/models/user_signals_response_model.dart';
 import 'package:finfx/utils/api_error.dart';
 
 class UserSignalsService {
