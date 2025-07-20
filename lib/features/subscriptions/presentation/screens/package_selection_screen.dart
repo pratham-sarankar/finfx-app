@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:finfx/features/subscriptions/presentation/providers/bot_packages_provider.dart';
-import 'package:finfx/features/subscriptions/data/models/bot_package_model.dart';
 
 class PackageSelectionScreen extends StatefulWidget {
   final String botId;
