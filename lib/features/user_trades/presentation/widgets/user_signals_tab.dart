@@ -91,7 +91,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
             Text(
               userSignalsProvider.getError(widget.status)!,
               style: textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurface.withOpacity(0.7),
+                color: colorScheme.onSurface.withValues(alpha: 0.7),
                 fontSize: 14,
               ),
               textAlign: TextAlign.center,
@@ -117,7 +117,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
           children: [
             Icon(
               Icons.signal_cellular_alt_outlined,
-              color: colorScheme.onSurface.withOpacity(0.5),
+              color: colorScheme.onSurface.withValues(alpha: 0.5),
               size: 48,
             ),
             const SizedBox(height: 16),
@@ -133,7 +133,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
             Text(
               'You don\'t have any ${widget.status} trades yet.',
               style: textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurface.withOpacity(0.7),
+                color: colorScheme.onSurface.withValues(alpha: 0.7),
                 fontSize: 14,
               ),
               textAlign: TextAlign.center,
@@ -197,7 +197,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
                   ? 'Loading more signals...'
                   : 'More signals available',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurface.withOpacity(0.7),
+                    color: colorScheme.onSurface.withValues(alpha: 0.7),
                     fontSize: 14,
                   ),
             ),
@@ -225,7 +225,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
       decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colorScheme.onSurface.withOpacity(0.1)),
+        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,7 +249,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: colorScheme.primary.withOpacity(0.1),
+                        color: colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
@@ -267,7 +267,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
               Text(
                 '${userSignalsProvider.getCurrentPage(widget.status)}/${userSignalsProvider.getTotalPages(widget.status)}',
                 style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurface.withOpacity(0.7),
+                  color: colorScheme.onSurface.withValues(alpha: 0.7),
                   fontSize: 12,
                 ),
               ),
@@ -307,7 +307,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
         Text(
           label,
           style: textTheme.bodySmall?.copyWith(
-            color: colorScheme.onSurface.withOpacity(0.7),
+            color: colorScheme.onSurface.withValues(alpha: 0.7),
             fontSize: 12,
           ),
         ),

@@ -235,7 +235,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: colorScheme.primary.withOpacity(0.2),
+                    color: colorScheme.primary.withValues(alpha: 0.2),
                     blurRadius: 20,
                     spreadRadius: 5,
                   ),
@@ -250,7 +250,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                     height: 60,
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        colorScheme.primary.withOpacity(0.2),
+                        colorScheme.primary.withValues(alpha: 0.2),
                       ),
                       strokeWidth: 3,
                     ),
@@ -267,7 +267,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: colorScheme.primary.withOpacity(0.1),
+                            color: colorScheme.primary.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
                           child: Center(
@@ -311,7 +311,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                         Text(
                           'Please wait...',
                           style: TextStyle(
-                            color: colorScheme.onSurface.withOpacity(0.7),
+                            color: colorScheme.onSurface.withValues(alpha: 0.7),
                             fontSize: 14,
                             fontFamily: "Manrope-Medium",
                           ),
@@ -376,7 +376,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                   "We've sent a verification code to your email address.\nPlease enter the 6-digit code below.",
                   style: TextStyle(
                     fontSize: 15,
-                    color: colorScheme.onSurface.withOpacity(0.6),
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
                     fontFamily: "Manrope-Medium",
                   ),
                 ),
@@ -431,7 +431,7 @@ class _EmailVerificationState extends State<EmailVerification> {
                             fontSize: 14,
                             color: _canResendOtp
                                 ? colorScheme.primary
-                                : colorScheme.onSurface.withOpacity(0.6),
+                                : colorScheme.onSurface.withValues(alpha: 0.6),
                             fontFamily: "Manrope-SemiBold",
                           ),
                         ),
@@ -454,9 +454,9 @@ class _EmailVerificationState extends State<EmailVerification> {
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       disabledBackgroundColor:
-                          colorScheme.primary.withOpacity(0.7),
+                          colorScheme.primary.withValues(alpha: 0.7),
                       disabledForegroundColor:
-                          colorScheme.onPrimary.withOpacity(1),
+                          colorScheme.onPrimary.withValues(alpha: 1),
                     ),
                     child: Text(
                       _isLoading ? "Verifying..." : "Verify Email",

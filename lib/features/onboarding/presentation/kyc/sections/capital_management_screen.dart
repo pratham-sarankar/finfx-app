@@ -119,7 +119,7 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
             "Help us understand your investment preferences and risk management",
             style: TextStyle(
               fontSize: 16,
-              color: colorScheme.onSurface.withOpacity(0.6),
+              color: colorScheme.onSurface.withValues(alpha: 0.6),
               fontFamily: "Manrope-Medium",
             ),
           ),
@@ -175,7 +175,7 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
                 color: colorScheme.primary,
                 boxShadow: [
                   BoxShadow(
-                    color: colorScheme.primary.withOpacity(0.3),
+                    color: colorScheme.primary.withValues(alpha: 0.3),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -245,7 +245,7 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: isSelected
-              ? colorScheme.primary.withOpacity(0.08)
+              ? colorScheme.primary.withValues(alpha: 0.08)
               : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
@@ -323,8 +323,8 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
             style: TextStyle(color: colorScheme.onSurface),
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle:
-                  TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+              hintStyle: TextStyle(
+                  color: colorScheme.onSurface.withValues(alpha: 0.6)),
               border: InputBorder.none,
               contentPadding: const EdgeInsets.all(16),
             ),
@@ -379,7 +379,7 @@ class _CapitalManagementScreenState extends State<CapitalManagementScreen> {
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: isSelected
-              ? colorScheme.primary.withOpacity(0.08)
+              ? colorScheme.primary.withValues(alpha: 0.08)
               : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(

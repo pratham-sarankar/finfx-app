@@ -156,7 +156,7 @@ class _ReasonState extends State<ExperienceScreen> {
                 "Select your experience level in trading and investments",
                 style: TextStyle(
                     fontSize: 16,
-                    color: colorScheme.onSurface.withOpacity(0.6),
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
                     fontFamily: "Manrope-Regular"),
               ),
               AppConstants.Height(30),
@@ -256,7 +256,7 @@ class _ReasonState extends State<ExperienceScreen> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer.withOpacity(0.5),
+        color: colorScheme.surfaceContainer.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -284,7 +284,7 @@ class _ReasonState extends State<ExperienceScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: isSelected(index)
-                        ? colorScheme.primary.withOpacity(0.08)
+                        ? colorScheme.primary.withValues(alpha: 0.08)
                         : colorScheme.surfaceContainer,
                     border: Border.all(
                       color: isSelected(index)
@@ -300,7 +300,7 @@ class _ReasonState extends State<ExperienceScreen> {
                       fontSize: 13,
                       color: isSelected(index)
                           ? colorScheme.primary
-                          : colorScheme.onSurface.withOpacity(0.6),
+                          : colorScheme.onSurface.withValues(alpha: 0.6),
                     ),
                   ),
                 ),

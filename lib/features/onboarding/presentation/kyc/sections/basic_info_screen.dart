@@ -118,7 +118,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
             "Please provide your basic identification details for KYC verification",
             style: TextStyle(
               fontSize: 16,
-              color: colorScheme.onSurface.withOpacity(0.6),
+              color: colorScheme.onSurface.withValues(alpha: 0.6),
               fontFamily: "Manrope-Medium",
             ),
           ),
@@ -192,7 +192,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 color: colorScheme.primary,
                 boxShadow: [
                   BoxShadow(
-                    color: colorScheme.primary.withOpacity(0.3),
+                    color: colorScheme.primary.withValues(alpha: 0.3),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -258,8 +258,8 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
             style: TextStyle(color: colorScheme.onSurface),
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle:
-                  TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
+              hintStyle: TextStyle(
+                  color: colorScheme.onSurface.withValues(alpha: 0.6)),
               border: InputBorder.none,
               contentPadding: const EdgeInsets.all(16),
             ),
@@ -312,7 +312,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: isSelected
-              ? colorScheme.primary.withOpacity(0.08)
+              ? colorScheme.primary.withValues(alpha: 0.08)
               : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
