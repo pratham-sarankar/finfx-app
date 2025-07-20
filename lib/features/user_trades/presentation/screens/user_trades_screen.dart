@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:finfx/features/user_signals/presentation/providers/user_signals_provider.dart';
-import 'package:finfx/features/user_signals/presentation/widgets/user_signals_tab.dart';
+import 'package:finfx/features/user_trades/presentation/providers/user_signals_provider.dart';
+import 'package:finfx/features/user_trades/presentation/widgets/user_signals_tab.dart';
 
-class UserSignalsScreen extends StatefulWidget {
-  const UserSignalsScreen({super.key});
+class UserTradesScreen extends StatefulWidget {
+  const UserTradesScreen({super.key});
 
   @override
-  State<UserSignalsScreen> createState() => _UserSignalsScreenState();
+  State<UserTradesScreen> createState() => _UserTradesScreenState();
 }
 
-class _UserSignalsScreenState extends State<UserSignalsScreen>
+class _UserTradesScreenState extends State<UserTradesScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -64,7 +64,7 @@ class _UserSignalsScreenState extends State<UserSignalsScreen>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Signals',
+              'Trades',
               style: TextStyle(
                 color: colorScheme.onSurface,
                 fontSize: 18,
@@ -334,7 +334,7 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Filter Signals',
+                  'Filter Trades',
                   style: TextStyle(
                     color: colorScheme.onSurface,
                     fontSize: 18,

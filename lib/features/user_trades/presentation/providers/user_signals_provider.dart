@@ -1,4 +1,4 @@
-import 'package:finfx/features/user_signals/domain/repositories/user_signals_repository.dart';
+import 'package:finfx/features/user_trades/domain/repositories/user_signals_repository.dart';
 import 'package:finfx/models/signal.dart';
 import 'package:finfx/utils/api_error.dart';
 import 'package:flutter/foundation.dart';

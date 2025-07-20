@@ -1,4 +1,7 @@
+import 'package:finfx/features/bot/presentation/screen/bot_connection_success_screen.dart';
 import 'package:finfx/features/home/data/models/bot_model.dart';
+import 'package:finfx/features/subscriptions/presentation/screens/lot_size_screen.dart';
+import 'package:finfx/features/subscriptions/presentation/screens/package_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/bot_details_provider.dart';
@@ -387,29 +390,51 @@ class _BotDetailsTabState extends State<BotDetailsTab>
             onPressed: botDetailsProvider.isToggling
                 ? null
                 : () async {
-                    final success = await botDetailsProvider
-                        .toggleSubscription(widget.bot.id);
-                    if (success) {
-                      if (botDetailsProvider.isSubscribed) {
-                        ToastUtils.showSuccess(
-                          context: context,
-                          message:
-                              'Successfully subscribed to ${widget.bot.name}!',
-                        );
-                      } else {
-                        ToastUtils.showInfo(
-                          context: context,
-                          message:
-                              'Subscription cancelled for ${widget.bot.name}',
-                        );
-                      }
-                    } else {
-                      ToastUtils.showError(
-                        context: context,
-                        message: botDetailsProvider.error ??
-                            'Failed to toggle subscription',
-                      );
-                    }
+                    final selectedLotSize =
+                        await Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) {
+                        return LotSizeScreen();
+                      },
+                      fullscreenDialog: true,
+                    ));
+                    if (selectedLotSize == null) return;
+                    print(selectedLotSize);
+                    final selectedPackage =
+                        await Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) {
+                        return PackageSelectionScreen();
+                      },
+                    ));
+                    if (selectedPackage == null) return;
+                    print(selectedPackage);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) {
+                        return BotConnectionSuccessScreen();
+                      },
+                    ));
+                    // final success = await botDetailsProvider
+                    //     .toggleSubscription(widget.bot.id);
+                    // if (success) {
+                    //   if (botDetailsProvider.isSubscribed) {
+                    //     ToastUtils.showSuccess(
+                    //       context: context,
+                    //       message:
+                    //           'Successfully subscribed to ${widget.bot.name}!',
+                    //     );
+                    //   } else {
+                    //     ToastUtils.showInfo(
+                    //       context: context,
+                    //       message:
+                    //           'Subscription cancelled for ${widget.bot.name}',
+                    //     );
+                    //   }
+                    // } else {
+                    //   ToastUtils.showError(
+                    //     context: context,
+                    //     message: botDetailsProvider.error ??
+                    //         'Failed to toggle subscription',
+                    //   );
+                    // }
                   },
             backgroundColor: botDetailsProvider.isSubscribed
                 ? Colors.red

@@ -316,11 +316,12 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         AppConstants.Height(15),
-                        ProfileTile.withBadge(
+                        // Use ProfileTile.withBadge if you uncomment badge.
+                        ProfileTile.regular(
                           image: 'assets/images/Person.png',
                           name: 'Personal Details',
                           description: 'Your account information',
-                          badge: ProfileTileBadge.verified,
+                          // badge: ProfileTileBadge.verified,
                           onTap: () {
                             Navigator.push(
                               context,

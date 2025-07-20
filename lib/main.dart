@@ -2,7 +2,7 @@
 import 'package:finfx/features/brokers/presentation/providers/binance_provider.dart';
 import 'package:finfx/features/brokers/presentation/providers/delta_provider.dart';
 import 'package:finfx/features/bot/presentation/providers/signals_provider.dart';
-import 'package:finfx/features/user_signals/presentation/providers/user_signals_provider.dart';
+import 'package:finfx/features/user_trades/presentation/providers/user_signals_provider.dart';
 import 'package:finfx/features/subscriptions/presentation/providers/subscriptions_provider.dart';
 import 'package:finfx/themes/theme.dart';
 import 'package:flutter/foundation.dart';
@@ -20,8 +20,8 @@ import 'package:finfx/features/onboarding/data/repositories/kyc_repository_impl.
 import 'package:finfx/features/onboarding/presentation/providers/kyc_provider.dart';
 import 'package:finfx/features/onboarding/presentation/splash/splash_screen.dart';
 import 'package:finfx/features/home/presentation/providers/bot_provider.dart';
-import 'package:finfx/features/user_signals/data/repositories/user_signals_repository_impl.dart';
-import 'package:finfx/features/user_signals/data/services/user_signals_service.dart';
+import 'package:finfx/features/user_trades/data/repositories/user_signals_repository_impl.dart';
+import 'package:finfx/features/user_trades/data/services/user_signals_service.dart';
 import 'firebase_options.dart';
 import 'services/api_service.dart';
 import 'services/auth_service.dart';

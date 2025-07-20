@@ -2,7 +2,7 @@ import 'package:finfx/widgets/signal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:finfx/dark_mode.dart';
-import 'package:finfx/features/user_signals/presentation/providers/user_signals_provider.dart';
+import 'package:finfx/features/user_trades/presentation/providers/user_signals_provider.dart';
 import 'package:finfx/features/bot/presentation/widgets/performance_overview_widget.dart';
 
 class UserSignalsTab extends StatefulWidget {
@@ -123,7 +123,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
             ),
             const SizedBox(height: 16),
             Text(
-              'No ${widget.status} signals found',
+              'No ${widget.status} trades found',
               style: textTheme.titleMedium?.copyWith(
                 color: colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
@@ -132,7 +132,7 @@ class _UserSignalsTabState extends State<UserSignalsTab> {
             ),
             const SizedBox(height: 8),
             Text(
-              'You don\'t have any ${widget.status} signals yet.',
+              'You don\'t have any ${widget.status} trades yet.',
               style: textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurface.withOpacity(0.7),
                 fontSize: 14,

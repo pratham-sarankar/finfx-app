@@ -5,18 +5,25 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:finfx/features/profile/presentation/profile.dart';
-import 'package:finfx/features/user_signals/presentation/screens/user_signals_screen.dart';
+import 'package:finfx/features/user_trades/presentation/screens/user_trades_screen.dart';
 import 'package:finfx/features/home/presentation/home_tab_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int initialIndex;
+  const HomeScreen({super.key, this.initialIndex = 0});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 0;
+  late int currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.initialIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     final myChildren = [
       homeTab,
-      const UserSignalsScreen(),
+      const UserTradesScreen(),
       // const BotScreen(),
       // const Portfolio(),
       const MySubscriptionsScreen(),
@@ -149,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 4),
               ],
             ),
-            label: "Signals",
+            label: "Trades",
           ),
           BottomNavigationBarItem(
             icon: Column(
