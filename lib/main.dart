@@ -15,7 +15,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:finfx/dark_mode.dart';
 import 'package:finfx/features/onboarding/data/repositories/kyc_repository_impl.dart';
 import 'package:finfx/features/onboarding/presentation/providers/kyc_provider.dart';
 import 'package:finfx/features/onboarding/presentation/splash/splash_screen.dart';

@@ -17,7 +17,6 @@ import 'package:finfx/services/auth_storage_service.dart';
 import 'package:finfx/utils/api_error.dart';
 import 'package:finfx/features/profile/presentation/providers/profile_provider.dart';
 
-import '../../dark_mode.dart';
 import '../config/common.dart';
 import 'Forget pass.dart';
 import 'Sign up.dart';

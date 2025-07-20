@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:finfx/dark_mode.dart';
 import 'package:finfx/features/subscriptions/data/models/subscription_model.dart';
 import 'package:finfx/features/subscriptions/presentation/providers/subscriptions_provider.dart';
 

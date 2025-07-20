@@ -5,7 +5,6 @@ import 'package:finfx/features/subscriptions/presentation/screens/package_select
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/bot_details_provider.dart';
-import '../../../../utils/toast_utils.dart';
 
 class BotDetailsTab extends StatefulWidget {
   const BotDetailsTab({super.key, required this.bot});

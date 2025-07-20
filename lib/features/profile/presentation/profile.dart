@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:finfx/dark_mode.dart';
 import 'package:finfx/features/brokers/presentation/screens/brokers_screen.dart';
 import 'package:finfx/features/profile/presentation/personal_data.dart';
 import 'package:finfx/features/profile/presentation/widgets/profile_tile.dart';

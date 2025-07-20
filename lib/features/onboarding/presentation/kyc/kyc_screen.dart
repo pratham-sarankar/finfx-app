@@ -3,7 +3,6 @@ import 'package:finfx/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:finfx/features/onboarding/presentation/kyc/sections/experience_screen.dart';

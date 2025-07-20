@@ -7,7 +7,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 // Project imports:
 import 'package:finfx/screens/Login%20Screens/login_screen.dart';
-import 'package:finfx/screens/config/common.dart';
 import 'package:finfx/services/auth_storage_service.dart';
 
 class Splash extends StatefulWidget {

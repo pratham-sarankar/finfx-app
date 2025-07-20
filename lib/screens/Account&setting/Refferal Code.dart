@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:finfx/screens/config/common.dart';
 
 class Reffle_code extends StatefulWidget {
   const Reffle_code({super.key});
