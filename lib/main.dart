@@ -4,6 +4,8 @@ import 'package:finfx/features/brokers/presentation/providers/delta_provider.dar
 import 'package:finfx/features/bot/presentation/providers/signals_provider.dart';
 import 'package:finfx/features/user_trades/presentation/providers/user_signals_provider.dart';
 import 'package:finfx/features/subscriptions/presentation/providers/subscriptions_provider.dart';
+import 'package:finfx/features/subscriptions/presentation/providers/bot_packages_provider.dart';
+import 'package:finfx/features/subscriptions/data/services/bot_packages_service.dart';
 import 'package:finfx/themes/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -82,6 +84,13 @@ void main() async {
               );
             },
           ),
+          Provider<BotPackagesService>(
+            create: (context) {
+              return BotPackagesService(
+                apiService: context.read<ApiService>(),
+              );
+            },
+          ),
           Provider<AuthService>(
             create: (context) => AuthService(
               context.read<ApiService>(),
@@ -152,6 +161,13 @@ void main() async {
             create: (context) {
               return SubscriptionsProvider(
                 context.read<ApiService>(),
+              );
+            },
+          ),
+          ChangeNotifierProvider(
+            create: (context) {
+              return BotPackagesProvider(
+                botPackagesService: context.read<BotPackagesService>(),
               );
             },
           ),

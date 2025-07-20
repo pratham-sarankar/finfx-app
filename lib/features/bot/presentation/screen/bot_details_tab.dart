@@ -401,11 +401,12 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                     final selectedPackage =
                         await Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) {
-                        return PackageSelectionScreen();
+                        return PackageSelectionScreen(botId: widget.bot.id);
                       },
                     ));
                     if (selectedPackage == null) return;
-                    print(selectedPackage);
+                    print(
+                        'Selected Package: ${selectedPackage.bot.name} - ${selectedPackage.package.name} - \$${selectedPackage.price}');
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) {
                         return BotConnectionSuccessScreen();

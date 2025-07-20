@@ -80,7 +80,7 @@ class _Succcess extends State<Success> {
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: "Manrope-Regular",
-                    color: colorScheme.onSurface.withOpacity(0.6)),
+                    color: colorScheme.onSurface.withValues(alpha: 0.6)),
               ),
             ),
             const Spacer(),

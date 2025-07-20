@@ -98,7 +98,7 @@ class _ForgetState extends State<Forget> {
                   "Enter your email to receive a password reset link.",
                   style: TextStyle(
                     fontSize: 16,
-                    color: colorScheme.onSurface.withOpacity(0.6),
+                    color: colorScheme.onSurface.withValues(alpha: 0.6),
                     fontFamily: "Manrope-Medium",
                   ),
                 ),
@@ -114,7 +114,7 @@ class _ForgetState extends State<Forget> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     hintStyle: TextStyle(
-                        color: colorScheme.onSurface.withOpacity(0.6)),
+                        color: colorScheme.onSurface.withValues(alpha: 0.6)),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {

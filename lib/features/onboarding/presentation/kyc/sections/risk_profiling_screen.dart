@@ -130,7 +130,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
             "Help us understand your investment preferences and risk tolerance",
             style: TextStyle(
               fontSize: 16,
-              color: colorScheme.onSurface.withOpacity(0.6),
+              color: colorScheme.onSurface.withValues(alpha: 0.6),
               fontFamily: "Manrope-Medium",
             ),
           ),
@@ -210,7 +210,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
                 color: colorScheme.primary,
                 boxShadow: [
                   BoxShadow(
-                    color: colorScheme.primary.withOpacity(0.3),
+                    color: colorScheme.primary.withValues(alpha: 0.3),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -280,7 +280,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: isSelected
-              ? colorScheme.primary.withOpacity(0.08)
+              ? colorScheme.primary.withValues(alpha: 0.08)
               : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
@@ -372,7 +372,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: isSelected
-              ? colorScheme.primary.withOpacity(0.08)
+              ? colorScheme.primary.withValues(alpha: 0.08)
               : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(

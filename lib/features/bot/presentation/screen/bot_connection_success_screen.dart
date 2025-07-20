@@ -28,15 +28,15 @@ class _BotConnectionSuccessScreenState
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
                     colors: [
-                      theme.colorScheme.primary.withOpacity(0.8),
-                      theme.colorScheme.secondary.withOpacity(0.8),
+                      theme.colorScheme.primary.withValues(alpha: 0.8),
+                      theme.colorScheme.secondary.withValues(alpha: 0.8),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: theme.colorScheme.primary.withOpacity(0.2),
+                      color: theme.colorScheme.primary.withValues(alpha: 0.2),
                       blurRadius: 24,
                       offset: Offset(0, 8),
                     ),
@@ -62,7 +62,7 @@ class _BotConnectionSuccessScreenState
               Text(
                 'Your trading bot is now live and ready to use.',
                 style: theme.textTheme.bodyLarge?.copyWith(
-                  color: theme.colorScheme.onSurface.withOpacity(0.7),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
                 textAlign: TextAlign.center,
               ),
