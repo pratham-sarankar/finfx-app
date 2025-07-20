@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import '../../../../utils/toast_utils.dart';
+import '../widgets/broker_selection_form_field.dart';
 
 class BrokersScreen extends StatefulWidget {
   final int initialTab;
@@ -372,21 +373,13 @@ class _BrokersScreenState extends State<BrokersScreen>
                                           ),
                                         ),
                                         const SizedBox(height: 16),
-                                        TextField(
-                                          decoration: InputDecoration(
-                                            labelText: 'Broker',
-                                            labelStyle: TextStyle(
-                                                color: colorScheme.onSurface),
-                                            filled: true,
-                                            fillColor: colorScheme.surface,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                          ),
-                                          style: TextStyle(
-                                              color: colorScheme.onSurface),
+                                        BrokerSelectionFormField(
+                                          labelText: 'Broker',
+                                          onChanged: (broker) {
+                                            // Handle broker selection for Delta
+                                            print(
+                                                'Selected Delta broker: ${broker?.name}');
+                                          },
                                         ),
                                         const SizedBox(height: 16),
                                         TextField(
@@ -884,21 +877,14 @@ class _BrokersScreenState extends State<BrokersScreen>
                                           ),
                                         ),
                                         const SizedBox(height: 16),
-                                        TextField(
-                                          decoration: InputDecoration(
-                                            labelText: 'Broker',
-                                            labelStyle: TextStyle(
-                                                color: colorScheme.onSurface),
-                                            filled: true,
-                                            fillColor: colorScheme.surface,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                          ),
-                                          style: TextStyle(
-                                              color: colorScheme.onSurface),
+                                        BrokerSelectionFormField(
+                                          labelText: 'Broker',
+                                          key: ObjectKey('MT5'),
+                                          onChanged: (broker) {
+                                            // Handle broker selection for Delta
+                                            print(
+                                                'Selected Delta broker: ${broker?.name}');
+                                          },
                                         ),
                                         const SizedBox(height: 16),
                                         TextField(
