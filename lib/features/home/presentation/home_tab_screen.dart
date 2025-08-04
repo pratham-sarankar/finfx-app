@@ -319,7 +319,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Trending Strategies",
+                          "Trading Bot",
                           style: TextStyle(
                             color: colorScheme.onSurface,
                             fontSize: 18,

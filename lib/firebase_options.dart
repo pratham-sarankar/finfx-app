@@ -20,10 +20,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -31,15 +28,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -66,7 +57,43 @@ class DefaultFirebaseOptions {
     messagingSenderId: '917312759089',
     projectId: 'finfx-f86db',
     storageBucket: 'finfx-f86db.firebasestorage.app',
+    androidClientId:
+        '917312759089-1insj1vndld8mtdrfc29vea9qf2992ol.apps.googleusercontent.com',
+    iosClientId:
+        '917312759089-ku1o04rd0p93lk734j0qs83d3ju2dd9m.apps.googleusercontent.com',
     iosBundleId: 'com.finfx.app',
   );
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyB3lOoXdHgK00KdUA63ivazUytZk68aHCc',
+    appId: '1:917312759089:web:f41503c21ac1aab87d7c10',
+    messagingSenderId: '917312759089',
+    projectId: 'finfx-f86db',
+    authDomain: 'finfx-f86db.firebaseapp.com',
+    storageBucket: 'finfx-f86db.firebasestorage.app',
+    measurementId: 'G-9CTJB8X4L7',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBaKL5oy482E1d1Q1KMS6ygmfe2kiQ5ELY',
+    appId: '1:917312759089:ios:ad7cc7bff6be18487d7c10',
+    messagingSenderId: '917312759089',
+    projectId: 'finfx-f86db',
+    storageBucket: 'finfx-f86db.firebasestorage.app',
+    androidClientId:
+        '917312759089-1insj1vndld8mtdrfc29vea9qf2992ol.apps.googleusercontent.com',
+    iosClientId:
+        '917312759089-kuht7pm2q95b7tb3r4cuuj0l2ufu2kpm.apps.googleusercontent.com',
+    iosBundleId: 'com.finfx.finfx',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyB3lOoXdHgK00KdUA63ivazUytZk68aHCc',
+    appId: '1:917312759089:web:6fd1b84078a97ebc7d7c10',
+    messagingSenderId: '917312759089',
+    projectId: 'finfx-f86db',
+    authDomain: 'finfx-f86db.firebaseapp.com',
+    storageBucket: 'finfx-f86db.firebasestorage.app',
+    measurementId: 'G-E3JQ0SD7E3',
+  );
 }

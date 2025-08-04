@@ -95,7 +95,8 @@ class BotDetailsProvider extends ChangeNotifier {
   }
 
   /// Toggle subscription (subscribe if not subscribed, cancel if subscribed)
-  Future<bool> toggleSubscription(String botId) async {
+  Future<bool> toggleSubscription(
+      String botId, String botPackageId, double lotSize) async {
     if (_isToggling) return false;
 
     _isToggling = true;
@@ -103,8 +104,11 @@ class BotDetailsProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _subscriptionStatus =
-          await _subscriptionService.toggleSubscription(botId);
+      _subscriptionStatus = await _subscriptionService.toggleSubscription(
+        botId,
+        botPackageId,
+        lotSize,
+      );
       return true;
     } catch (e) {
       if (e is ApiError) {
@@ -120,7 +124,8 @@ class BotDetailsProvider extends ChangeNotifier {
   }
 
   /// Subscribe to a bot
-  Future<bool> subscribeToBot(String botId) async {
+  Future<bool> subscribeToBot(
+      String botId, String botPackageId, double lotSize) async {
     if (_isToggling) return false;
 
     _isToggling = true;
@@ -128,7 +133,8 @@ class BotDetailsProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _subscriptionStatus = await _subscriptionService.subscribeToBot(botId);
+      _subscriptionStatus = await _subscriptionService.subscribeToBot(
+          botId, botPackageId, lotSize);
       return true;
     } catch (e) {
       if (e is ApiError) {

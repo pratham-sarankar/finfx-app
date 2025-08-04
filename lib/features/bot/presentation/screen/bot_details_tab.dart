@@ -1,7 +1,9 @@
 import 'package:finfx/features/bot/presentation/screen/bot_connection_success_screen.dart';
 import 'package:finfx/features/home/data/models/bot_model.dart';
+import 'package:finfx/features/subscriptions/data/models/bot_package_model.dart';
 import 'package:finfx/features/subscriptions/presentation/screens/lot_size_screen.dart';
 import 'package:finfx/features/subscriptions/presentation/screens/package_selection_screen.dart';
+import 'package:finfx/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/bot_details_provider.dart';
@@ -389,6 +391,19 @@ class _BotDetailsTabState extends State<BotDetailsTab>
             onPressed: botDetailsProvider.isToggling
                 ? null
                 : () async {
+                    if (botDetailsProvider.isSubscribed) {
+                      final success = await botDetailsProvider
+                          .cancelSubscription(botDetailsProvider
+                              .subscriptionStatus!.subscription!.id);
+                      if (success) {
+                        ToastUtils.showSuccess(
+                          context: context,
+                          message:
+                              'Successfully cancelled subscription for ${widget.bot.name}',
+                        );
+                      }
+                      return;
+                    }
                     final selectedLotSize =
                         await Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) {
@@ -407,11 +422,25 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                     if (selectedPackage == null) return;
                     print(
                         'Selected Package: ${selectedPackage.bot.name} - ${selectedPackage.package.name} - \$${selectedPackage.price}');
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) {
-                        return BotConnectionSuccessScreen();
-                      },
-                    ));
+                    // Add subscription
+                    final success = await botDetailsProvider.subscribeToBot(
+                      widget.bot.id,
+                      selectedPackage.id,
+                      selectedLotSize,
+                    );
+                    if (success) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) {
+                          return BotConnectionSuccessScreen();
+                        },
+                      ));
+                    } else {
+                      ToastUtils.showError(
+                        context: context,
+                        message: 'Failed to subscribe to ${widget.bot.name}',
+                      );
+                    }
+
                     // final success = await botDetailsProvider
                     //     .toggleSubscription(widget.bot.id);
                     // if (success) {

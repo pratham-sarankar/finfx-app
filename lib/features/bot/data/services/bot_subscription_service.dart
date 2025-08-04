@@ -37,11 +37,16 @@ class BotSubscriptionService {
   }
 
   /// Subscribe to a bot
-  Future<BotSubscriptionStatus> subscribeToBot(String botId) async {
+  Future<BotSubscriptionStatus> subscribeToBot(
+      String botId, String botPackageId, double lotSize) async {
     try {
       final response = await _apiService.post(
         '/api/subscriptions',
-        body: jsonEncode({'botId': botId}),
+        body: jsonEncode({
+          'botId': botId,
+          'botPackageId': botPackageId,
+          'lotSize': lotSize,
+        }),
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -89,7 +94,8 @@ class BotSubscriptionService {
   }
 
   /// Toggle subscription (subscribe if not subscribed, cancel if subscribed)
-  Future<BotSubscriptionStatus> toggleSubscription(String botId) async {
+  Future<BotSubscriptionStatus> toggleSubscription(
+      String botId, String botPackageId, double lotSize) async {
     try {
       // First check current status
       final currentStatus = await checkSubscriptionStatus(botId);
@@ -97,7 +103,7 @@ class BotSubscriptionService {
       if (currentStatus.isSubscribed) {
         return await cancelSubscription(currentStatus.subscription!.id);
       } else {
-        final response = await subscribeToBot(botId);
+        final response = await subscribeToBot(botId, botPackageId, lotSize);
         return response;
       }
     } catch (e) {

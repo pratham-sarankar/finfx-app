@@ -13,11 +13,46 @@ class SubscriptionsProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   String? _currentStatus;
+  bool _isSubscribing = false;
+  String? _subscribeError;
 
   List<SubscriptionModel> get subscriptions => _subscriptions;
   bool get isLoading => _isLoading;
   String? get error => _error;
   String? get currentStatus => _currentStatus;
+  bool get isSubscribing => _isSubscribing;
+  String? get subscribeError => _subscribeError;
+
+  Future<bool> subscribeToBot({
+    required String botId,
+    required int lotSize,
+    required String botPackageId,
+  }) async {
+    _isSubscribing = true;
+    _subscribeError = null;
+    notifyListeners();
+    try {
+      final body = jsonEncode({
+        'botId': botId,
+        'lotSize': lotSize,
+        'botPackageId': botPackageId,
+      });
+      final response = await _apiService.post('/api/subscriptions', body: body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      } else {
+        final errorData = json.decode(response.body);
+        _subscribeError = errorData['message'] ?? 'Failed to subscribe';
+        return false;
+      }
+    } catch (e) {
+      _subscribeError = e.toString();
+      return false;
+    } finally {
+      _isSubscribing = false;
+      notifyListeners();
+    }
+  }
 
   Future<void> fetchSubscriptions({String? status}) async {
     try {

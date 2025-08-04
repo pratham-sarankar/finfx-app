@@ -139,7 +139,7 @@ class _BotDetailsScreenState extends State<BotDetailsScreen>
                             ? colorScheme.primary
                             : colorScheme.onSurface.withValues(alpha: 0.7)),
                     const SizedBox(width: 8),
-                    const Text('Signals'),
+                    const Text('Trades'),
                   ],
                 ),
               ].map((child) => Tab(child: child)).toList(),
