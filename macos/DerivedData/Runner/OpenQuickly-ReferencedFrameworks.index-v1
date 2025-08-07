@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>the</string>
+	<string>FirebaseCore</string>
+	<string>WebKit</string>
+	<string>FirebaseStorage</string>
+	<string>FirebaseInAppMessaging</string>
+	<string>google</string>
+	<string>FirebaseCrashlytics</string>
+	<string>GTMAppAuth</string>
+	<string>FirebaseDatabase</string>
+	<string>FirebaseAppCheck</string>
+	<string>CoreServices</string>
+	<string>AppAuthCore</string>
+	<string>FirebaseFunctions</string>
+	<string>GTMSessionFetcherCore</string>
+	<string>FirebaseMessaging</string>
+	<string>shared</string>
+	<string>os</string>
+	<string>WatchKit</string>
+	<string>CoreText</string>
+	<string>DeviceCheck</string>
+	<string>FirebaseAuthInterop</string>
+	<string>FirebaseAuth</string>
+	<string>AppKit</string>
+	<string>package</string>
+	<string>AppAuth</string>
+	<string>Cocoa</string>
+	<string>FirebasePerformance</string>
+	<string>FirebaseCoreInternal</string>
+	<string>AuthenticationServices</string>
+	<string>FirebaseAppDistribution</string>
+	<string>XCTest</string>
+	<string>CoreData</string>
+	<string>FirebaseInstallations</string>
+	<string>CommonCrypto</string>
+	<string>GoogleUtilities</string>
+	<string>FirebaseRemoteConfig</string>
+	<string>GoogleSignIn</string>
+	<string>GTMSessionFetcher</string>
+	<string>SystemConfiguration</string>
+	<string>FirebaseAnalytics</string>
+	<string>Security</string>
+	<string>LocalAuthentication</string>
+	<string>UniformTypeIdentifiers</string>
+	<string>FirebaseCoreExtension</string>
+	<string>file</string>
+	<string>webview</string>
+	<string>firebase</string>
+	<string>objc</string>
+	<string>CoreMedia</string>
+	<string>FirebaseDynamicLinks</string>
+	<string>AppCheckCore</string>
+	<string>UIKit</string>
+	<string>Foundation</string>
+	<string>CoreTelephony</string>
+	<string>Darwin</string>
+	<string>Flutter</string>
+	<string>FlutterMacOS</string>
+	<string>sys</string>
+	<string>FirebaseFirestore</string>
+	<string>FBLPromises</string>
+</array>
+</plist>

@@ -1,0 +1,23 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/prathamsarankar/Projects/finfx/app/macos/DerivedData/Runner/Index.noindex/Build/Products/Debug/file_picker/file_picker.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/prathamsarankar/Projects/finfx/app/macos/DerivedData/Runner/Index.noindex/Build/Intermediates.noindex/Pods.build/Debug/file_picker.build/unextended-module.modulemap",
+    }]
+    },
+    {
+    'type': 'directory',
+    'name': "/Users/prathamsarankar/Projects/finfx/app/macos/DerivedData/Runner/Index.noindex/Build/Products/Debug/file_picker/file_picker.framework/Headers"
+    'contents': [{
+      'type': 'file',
+      'name': "file_picker-Swift.h",
+      'external-contents': "/Users/prathamsarankar/Projects/finfx/app/macos/DerivedData/Runner/Index.noindex/Build/Intermediates.noindex/Pods.build/Debug/file_picker.build/unextended-interface-header.h",
+    }]
+    }]
+}

@@ -1,0 +1,12 @@
+version: "Apple Swift version 6.0.3 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)"
+options: "2f99eb9d29d4761facb6360e5a6bbecaf1469999b7e5012fb77a6f173434d743"
+build_start_time: [1752176429, 229209000]
+build_end_time: [1752176441, 763008000]
+inputs:
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/GTMAppAuth/GTMAppAuth/Sources/AuthSession.swift": [1752176293, 93991688]
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/GTMAppAuth/GTMAppAuth/Sources/AuthSessionDelegate.swift": [1752176293, 93668733]
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/GTMAppAuth/GTMAppAuth/Sources/AuthSessionStore.swift": [1752176293, 93513318]
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/GTMAppAuth/GTMAppAuth/Sources/KeychainStore/GTMOAuth2Compatibility.swift": [1752176293, 95673255]
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/GTMAppAuth/GTMAppAuth/Sources/KeychainStore/KeychainAttribute.swift": [1752176293, 95349383]
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/GTMAppAuth/GTMAppAuth/Sources/KeychainStore/KeychainHelper.swift": [1752176293, 94749556]
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/GTMAppAuth/GTMAppAuth/Sources/KeychainStore/KeychainStore.swift": [1752176293, 95107261]

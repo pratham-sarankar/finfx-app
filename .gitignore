@@ -59,9 +59,3 @@ ios/Podfile.lock
 # Environment variables
 .env
 env.json
-
-# Platform folders to ignore
-macos/
-linux/
-windows/
-web/

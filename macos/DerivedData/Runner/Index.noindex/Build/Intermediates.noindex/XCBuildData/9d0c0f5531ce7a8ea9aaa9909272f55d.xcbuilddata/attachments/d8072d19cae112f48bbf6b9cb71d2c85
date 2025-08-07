@@ -1,0 +1,45 @@
+{
+  "" : {
+    "dependencies" : "/Users/prathamsarankar/Projects/finfx/app/macos/DerivedData/Runner/Index.noindex/Build/Intermediates.noindex/Pods.build/Debug/FirebaseCoreInternal.build/Objects-normal/arm64/FirebaseCoreInternal-master.d",
+    "diagnostics" : "/Users/prathamsarankar/Projects/finfx/app/macos/DerivedData/Runner/Index.noindex/Build/Intermediates.noindex/Pods.build/Debug/FirebaseCoreInternal.build/Objects-normal/arm64/FirebaseCoreInternal-master.dia",
+    "emit-module-dependencies" : "/Users/prathamsarankar/Projects/finfx/app/macos/DerivedData/Runner/Index.noindex/Build/Intermediates.noindex/Pods.build/Debug/FirebaseCoreInternal.build/Objects-normal/arm64/FirebaseCoreInternal-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/prathamsarankar/Projects/finfx/app/macos/DerivedData/Runner/Index.noindex/Build/Intermediates.noindex/Pods.build/Debug/FirebaseCoreInternal.build/Objects-normal/arm64/FirebaseCoreInternal-master-emit-module.dia",
+    "swift-dependencies" : "/Users/prathamsarankar/Projects/finfx/app/macos/DerivedData/Runner/Index.noindex/Build/Intermediates.noindex/Pods.build/Debug/FirebaseCoreInternal.build/Objects-normal/arm64/FirebaseCoreInternal-master.swiftdeps"
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/Heartbeat.swift" : {
+
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/HeartbeatController.swift" : {
+
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/HeartbeatLoggingTestUtils.swift" : {
+
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/HeartbeatStorage.swift" : {
+
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/HeartbeatsBundle.swift" : {
+
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/HeartbeatsPayload.swift" : {
+
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/RingBuffer.swift" : {
+
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/Storage.swift" : {
+
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/StorageFactory.swift" : {
+
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/WeakContainer.swift" : {
+
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/_ObjC_HeartbeatController.swift" : {
+
+  },
+  "/Users/prathamsarankar/Projects/finfx/app/macos/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/_ObjC_HeartbeatsPayload.swift" : {
+
+  }
+}
