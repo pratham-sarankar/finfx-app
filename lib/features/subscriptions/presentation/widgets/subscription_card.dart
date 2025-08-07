@@ -185,6 +185,40 @@ class SubscriptionCard extends StatelessWidget {
                               ),
                             ],
                           ),
+                          if ((subscription.status == 'active' ||
+                                  subscription.status == 'paused') &&
+                              subscription.expiresAt != null) ...[
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.schedule,
+                                  size: 16,
+                                  color: colorScheme.onSurface
+                                      .withValues(alpha: 0.5),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  'Expires: ',
+                                  style: TextStyle(
+                                    color: colorScheme.onSurface
+                                        .withValues(alpha: 0.6),
+                                    fontSize: 12,
+                                    fontFamily: "Manrope-Regular",
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat('MMM d, yyyy')
+                                      .format(subscription.expiresAt!),
+                                  style: TextStyle(
+                                    color: colorScheme.onSurface,
+                                    fontSize: 12,
+                                    fontFamily: "Manrope-SemiBold",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ],
                       ),
                     ),

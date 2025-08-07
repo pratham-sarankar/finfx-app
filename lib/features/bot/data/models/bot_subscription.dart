@@ -3,12 +3,14 @@ class BotSubscription {
   final String status;
   final DateTime subscribedAt;
   final DateTime? cancelledAt;
+  final DateTime? expiresAt;
 
   BotSubscription({
     required this.id,
     required this.status,
     required this.subscribedAt,
     this.cancelledAt,
+    this.expiresAt,
   });
 
   factory BotSubscription.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,9 @@ class BotSubscription {
       cancelledAt: json['cancelledAt'] != null
           ? DateTime.parse(json['cancelledAt'] as String)
           : null,
+      expiresAt: json['expiresAt'] != null
+          ? DateTime.parse(json['expiresAt'] as String)
+          : null,
     );
   }
 
@@ -28,6 +33,7 @@ class BotSubscription {
       'status': status,
       'subscribedAt': subscribedAt.toIso8601String(),
       'cancelledAt': cancelledAt?.toIso8601String(),
+      'expiresAt': expiresAt?.toIso8601String(),
     };
   }
 

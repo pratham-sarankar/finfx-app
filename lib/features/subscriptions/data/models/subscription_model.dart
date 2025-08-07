@@ -9,6 +9,7 @@ class SubscriptionModel {
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? cancelledAt;
+  final DateTime? expiresAt;
   final SubscriptionBotModel bot;
 
   SubscriptionModel({
@@ -19,6 +20,7 @@ class SubscriptionModel {
     required this.createdAt,
     required this.updatedAt,
     this.cancelledAt,
+    this.expiresAt,
     required this.bot,
   });
 
@@ -33,6 +35,9 @@ class SubscriptionModel {
         updatedAt: DateTime.parse(json['updatedAt'] as String),
         cancelledAt: json['cancelledAt'] != null
             ? DateTime.parse(json['cancelledAt'] as String)
+            : null,
+        expiresAt: json['expiresAt'] != null
+            ? DateTime.parse(json['expiresAt'] as String)
             : null,
         bot: SubscriptionBotModel.fromJson(json['bot'] as Map<String, dynamic>),
       );
@@ -50,6 +55,7 @@ class SubscriptionModel {
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
       'cancelledAt': cancelledAt?.toIso8601String(),
+      'expiresAt': expiresAt?.toIso8601String(),
       'bot': bot.toJson(),
     };
   }

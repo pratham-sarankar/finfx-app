@@ -189,6 +189,25 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                     fontFamily: "Manrope-Regular",
                                   ),
                                 ),
+                                if ((botDetailsProvider.subscriptionStatus!
+                                                .subscription!.status ==
+                                            'active' ||
+                                        botDetailsProvider.subscriptionStatus!
+                                                .subscription!.status ==
+                                            'paused') &&
+                                    botDetailsProvider.subscriptionStatus!
+                                            .subscription!.expiresAt !=
+                                        null) ...[
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Expires: ${_formatDate(botDetailsProvider.subscriptionStatus!.subscription!.expiresAt!)}',
+                                    style: TextStyle(
+                                      color: colorScheme.onSurfaceVariant,
+                                      fontSize: 12,
+                                      fontFamily: "Manrope-Regular",
+                                    ),
+                                  ),
+                                ],
                               ],
                             ],
                           ),
