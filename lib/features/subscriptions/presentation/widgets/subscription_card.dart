@@ -16,8 +16,10 @@ class SubscriptionCard extends StatelessWidget {
     switch (status) {
       case 'active':
         return const Color(0xFF4CAF50);
-      case 'cancelled':
-        return const Color(0xFFF44336);
+      case 'paused':
+        return const Color(0xFFFF9800);
+      case 'expired':
+        return const Color(0xFF9E9E9E);
       default:
         return const Color(0xFF607D8B);
     }
@@ -27,10 +29,25 @@ class SubscriptionCard extends StatelessWidget {
     switch (status) {
       case 'active':
         return 'Active';
-      case 'cancelled':
-        return 'Cancelled';
+      case 'paused':
+        return 'Paused';
+      case 'expired':
+        return 'Expired';
       default:
         return 'Unknown';
+    }
+  }
+
+  IconData _getStatusIcon(String status) {
+    switch (status) {
+      case 'active':
+        return Icons.check_circle;
+      case 'paused':
+        return Icons.pause_circle;
+      case 'expired':
+        return Icons.schedule;
+      default:
+        return Icons.help;
     }
   }
 
@@ -108,9 +125,7 @@ class SubscriptionCard extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Icon(
-                                      subscription.status == 'active'
-                                          ? Icons.check_circle
-                                          : Icons.cancel,
+                                      _getStatusIcon(subscription.status),
                                       color:
                                           getStatusColor(subscription.status),
                                       size: 16,
@@ -175,32 +190,58 @@ class SubscriptionCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (subscription.status == 'active') ...[
+                if (subscription.status == 'active' ||
+                    subscription.status == 'paused') ...[
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () => _showCancelDialog(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            colorScheme.error.withValues(alpha: 0.1),
-                        foregroundColor: colorScheme.error,
-                        elevation: 0,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          side: BorderSide(
-                              color: colorScheme.error.withValues(alpha: 0.3)),
-                        ),
-                      ),
-                      child: const Text(
-                        'Cancel Subscription',
-                        style: TextStyle(
-                          fontFamily: "Manrope-SemiBold",
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
+                    child: subscription.status == 'active'
+                        ? ElevatedButton(
+                            onPressed: () => _pauseSubscription(context),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFFF9800)
+                                  .withValues(alpha: 0.1),
+                              foregroundColor: const Color(0xFFFF9800),
+                              elevation: 0,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                side: BorderSide(
+                                    color: const Color(0xFFFF9800)
+                                        .withValues(alpha: 0.3)),
+                              ),
+                            ),
+                            child: const Text(
+                              'Pause',
+                              style: TextStyle(
+                                fontFamily: "Manrope-SemiBold",
+                                fontSize: 14,
+                              ),
+                            ),
+                          )
+                        : ElevatedButton(
+                            onPressed: () => _reactivateSubscription(context),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF4CAF50)
+                                  .withValues(alpha: 0.1),
+                              foregroundColor: const Color(0xFF4CAF50),
+                              elevation: 0,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                side: BorderSide(
+                                    color: const Color(0xFF4CAF50)
+                                        .withValues(alpha: 0.3)),
+                              ),
+                            ),
+                            child: const Text(
+                              'Reactivate',
+                              style: TextStyle(
+                                fontFamily: "Manrope-SemiBold",
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
                   ),
                 ],
               ],
@@ -211,48 +252,44 @@ class SubscriptionCard extends StatelessWidget {
     );
   }
 
-  void _showCancelDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Cancel Subscription'),
-          content: Text(
-              'Are you sure you want to cancel your subscription to ${subscription.bot.name}?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('No'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                _cancelSubscription(context);
-              },
-              style: TextButton.styleFrom(foregroundColor: Colors.red),
-              child: const Text('Yes, Cancel'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _cancelSubscription(BuildContext context) async {
+  void _pauseSubscription(BuildContext context) async {
     final provider = context.read<SubscriptionsProvider>();
-    final success = await provider.cancelSubscription(subscription.id);
+    final success =
+        await provider.updateSubscriptionStatus(subscription.id, 'paused');
 
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Subscription cancelled successfully'),
+          content: Text('Subscription paused successfully'),
           backgroundColor: Colors.green,
         ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(provider.error ?? 'Failed to cancel subscription'),
+          content: Text(provider.error ?? 'Failed to pause subscription'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  void _reactivateSubscription(BuildContext context) async {
+    final provider = context.read<SubscriptionsProvider>();
+    final success =
+        await provider.updateSubscriptionStatus(subscription.id, 'active');
+
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Subscription reactivated successfully'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(provider.error ?? 'Failed to reactivate subscription'),
           backgroundColor: Colors.red,
         ),
       );

@@ -32,5 +32,5 @@ class BotSubscription {
   }
 
   bool get isActive => status == 'active';
-  bool get isCancelled => status == 'cancelled';
+  bool get isPaused => status == 'paused';
 }

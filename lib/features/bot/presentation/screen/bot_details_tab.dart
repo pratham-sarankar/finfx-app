@@ -150,23 +150,27 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                               Row(
                                 children: [
                                   Icon(
-                                    botDetailsProvider.isSubscribed
-                                        ? Icons.check_circle
-                                        : Icons.cancel,
-                                    color: botDetailsProvider.isSubscribed
-                                        ? Colors.green
-                                        : Colors.red,
+                                    _getStatusIcon(botDetailsProvider
+                                        .subscriptionStatus
+                                        ?.subscription
+                                        ?.status),
+                                    color: _getStatusColor(botDetailsProvider
+                                        .subscriptionStatus
+                                        ?.subscription
+                                        ?.status),
                                     size: 20,
                                   ),
                                   const SizedBox(width: 8),
                                   Text(
-                                    botDetailsProvider.isSubscribed
-                                        ? 'Active Subscription'
-                                        : 'Not Subscribed',
+                                    _getStatusText(botDetailsProvider
+                                        .subscriptionStatus
+                                        ?.subscription
+                                        ?.status),
                                     style: TextStyle(
-                                      color: botDetailsProvider.isSubscribed
-                                          ? Colors.green
-                                          : Colors.red,
+                                      color: _getStatusColor(botDetailsProvider
+                                          .subscriptionStatus
+                                          ?.subscription
+                                          ?.status),
                                       fontSize: 14,
                                       fontFamily: "Manrope-Medium",
                                     ),
@@ -185,17 +189,6 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                     fontFamily: "Manrope-Regular",
                                   ),
                                 ),
-                                if (botDetailsProvider.subscriptionStatus!
-                                        .subscription!.cancelledAt !=
-                                    null)
-                                  Text(
-                                    'Cancelled: ${_formatDate(botDetailsProvider.subscriptionStatus!.subscription!.cancelledAt!)}',
-                                    style: TextStyle(
-                                      color: colorScheme.onSurfaceVariant,
-                                      fontSize: 12,
-                                      fontFamily: "Manrope-Regular",
-                                    ),
-                                  ),
                               ],
                             ],
                           ),
@@ -391,83 +384,117 @@ class _BotDetailsTabState extends State<BotDetailsTab>
             onPressed: botDetailsProvider.isToggling
                 ? null
                 : () async {
-                    if (botDetailsProvider.isSubscribed) {
-                      final success = await botDetailsProvider
-                          .cancelSubscription(botDetailsProvider
-                              .subscriptionStatus!.subscription!.id);
+                    final subscriptionStatus = botDetailsProvider
+                        .subscriptionStatus?.subscription?.status;
+
+                    if (subscriptionStatus == 'active') {
+                      // Pause the subscription
+                      final success =
+                          await botDetailsProvider.updateSubscriptionStatus(
+                              botDetailsProvider
+                                  .subscriptionStatus!.subscription!.id,
+                              'paused');
                       if (success) {
                         ToastUtils.showSuccess(
                           context: context,
                           message:
-                              'Successfully cancelled subscription for ${widget.bot.name}',
+                              'Successfully paused subscription for ${widget.bot.name}',
+                        );
+                      } else {
+                        ToastUtils.showError(
+                          context: context,
+                          message: botDetailsProvider.error ??
+                              'Failed to pause subscription',
                         );
                       }
                       return;
-                    }
-                    final selectedLotSize =
-                        await Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) {
-                        return LotSizeScreen();
-                      },
-                      fullscreenDialog: true,
-                    ));
-                    if (selectedLotSize == null) return;
-                    print(selectedLotSize);
-                    final selectedPackage =
-                        await Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) {
-                        return PackageSelectionScreen(botId: widget.bot.id);
-                      },
-                    ));
-                    if (selectedPackage == null) return;
-                    print(
-                        'Selected Package: ${selectedPackage.bot.name} - ${selectedPackage.package.name} - \$${selectedPackage.price}');
-                    // Add subscription
-                    final success = await botDetailsProvider.subscribeToBot(
-                      widget.bot.id,
-                      selectedPackage.id,
-                      selectedLotSize,
-                    );
-                    if (success) {
-                      Navigator.of(context).push(MaterialPageRoute(
+                    } else if (subscriptionStatus == 'paused') {
+                      // Reactivate the subscription
+                      final success =
+                          await botDetailsProvider.updateSubscriptionStatus(
+                              botDetailsProvider
+                                  .subscriptionStatus!.subscription!.id,
+                              'active');
+                      if (success) {
+                        ToastUtils.showSuccess(
+                          context: context,
+                          message:
+                              'Successfully reactivated subscription for ${widget.bot.name}',
+                        );
+                      } else {
+                        ToastUtils.showError(
+                          context: context,
+                          message: botDetailsProvider.error ??
+                              'Failed to reactivate subscription',
+                        );
+                      }
+                      return;
+                    } else {
+                      // Connect (subscribe) - for expired or no subscription
+                      final selectedLotSize =
+                          await Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) {
-                          return BotConnectionSuccessScreen();
+                          return LotSizeScreen();
+                        },
+                        fullscreenDialog: true,
+                      ));
+                      if (selectedLotSize == null) return;
+                      print(selectedLotSize);
+                      final selectedPackage =
+                          await Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) {
+                          return PackageSelectionScreen(botId: widget.bot.id);
                         },
                       ));
-                    } else {
-                      ToastUtils.showError(
-                        context: context,
-                        message: 'Failed to subscribe to ${widget.bot.name}',
+                      if (selectedPackage == null) return;
+                      print(
+                          'Selected Package: ${selectedPackage.bot.name} - ${selectedPackage.package.name} - \$${selectedPackage.price}');
+                      // Add subscription
+                      final success = await botDetailsProvider.subscribeToBot(
+                        widget.bot.id,
+                        selectedPackage.id,
+                        selectedLotSize,
                       );
-                    }
+                      if (success) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) {
+                            return BotConnectionSuccessScreen();
+                          },
+                        ));
+                      } else {
+                        ToastUtils.showError(
+                          context: context,
+                          message: 'Failed to subscribe to ${widget.bot.name}',
+                        );
+                      }
 
-                    // final success = await botDetailsProvider
-                    //     .toggleSubscription(widget.bot.id);
-                    // if (success) {
-                    //   if (botDetailsProvider.isSubscribed) {
-                    //     ToastUtils.showSuccess(
-                    //       context: context,
-                    //       message:
-                    //           'Successfully subscribed to ${widget.bot.name}!',
-                    //     );
-                    //   } else {
-                    //     ToastUtils.showInfo(
-                    //       context: context,
-                    //       message:
-                    //           'Subscription cancelled for ${widget.bot.name}',
-                    //     );
-                    //   }
-                    // } else {
-                    //   ToastUtils.showError(
-                    //     context: context,
-                    //     message: botDetailsProvider.error ??
-                    //         'Failed to toggle subscription',
-                    //   );
-                    // }
+                      // final success = await botDetailsProvider
+                      //     .toggleSubscription(widget.bot.id);
+                      // if (success) {
+                      //   if (botDetailsProvider.isSubscribed) {
+                      //     ToastUtils.showSuccess(
+                      //       context: context,
+                      //       message:
+                      //           'Successfully subscribed to ${widget.bot.name}!',
+                      //     );
+                      //   } else {
+                      //     ToastUtils.showInfo(
+                      //       context: context,
+                      //       message:
+                      //           'Subscription cancelled for ${widget.bot.name}',
+                      //     );
+                      //   }
+                      // } else {
+                      //   ToastUtils.showError(
+                      //     context: context,
+                      //     message: botDetailsProvider.error ??
+                      //         'Failed to toggle subscription',
+                      //   );
+                      // }
+                    }
                   },
-            backgroundColor: botDetailsProvider.isSubscribed
-                ? Colors.red
-                : const Color(0xff2e9844),
+            backgroundColor: _getFloatingActionButtonColor(
+                botDetailsProvider.subscriptionStatus?.subscription?.status),
             icon: botDetailsProvider.isToggling
                 ? SizedBox(
                     width: 20,
@@ -478,17 +505,15 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                     ),
                   )
                 : Icon(
-                    botDetailsProvider.isSubscribed
-                        ? Icons.link_off
-                        : Icons.link,
+                    _getFloatingActionButtonIcon(botDetailsProvider
+                        .subscriptionStatus?.subscription?.status),
                     color: Colors.white,
                   ),
             label: Text(
               botDetailsProvider.isToggling
                   ? 'Processing...'
-                  : botDetailsProvider.isSubscribed
-                      ? 'Disconnect'
-                      : 'Connect',
+                  : _getFloatingActionButtonText(botDetailsProvider
+                      .subscriptionStatus?.subscription?.status),
               style: const TextStyle(
                 color: Colors.white,
                 fontFamily: "Manrope-Bold",
@@ -624,5 +649,83 @@ class _BotDetailsTabState extends State<BotDetailsTab>
         ],
       ),
     );
+  }
+
+  Color _getStatusColor(String? status) {
+    switch (status) {
+      case 'active':
+        return const Color(0xFF4CAF50);
+      case 'paused':
+        return const Color(0xFFFF9800);
+      case 'expired':
+        return const Color(0xFF9E9E9E);
+      default:
+        return const Color(0xFF607D8B);
+    }
+  }
+
+  String _getStatusText(String? status) {
+    switch (status) {
+      case 'active':
+        return 'Active Subscription';
+      case 'paused':
+        return 'Paused Subscription';
+      case 'expired':
+        return 'Expired Subscription';
+      default:
+        return 'Not Subscribed';
+    }
+  }
+
+  IconData _getStatusIcon(String? status) {
+    switch (status) {
+      case 'active':
+        return Icons.check_circle;
+      case 'paused':
+        return Icons.pause_circle;
+      case 'expired':
+        return Icons.schedule;
+      default:
+        return Icons.cancel;
+    }
+  }
+
+  Color _getFloatingActionButtonColor(String? status) {
+    switch (status) {
+      case 'active':
+        return const Color(0xFFFF9800); // Orange for pause
+      case 'paused':
+        return const Color(0xFF4CAF50); // Green for reactivate
+      case 'expired':
+        return const Color(0xff2e9844); // Green for connect again
+      default:
+        return const Color(0xff2e9844); // Green for connect
+    }
+  }
+
+  IconData _getFloatingActionButtonIcon(String? status) {
+    switch (status) {
+      case 'active':
+        return Icons.pause;
+      case 'paused':
+        return Icons.play_arrow;
+      case 'expired':
+        return Icons.link;
+      default:
+        return Icons.link;
+    }
+  }
+
+  String _getFloatingActionButtonText(String? status) {
+    switch (status) {
+      case 'active':
+        return 'Pause';
+      case 'paused':
+        return 'Reactivate';
+      case 'expired':
+        return 'Connect Again';
+      default:
+        return 'Connect';
+    }
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:finfx/features/subscriptions/data/models/subscription_model.dart';
-import 'package:finfx/features/subscriptions/data/models/cancel_subscription_response.dart';
 import 'package:finfx/services/api_service.dart';
 
 class SubscriptionsProvider extends ChangeNotifier {
@@ -90,48 +89,49 @@ class SubscriptionsProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> cancelSubscription(String subscriptionId) async {
+  Future<bool> updateSubscriptionStatus(String subscriptionId, String status,
+      {double? lotSize}) async {
     try {
+      final body = jsonEncode({
+        'status': status,
+        if (lotSize != null) 'lotSize': lotSize,
+      });
+
       final response = await _apiService.put(
-        '/api/subscriptions/$subscriptionId/cancel',
-        body: '{}', // Empty body as per API specification
+        '/api/subscriptions/$subscriptionId',
+        body: body,
       );
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
 
         if (data['status'] == 'success') {
-          // Parse the cancel response
-          final cancelResponse =
-              CancelSubscriptionResponse.fromJson(data['data']);
-
           // Update the subscription status in the list
           final index =
               _subscriptions.indexWhere((sub) => sub.id == subscriptionId);
           if (index != -1) {
-            // Update the existing subscription with new status and cancelledAt
             final existingSubscription = _subscriptions[index];
             final updatedSubscription = SubscriptionModel(
-              id: cancelResponse.id,
-              userId: cancelResponse.userId,
-              status: cancelResponse.status,
-              subscribedAt: cancelResponse.subscribedAt,
-              createdAt: cancelResponse.createdAt,
-              updatedAt: cancelResponse.updatedAt,
-              cancelledAt: cancelResponse.cancelledAt,
-              bot: existingSubscription.bot, // Keep the existing bot data
+              id: existingSubscription.id,
+              userId: existingSubscription.userId,
+              status: status,
+              subscribedAt: existingSubscription.subscribedAt,
+              createdAt: existingSubscription.createdAt,
+              updatedAt: DateTime.now(),
+              cancelledAt: existingSubscription.cancelledAt,
+              bot: existingSubscription.bot,
             );
             _subscriptions[index] = updatedSubscription;
             notifyListeners();
           }
           return true;
         } else {
-          _error = data['message'] ?? 'Failed to cancel subscription';
+          _error = data['message'] ?? 'Failed to update subscription status';
           notifyListeners();
           return false;
         }
       } else if (response.statusCode == 404) {
-        _error = 'Subscription not found or endpoint does not exist';
+        _error = 'Subscription not found';
         notifyListeners();
         return false;
       } else if (response.statusCode == 400) {
@@ -144,12 +144,12 @@ class SubscriptionsProvider extends ChangeNotifier {
         return false;
       } else if (response.statusCode == 403) {
         _error =
-            'Forbidden: You do not have permission to cancel this subscription';
+            'Forbidden: You do not have permission to update this subscription';
         notifyListeners();
         return false;
       } else {
         _error =
-            'Failed to cancel subscription: ${response.statusCode} - ${response.body}';
+            'Failed to update subscription status: ${response.statusCode} - ${response.body}';
         notifyListeners();
         return false;
       }

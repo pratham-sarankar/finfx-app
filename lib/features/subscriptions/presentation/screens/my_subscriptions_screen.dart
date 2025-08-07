@@ -10,18 +10,30 @@ class MySubscriptionsScreen extends StatefulWidget {
   State<MySubscriptionsScreen> createState() => _MySubscriptionsScreenState();
 }
 
-class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
+class _MySubscriptionsScreenState extends State<MySubscriptionsScreen>
+    with SingleTickerProviderStateMixin {
   String selectedFilter = 'all';
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      setState(() {});
+    });
     // Fetch subscriptions when the screen loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context
           .read<SubscriptionsProvider>()
           .fetchSubscriptions(status: selectedFilter);
     });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -64,20 +76,98 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
             ),
             // Filter Bar
             Container(
-              margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.all(4),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
               decoration: BoxDecoration(
-                color: colorScheme.surfaceContainer,
+                color: colorScheme.surfaceContainer.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                     color: colorScheme.outline.withValues(alpha: 0.2)),
               ),
-              child: Row(
-                children: [
-                  _buildFilterChip('all', 'All'),
-                  _buildFilterChip('active', 'Active'),
-                  _buildFilterChip('cancelled', 'Cancelled'),
-                ],
+              child: TabBar(
+                controller: _tabController,
+                indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: colorScheme.primary.withValues(alpha: 0.1),
+                  border: Border.all(
+                    color: colorScheme.primary.withValues(alpha: 0.3),
+                  ),
+                ),
+                indicatorSize: TabBarIndicatorSize.tab,
+                dividerColor: Colors.transparent,
+                labelColor: colorScheme.primary,
+                unselectedLabelColor:
+                    colorScheme.onSurface.withValues(alpha: 0.7),
+                labelStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.5,
+                ),
+                unselectedLabelStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.5,
+                ),
+                onTap: (index) {
+                  String filter;
+                  switch (index) {
+                    case 0:
+                      filter = 'all';
+                      break;
+                    case 1:
+                      filter = 'active';
+                      break;
+                    case 2:
+                      filter = 'paused';
+                      break;
+                    default:
+                      filter = 'all';
+                  }
+                  setState(() {
+                    selectedFilter = filter;
+                  });
+                  // Fetch subscriptions for the selected filter
+                  context.read<SubscriptionsProvider>().fetchSubscriptions(
+                        status: filter == 'all' ? null : filter,
+                      );
+                },
+                tabs: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.list_alt_outlined,
+                          size: 18,
+                          color: _tabController.index == 0
+                              ? colorScheme.primary
+                              : colorScheme.onSurface.withValues(alpha: 0.7)),
+                      const SizedBox(width: 8),
+                      const Text('All'),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.check_circle_outline,
+                          size: 18,
+                          color: _tabController.index == 1
+                              ? colorScheme.primary
+                              : colorScheme.onSurface.withValues(alpha: 0.7)),
+                      const SizedBox(width: 8),
+                      const Text('Active'),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.pause_circle_outline,
+                          size: 18,
+                          color: _tabController.index == 2
+                              ? colorScheme.primary
+                              : colorScheme.onSurface.withValues(alpha: 0.7)),
+                      const SizedBox(width: 8),
+                      const Text('Paused'),
+                    ],
+                  ),
+                ].map((child) => Tab(child: child)).toList(),
               ),
             ),
             // Subscriptions List
@@ -110,49 +200,6 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
     );
   }
 
-  Widget _buildFilterChip(String filter, String label) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final isSelected = selectedFilter == filter;
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            selectedFilter = filter;
-          });
-          // Fetch subscriptions for the selected filter
-          context.read<SubscriptionsProvider>().fetchSubscriptions(
-                status: filter == 'all' ? null : filter,
-              );
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          decoration: BoxDecoration(
-            color: isSelected
-                ? const Color(0xff2e9844).withValues(alpha: 0.1)
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: isSelected
-                  ? const Color(0xff2e9844).withValues(alpha: 0.3)
-                  : Colors.transparent,
-            ),
-          ),
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: isSelected
-                  ? const Color(0xff2e9844)
-                  : colorScheme.onSurface.withValues(alpha: 0.7),
-              fontSize: 14,
-              fontFamily: isSelected ? "Manrope-Bold" : "Manrope-Regular",
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildEmptyState() {
     final colorScheme = Theme.of(context).colorScheme;
     String message;
@@ -167,9 +214,9 @@ class _MySubscriptionsScreenState extends State<MySubscriptionsScreen> {
         message = 'No active subscriptions';
         subMessage = 'You don\'t have any active subscriptions at the moment.';
         break;
-      case 'cancelled':
-        message = 'No cancelled subscriptions';
-        subMessage = 'You don\'t have any cancelled subscriptions.';
+      case 'paused':
+        message = 'No paused subscriptions';
+        subMessage = 'You don\'t have any paused subscriptions at the moment.';
         break;
       default:
         message = 'No subscriptions found';

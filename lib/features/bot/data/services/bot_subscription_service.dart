@@ -66,19 +66,26 @@ class BotSubscriptionService {
     }
   }
 
-  /// Cancel subscription to a bot
-  Future<BotSubscriptionStatus> cancelSubscription(
-      String subscriptionId) async {
+  /// Update subscription status (pause/reactivate)
+  Future<BotSubscriptionStatus> updateSubscriptionStatus(
+      String subscriptionId, String status, String botId,
+      {double? lotSize}) async {
     try {
+      final body = jsonEncode({
+        'status': status,
+        if (lotSize != null) 'lotSize': lotSize,
+      });
+
       final response = await _apiService.put(
-        '/api/subscriptions/$subscriptionId/cancel',
-        body: '{}', // Empty body as per API specification
+        '/api/subscriptions/$subscriptionId',
+        body: body,
       );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data['status'] == 'success') {
-          return BotSubscriptionStatus.fromJson(data['data']);
+          // Get the updated subscription status
+          return await checkSubscriptionStatus(botId);
         } else {
           throw ApiError.fromMap(data);
         }
@@ -89,27 +96,7 @@ class BotSubscriptionService {
     } catch (e) {
       if (e is ApiError) rethrow;
       throw ApiError.fromString(
-          'Failed to cancel subscription: ${e.toString()}');
-    }
-  }
-
-  /// Toggle subscription (subscribe if not subscribed, cancel if subscribed)
-  Future<BotSubscriptionStatus> toggleSubscription(
-      String botId, String botPackageId, double lotSize) async {
-    try {
-      // First check current status
-      final currentStatus = await checkSubscriptionStatus(botId);
-
-      if (currentStatus.isSubscribed) {
-        return await cancelSubscription(currentStatus.subscription!.id);
-      } else {
-        final response = await subscribeToBot(botId, botPackageId, lotSize);
-        return response;
-      }
-    } catch (e) {
-      if (e is ApiError) rethrow;
-      throw ApiError.fromString(
-          'Failed to toggle subscription: ${e.toString()}');
+          'Failed to update subscription status: ${e.toString()}');
     }
   }
 }

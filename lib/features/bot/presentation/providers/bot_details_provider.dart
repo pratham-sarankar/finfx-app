@@ -94,35 +94,6 @@ class BotDetailsProvider extends ChangeNotifier {
     }
   }
 
-  /// Toggle subscription (subscribe if not subscribed, cancel if subscribed)
-  Future<bool> toggleSubscription(
-      String botId, String botPackageId, double lotSize) async {
-    if (_isToggling) return false;
-
-    _isToggling = true;
-    _error = null;
-    notifyListeners();
-
-    try {
-      _subscriptionStatus = await _subscriptionService.toggleSubscription(
-        botId,
-        botPackageId,
-        lotSize,
-      );
-      return true;
-    } catch (e) {
-      if (e is ApiError) {
-        _error = e.message;
-      } else {
-        _error = 'Failed to toggle subscription: ${e.toString()}';
-      }
-      return false;
-    } finally {
-      _isToggling = false;
-      notifyListeners();
-    }
-  }
-
   /// Subscribe to a bot
   Future<bool> subscribeToBot(
       String botId, String botPackageId, double lotSize) async {
@@ -149,8 +120,9 @@ class BotDetailsProvider extends ChangeNotifier {
     }
   }
 
-  /// Cancel subscription to a bot
-  Future<bool> cancelSubscription(String subscriptionId) async {
+  /// Update subscription status (pause/reactivate)
+  Future<bool> updateSubscriptionStatus(String subscriptionId, String status,
+      {double? lotSize}) async {
     if (_isToggling) return false;
 
     _isToggling = true;
@@ -158,14 +130,15 @@ class BotDetailsProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _subscriptionStatus =
-          await _subscriptionService.cancelSubscription(subscriptionId);
+      _subscriptionStatus = await _subscriptionService.updateSubscriptionStatus(
+          subscriptionId, status, _currentBotId!,
+          lotSize: lotSize);
       return true;
     } catch (e) {
       if (e is ApiError) {
         _error = e.message;
       } else {
-        _error = 'Failed to cancel subscription: ${e.toString()}';
+        _error = 'Failed to update subscription status: ${e.toString()}';
       }
       return false;
     } finally {
