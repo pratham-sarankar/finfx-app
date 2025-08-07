@@ -208,6 +208,60 @@ class _BotDetailsTabState extends State<BotDetailsTab>
                                     ),
                                   ),
                                 ],
+                                const SizedBox(height: 4),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Lot Size: ',
+                                      style: TextStyle(
+                                        color: colorScheme.onSurfaceVariant,
+                                        fontSize: 12,
+                                        fontFamily: "Manrope-Regular",
+                                      ),
+                                    ),
+                                    Text(
+                                      '${botDetailsProvider.subscriptionStatus!.subscription!.lotSize.toStringAsFixed(2)}',
+                                      style: TextStyle(
+                                        color: colorScheme.onSurface,
+                                        fontSize: 12,
+                                        fontFamily: "Manrope-SemiBold",
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    if (botDetailsProvider.subscriptionStatus!
+                                                .subscription!.status ==
+                                            'active' ||
+                                        botDetailsProvider.subscriptionStatus!
+                                                .subscription!.status ==
+                                            'paused')
+                                      GestureDetector(
+                                        onTap: () => _updateLotSize(
+                                            context, botDetailsProvider),
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: colorScheme.primary
+                                                .withValues(alpha: 0.1),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            border: Border.all(
+                                              color: colorScheme.primary
+                                                  .withValues(alpha: 0.3),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            'Update',
+                                            style: TextStyle(
+                                              color: colorScheme.primary,
+                                              fontSize: 10,
+                                              fontFamily: "Manrope-SemiBold",
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
                               ],
                             ],
                           ),
@@ -745,6 +799,39 @@ class _BotDetailsTabState extends State<BotDetailsTab>
         return 'Connect Again';
       default:
         return 'Connect';
+    }
+  }
+
+  void _updateLotSize(
+      BuildContext context, BotDetailsProvider botDetailsProvider) async {
+    final currentLotSize =
+        botDetailsProvider.subscriptionStatus!.subscription!.lotSize;
+
+    final newLotSize = await Navigator.of(context).push<double>(
+      MaterialPageRoute(
+        builder: (context) => LotSizeScreen(initialValue: currentLotSize),
+        fullscreenDialog: true,
+      ),
+    );
+
+    if (newLotSize != null && newLotSize != currentLotSize) {
+      final success = await botDetailsProvider.updateSubscriptionStatus(
+        botDetailsProvider.subscriptionStatus!.subscription!.id,
+        botDetailsProvider.subscriptionStatus!.subscription!.status,
+        lotSize: newLotSize,
+      );
+
+      if (success) {
+        ToastUtils.showSuccess(
+          context: context,
+          message: 'Lot size updated successfully',
+        );
+      } else {
+        ToastUtils.showError(
+          context: context,
+          message: botDetailsProvider.error ?? 'Failed to update lot size',
+        );
+      }
     }
   }
 }

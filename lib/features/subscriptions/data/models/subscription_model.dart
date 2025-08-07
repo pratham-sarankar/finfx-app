@@ -5,6 +5,7 @@ class SubscriptionModel {
   final String id;
   final String userId;
   final String status;
+  final double lotSize;
   final DateTime subscribedAt;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -16,6 +17,7 @@ class SubscriptionModel {
     required this.id,
     required this.userId,
     required this.status,
+    required this.lotSize,
     required this.subscribedAt,
     required this.createdAt,
     required this.updatedAt,
@@ -30,6 +32,7 @@ class SubscriptionModel {
         id: json['id'] as String,
         userId: json['userId'] as String,
         status: json['status'] as String,
+        lotSize: (json['lotSize'] as num).toDouble(),
         subscribedAt: DateTime.parse(json['subscribedAt'] as String),
         createdAt: DateTime.parse(json['createdAt'] as String),
         updatedAt: DateTime.parse(json['updatedAt'] as String),
@@ -51,6 +54,7 @@ class SubscriptionModel {
       'id': id,
       'userId': userId,
       'status': status,
+      'lotSize': lotSize,
       'subscribedAt': subscribedAt.toIso8601String(),
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),

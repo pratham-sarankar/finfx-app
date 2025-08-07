@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:finfx/features/subscriptions/data/models/subscription_model.dart';
 import 'package:finfx/features/subscriptions/presentation/providers/subscriptions_provider.dart';
+import 'package:finfx/features/bot/presentation/screen/bot_detail_screen.dart';
+import 'package:finfx/features/home/data/models/bot_model.dart';
 
 class SubscriptionCard extends StatelessWidget {
   final SubscriptionModel subscription;
@@ -69,7 +71,27 @@ class SubscriptionCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: () {},
+          onTap: () {
+            // Navigate to bot details screen
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BotDetailsScreen(
+                  bot: BotModel(
+                    id: subscription.bot.id,
+                    name: subscription.bot.name,
+                    description: subscription.bot.description,
+                    performanceDuration: subscription.bot.performanceDuration,
+                    recommendedCapital: subscription.bot.recommendedCapital,
+                    script: subscription.bot.script,
+                    createdAt: DateTime
+                        .now(), // Use current time since SubscriptionBotModel doesn't have this
+                    updatedAt: DateTime
+                        .now(), // Use current time since SubscriptionBotModel doesn't have this
+                  ),
+                ),
+              ),
+            );
+          },
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -156,35 +178,6 @@ class SubscriptionCard extends StatelessWidget {
                               fontFamily: "Manrope-Regular",
                             ),
                           ),
-                          const SizedBox(height: 12),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.calendar_today,
-                                size: 16,
-                                color: colorScheme.onSurface
-                                    .withValues(alpha: 0.5),
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                'Subscribed: ',
-                                style: TextStyle(
-                                  color: colorScheme.onSurface
-                                      .withValues(alpha: 0.6),
-                                  fontSize: 12,
-                                  fontFamily: "Manrope-Regular",
-                                ),
-                              ),
-                              Text(
-                                formattedDate,
-                                style: TextStyle(
-                                  color: colorScheme.onSurface,
-                                  fontSize: 12,
-                                  fontFamily: "Manrope-SemiBold",
-                                ),
-                              ),
-                            ],
-                          ),
                           if ((subscription.status == 'active' ||
                                   subscription.status == 'paused') &&
                               subscription.expiresAt != null) ...[
@@ -219,6 +212,35 @@ class SubscriptionCard extends StatelessWidget {
                               ],
                             ),
                           ],
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.trending_up,
+                                size: 16,
+                                color: colorScheme.onSurface
+                                    .withValues(alpha: 0.5),
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Lot Size: ',
+                                style: TextStyle(
+                                  color: colorScheme.onSurface
+                                      .withValues(alpha: 0.6),
+                                  fontSize: 12,
+                                  fontFamily: "Manrope-Regular",
+                                ),
+                              ),
+                              Text(
+                                subscription.lotSize.toStringAsFixed(2),
+                                style: TextStyle(
+                                  color: colorScheme.onSurface,
+                                  fontSize: 12,
+                                  fontFamily: "Manrope-SemiBold",
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),

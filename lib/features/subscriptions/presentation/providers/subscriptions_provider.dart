@@ -115,10 +115,12 @@ class SubscriptionsProvider extends ChangeNotifier {
               id: existingSubscription.id,
               userId: existingSubscription.userId,
               status: status,
+              lotSize: lotSize ?? existingSubscription.lotSize,
               subscribedAt: existingSubscription.subscribedAt,
               createdAt: existingSubscription.createdAt,
               updatedAt: DateTime.now(),
               cancelledAt: existingSubscription.cancelledAt,
+              expiresAt: existingSubscription.expiresAt,
               bot: existingSubscription.bot,
             );
             _subscriptions[index] = updatedSubscription;
