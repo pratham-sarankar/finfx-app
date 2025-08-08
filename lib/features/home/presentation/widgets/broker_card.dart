@@ -1,5 +1,3 @@
-import 'package:finfx/features/brokers/domain/models/binance_balance.dart';
-import 'package:finfx/features/brokers/domain/models/delta_balance.dart';
 import 'package:finfx/themes/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +5,6 @@ class BrokerCard extends StatelessWidget {
   final String brokerName;
   final String logoPath;
   final bool isConnected;
-  final dynamic balance;
   final bool isLoading;
   final VoidCallback onTap;
 
@@ -16,7 +13,6 @@ class BrokerCard extends StatelessWidget {
     required this.brokerName,
     required this.logoPath,
     required this.isConnected,
-    required this.balance,
     required this.isLoading,
     required this.onTap,
   }) : super(key: key);
@@ -135,12 +131,12 @@ class BrokerCard extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  // Right side - Balance or connection status
+                  // Right side - Connection status
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (isConnected && balance != null)
+                      if (isConnected)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -148,10 +144,10 @@ class BrokerCard extends StatelessWidget {
                               _buildShimmerLoader()
                             else
                               Text(
-                                _formatBalance(balance),
+                                "Connected",
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 18,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -165,7 +161,7 @@ class BrokerCard extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  "Active",
+                                  "Tap to manage",
                                   style: TextStyle(
                                     color: Colors.white.withValues(alpha: 0.8),
                                     fontSize: 11,
@@ -220,7 +216,7 @@ class BrokerCard extends StatelessWidget {
     );
   }
 
-  // Shimmer loading effect for balance
+  // Shimmer loading effect
   Widget _buildShimmerLoader() {
     return Container(
       width: 80,
@@ -274,21 +270,6 @@ class BrokerCard extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  // Format balance based on broker type
-  String _formatBalance(dynamic balance) {
-    if (balance is BinanceBalance) {
-      final totalBalance = balance.btcBalance + balance.btcLocked;
-      if (totalBalance >= 1) {
-        return "${totalBalance.toStringAsFixed(2)} BTC";
-      } else {
-        return "${(totalBalance * 1000).toStringAsFixed(0)} mBTC";
-      }
-    } else if (balance is DeltaBalance) {
-      return "${balance.availableBalance.toStringAsFixed(2)} ${balance.asset}";
-    }
-    return "0.00";
   }
 
   // Generate theme-based gradient based on broker name

@@ -1,7 +1,8 @@
 // Flutter imports:
-import 'package:finfx/features/brokers/presentation/providers/binance_provider.dart';
-import 'package:finfx/features/brokers/presentation/providers/delta_provider.dart';
+import 'package:finfx/features/brokers/presentation/providers/mt4_provider.dart';
+import 'package:finfx/features/brokers/presentation/providers/mt5_provider.dart';
 import 'package:finfx/features/brokers/presentation/screens/brokers_screen.dart';
+import 'package:finfx/features/home/presentation/providers/bot_provider.dart';
 import 'package:finfx/features/home/presentation/widgets/bot_card.dart';
 import 'package:finfx/features/home/presentation/widgets/broker_card.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,6 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:finfx/screens/Message%20&%20Notification/Notifications.dart';
-import 'package:finfx/features/home/presentation/providers/bot_provider.dart';
 import 'package:finfx/features/profile/presentation/providers/profile_provider.dart';
 
 // Custom painter for the line chart
@@ -175,8 +175,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     // Initialize broker providers and fetch bots
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<BotProvider>().fetchBots();
-      context.read<BinanceProvider>().initialize();
-      context.read<DeltaProvider>().initialize();
+      context.read<MT4Provider>().initialize();
+      context.read<MT5Provider>().initialize();
     });
   }
 
@@ -225,15 +225,15 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               setState(() {});
               // Refresh bots
               await context.read<BotProvider>().fetchBots();
-              // Refresh broker balances
-              final binanceProvider = context.read<BinanceProvider>();
-              final deltaProvider = context.read<DeltaProvider>();
+              // Refresh broker credentials
+              final mt4Provider = context.read<MT4Provider>();
+              final mt5Provider = context.read<MT5Provider>();
 
-              if (binanceProvider.isConnected) {
-                await binanceProvider.refreshBalance();
+              if (mt4Provider.isConnected) {
+                await mt4Provider.refresh();
               }
-              if (deltaProvider.isConnected) {
-                await deltaProvider.refreshBalance();
+              if (mt5Provider.isConnected) {
+                await mt5Provider.refresh();
               }
             },
             child: SingleChildScrollView(
@@ -460,9 +460,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               BrokerCard(
                 brokerName: "Meta Trader 5",
                 logoPath: "assets/images/mt5.png",
-                isConnected: context.watch<DeltaProvider>().isConnected,
-                balance: context.watch<DeltaProvider>().balance,
-                isLoading: context.watch<DeltaProvider>().isLoading,
+                isConnected: context.watch<MT5Provider>().isConnected,
+                isLoading: context.watch<MT5Provider>().isLoading,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -476,9 +475,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               BrokerCard(
                 brokerName: "Meta Trader 4",
                 logoPath: "assets/images/mt4.webp",
-                isConnected: context.watch<BinanceProvider>().isConnected,
-                balance: context.watch<BinanceProvider>().balance,
-                isLoading: context.watch<BinanceProvider>().isLoading,
+                isConnected: context.watch<MT4Provider>().isConnected,
+                isLoading: context.watch<MT4Provider>().isLoading,
                 onTap: () {
                   Navigator.push(
                     context,

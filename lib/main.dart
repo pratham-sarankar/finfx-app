@@ -1,6 +1,7 @@
 // Flutter imports:
-import 'package:finfx/features/brokers/presentation/providers/binance_provider.dart';
-import 'package:finfx/features/brokers/presentation/providers/delta_provider.dart';
+import 'package:finfx/features/brokers/presentation/providers/mt4_provider.dart';
+import 'package:finfx/features/brokers/presentation/providers/mt5_provider.dart';
+import 'package:finfx/features/brokers/data/services/platform_credentials_service.dart';
 import 'package:finfx/features/bot/presentation/providers/signals_provider.dart';
 import 'package:finfx/features/user_trades/presentation/providers/user_signals_provider.dart';
 import 'package:finfx/features/subscriptions/presentation/providers/subscriptions_provider.dart';
@@ -27,8 +28,6 @@ import 'firebase_options.dart';
 import 'services/api_service.dart';
 import 'services/auth_service.dart';
 import 'services/auth_storage_service.dart';
-import 'services/binance_service.dart';
-import 'services/delta_service.dart';
 import 'package:finfx/features/profile/presentation/providers/profile_provider.dart';
 import 'package:finfx/features/profile/data/repositories/profile_repository_impl.dart';
 import 'features/bot/data/services/bot_subscription_service.dart';
@@ -56,16 +55,9 @@ void main() async {
               );
             },
           ),
-          Provider<BinanceService>(
+          Provider<PlatformCredentialsService>(
             create: (context) {
-              return BinanceService(
-                apiService: context.read<ApiService>(),
-              );
-            },
-          ),
-          Provider<DeltaService>(
-            create: (context) {
-              return DeltaService(
+              return PlatformCredentialsService(
                 apiService: context.read<ApiService>(),
               );
             },
@@ -98,17 +90,28 @@ void main() async {
           ),
           ChangeNotifierProvider(
             create: (context) {
-              return BinanceProvider(
-                binanceService: context.read<BinanceService>(),
-                authStorage: context.read<AuthStorageService>(),
+              return ProfileProvider(
+                ProfileRepositoryImpl(context.read<ApiService>()),
               );
             },
           ),
           ChangeNotifierProvider(
             create: (context) {
-              return DeltaProvider(
-                deltaService: context.read<DeltaService>(),
+              return MT5Provider(
+                platformCredentialsService:
+                    context.read<PlatformCredentialsService>(),
                 authStorage: context.read<AuthStorageService>(),
+                profileProvider: context.read<ProfileProvider>(),
+              );
+            },
+          ),
+          ChangeNotifierProvider(
+            create: (context) {
+              return MT4Provider(
+                platformCredentialsService:
+                    context.read<PlatformCredentialsService>(),
+                authStorage: context.read<AuthStorageService>(),
+                profileProvider: context.read<ProfileProvider>(),
               );
             },
           ),
@@ -122,13 +125,6 @@ void main() async {
           ChangeNotifierProvider(
             create: (context) {
               return KYCProvider(KYCRepositoryImpl(context.read<ApiService>()));
-            },
-          ),
-          ChangeNotifierProvider(
-            create: (context) {
-              return ProfileProvider(
-                ProfileRepositoryImpl(context.read<ApiService>()),
-              );
             },
           ),
           ChangeNotifierProvider(
