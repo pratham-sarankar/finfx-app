@@ -26,15 +26,9 @@ jobs:
           }
           EOF
 
-      - name: Build Flutter Web
-        run: flutter build web --release --wasm --dart-define-from-file=env.json
-
-      - name: Verify build output
-        run: |
-          echo "Checking build output..."
-          ls -la build/web/
-          echo "Build completed successfully!"
-
       - name: Deploy to GitHub Pages
-        uses: bluefireteam/flutter-gh-pages@v8
+        uses: bluefireteam/flutter-gh-pages@v9
+        with:
+          compileToWasm: true
+          customArgs: --dart-define-from-file=env.json
         
