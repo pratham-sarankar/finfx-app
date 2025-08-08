@@ -1,0 +1,41 @@
+name: Gh-pages
+
+on: 
+  push:
+    branches: [main] 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Flutter Action
+        uses: subosito/flutter-action@v2
+
+      - name: Create env.json file
+        run: |
+          cat > env.json << 'EOF'
+          {
+            "DEBUG_API_URL": "http://localhost:3000",
+            "PRODUCTION_API_URL": "https://finfx-backend.onrender.com"
+          }
+          EOF
+
+      - name: Build Flutter Web
+        run: flutter build web --release --dart-define-from-file=env.json
+
+      - name: Verify build output
+        run: |
+          echo "Checking build output..."
+          ls -la build/web/
+          echo "Build completed successfully!"
+
+      - name: Deploy to GitHub Pages
+        uses: bluefireteam/flutter-gh-pages@v8
+        with:
+          baseHref: /dot_guide_pano/
+          webRenderer: canvasKit
+        
