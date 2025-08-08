@@ -27,7 +27,7 @@ jobs:
           EOF
 
       - name: Build Flutter Web
-        run: flutter build web --release --dart-define-from-file=env.json
+        run: flutter build web --release --wasm --dart-define-from-file=env.json
 
       - name: Verify build output
         run: |
@@ -37,7 +37,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: bluefireteam/flutter-gh-pages@v8
-        with:
-          baseHref: /dot_guide_pano/
-          webRenderer: canvasKit
         
