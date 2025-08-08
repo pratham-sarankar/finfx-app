@@ -31,4 +31,5 @@ jobs:
         with:
           compileToWasm: true
           customArgs: --dart-define-from-file=env.json
+          baseHref: /finfx-app/
         
