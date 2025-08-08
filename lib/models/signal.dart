@@ -19,6 +19,7 @@ class Signal {
   final DateTime? updatedAt;
   final String id;
   final BotInfo? bot;
+  final String pairName;
 
   Signal({
     required this.tradeId,
@@ -39,6 +40,7 @@ class Signal {
     this.updatedAt,
     required this.id,
     this.bot,
+    required this.pairName,
   });
 
   factory Signal.fromMap(Map<String, dynamic> map) {
@@ -61,6 +63,7 @@ class Signal {
       updatedAt: _parseDateTime(map['updatedAt']),
       id: map['id'] as String? ?? '',
       bot: map['bot'] != null ? BotInfo.fromMap(map['bot']) : null,
+      pairName: map['pairName'] ?? '',
     );
   }
 
@@ -88,6 +91,7 @@ class Signal {
       'updatedAt': updatedAt?.toIso8601String(),
       'id': id,
       'bot': bot?.toMap(),
+      'pairName': pairName,
     };
   }
 

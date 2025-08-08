@@ -41,7 +41,7 @@ class SignalCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    signal.bot?.name ?? "Bot",
+                    signal.pairName,
                     style: TextStyle(
                       color: colorScheme.onSurface,
                       fontSize: 16,
