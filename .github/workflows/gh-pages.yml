@@ -1,8 +1,8 @@
 name: Gh-pages
 
-on: 
+on:
   push:
-    branches: [main] 
+    branches: [main]
 
 jobs:
   build:
@@ -15,14 +15,14 @@ jobs:
       - name: Flutter Action
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.3'
+          flutter-version: "3.29.3"
 
       - name: Create env.json file
         run: |
           cat > env.json << 'EOF'
           {
             "DEBUG_API_URL": "http://localhost:3000",
-            "PRODUCTION_API_URL": "https://finfx-backend.onrender.com"
+            "PRODUCTION_API_URL": "https://finfx-backend-917312759089.asia-south2.run.app"
           }
           EOF
 
@@ -31,5 +31,4 @@ jobs:
         with:
           compileToWasm: true
           customArgs: --dart-define-from-file=env.json
-          baseHref: /finfx-app/
-        
+          cname: finfx.sarankar.com
