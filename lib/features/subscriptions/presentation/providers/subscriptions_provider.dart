@@ -70,7 +70,7 @@ class SubscriptionsProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
 
-        if (data['status'] == 'success') {
+        if (data['success'] == true) {
           final subscriptionsList = data['data'] as List;
           _subscriptions = subscriptionsList
               .map((subJson) => SubscriptionModel.fromJson(subJson))
@@ -105,7 +105,7 @@ class SubscriptionsProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
 
-        if (data['status'] == 'success') {
+        if (data['success'] == true) {
           // Update the subscription status in the list
           final index =
               _subscriptions.indexWhere((sub) => sub.id == subscriptionId);
@@ -113,15 +113,13 @@ class SubscriptionsProvider extends ChangeNotifier {
             final existingSubscription = _subscriptions[index];
             final updatedSubscription = SubscriptionModel(
               id: existingSubscription.id,
-              userId: existingSubscription.userId,
               status: status,
               lotSize: lotSize ?? existingSubscription.lotSize,
               subscribedAt: existingSubscription.subscribedAt,
-              createdAt: existingSubscription.createdAt,
-              updatedAt: DateTime.now(),
-              cancelledAt: existingSubscription.cancelledAt,
               expiresAt: existingSubscription.expiresAt,
+              user: existingSubscription.user, // Keep existing user (can be null)
               bot: existingSubscription.bot,
+              package: existingSubscription.package,
             );
             _subscriptions[index] = updatedSubscription;
             notifyListeners();
