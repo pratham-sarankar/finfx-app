@@ -1,66 +1,68 @@
 import 'package:finfx/utils/api_error.dart';
 import 'package:finfx/features/subscriptions/data/models/subscription_bot_model.dart';
+import 'package:finfx/features/subscriptions/data/models/subscription_user_model.dart';
+import 'package:finfx/features/subscriptions/data/models/subscription_package_model.dart';
 
 class SubscriptionModel {
   final String id;
-  final String userId;
   final String status;
   final double lotSize;
   final DateTime subscribedAt;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final DateTime? cancelledAt;
   final DateTime? expiresAt;
+  final SubscriptionUserModel? user; // Made optional
   final SubscriptionBotModel bot;
+  final SubscriptionPackageModel package;
 
   SubscriptionModel({
     required this.id,
-    required this.userId,
     required this.status,
     required this.lotSize,
     required this.subscribedAt,
-    required this.createdAt,
-    required this.updatedAt,
-    this.cancelledAt,
     this.expiresAt,
+    this.user, // Made optional
     required this.bot,
+    required this.package,
   });
 
   factory SubscriptionModel.fromJson(Map<String, dynamic> json) {
     try {
+      // Validate required fields first
+      if (json['id'] == null) throw Exception('Subscription ID is required');
+      if (json['status'] == null) throw Exception('Subscription status is required');
+      if (json['lotSize'] == null) throw Exception('Lot size is required');
+      if (json['subscribedAt'] == null) throw Exception('Subscribed date is required');
+      if (json['bot'] == null) throw Exception('Bot information is required');
+      if (json['package'] == null) throw Exception('Package information is required');
+
       return SubscriptionModel(
         id: json['id'] as String,
-        userId: json['userId'] as String,
         status: json['status'] as String,
         lotSize: (json['lotSize'] as num).toDouble(),
         subscribedAt: DateTime.parse(json['subscribedAt'] as String),
-        createdAt: DateTime.parse(json['createdAt'] as String),
-        updatedAt: DateTime.parse(json['updatedAt'] as String),
-        cancelledAt: json['cancelledAt'] != null
-            ? DateTime.parse(json['cancelledAt'] as String)
-            : null,
         expiresAt: json['expiresAt'] != null
             ? DateTime.parse(json['expiresAt'] as String)
             : null,
+        user: json['user'] != null 
+            ? SubscriptionUserModel.fromJson(json['user'] as Map<String, dynamic>)
+            : null, // Handle null user field
         bot: SubscriptionBotModel.fromJson(json['bot'] as Map<String, dynamic>),
+        package: SubscriptionPackageModel.fromJson(json['package'] as Map<String, dynamic>),
       );
     } catch (e) {
-      throw ApiError.fromString('Failed to parse subscription data: $e');
+      throw ApiError.fromString('Failed to parse subscription data: $e\nJSON: $json');
     }
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'userId': userId,
       'status': status,
       'lotSize': lotSize,
       'subscribedAt': subscribedAt.toIso8601String(),
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
-      'cancelledAt': cancelledAt?.toIso8601String(),
       'expiresAt': expiresAt?.toIso8601String(),
+      'user': user?.toJson(), // Handle null user
       'bot': bot.toJson(),
+      'package': package.toJson(),
     };
   }
 }
