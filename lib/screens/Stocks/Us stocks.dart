@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 // Flutter imports:
+import 'package:finfx/screens/Account&setting/refferal_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,7 +9,6 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import '../../dark_mode.dart';
-import '../Account&setting/Refferal Code.dart';
 import '../Crypto/Latest News.dart';
 import '../config/common.dart';
 import 'Category_stock.dart';
@@ -506,7 +506,7 @@ class _StockState extends State<Stock> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Reffle_code(),
+                            builder: (context) => const ReferralScreen(),
                           ));
                     },
                     child: Container(

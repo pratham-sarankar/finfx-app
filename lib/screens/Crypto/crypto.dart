@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 
 // Flutter imports:
+import 'package:finfx/screens/Account&setting/refferal_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,7 +9,6 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import '../../dark_mode.dart';
-import '../Account&setting/Refferal Code.dart';
 import '../config/common.dart';
 import 'Detail_crypto.dart';
 import 'Latest News.dart';
@@ -355,7 +355,7 @@ class _Crypto_State extends State<Crypto_> with SingleTickerProviderStateMixin {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Reffle_code(),
+                          builder: (context) => const ReferralScreen(),
                         ),
                       );
                     },

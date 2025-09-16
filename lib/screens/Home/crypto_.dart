@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import '../../dark_mode.dart';
-import '../Account&setting/Refferal Code.dart';
+import '../Account&setting/refferal_screen.dart';
 import '../Crypto/Detail_crypto.dart';
 import '../Crypto/Latest News.dart';
 import '../Crypto/See All Assets.dart';
@@ -319,7 +319,7 @@ class _crypto_State extends State<crypto_> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Reffle_code(),
+                            builder: (context) => ReferralScreen(),
                           ));
                     },
                     child: Container(

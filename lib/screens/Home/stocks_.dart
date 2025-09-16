@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 
 // Flutter imports:
+import 'package:finfx/screens/Account&setting/refferal_screen.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,7 +9,6 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import '../../dark_mode.dart';
-import '../Account&setting/Refferal Code.dart';
 import '../Crypto/Latest News.dart';
 import '../Stocks/Category_stock.dart';
 import '../Stocks/Detail_stock.dart';
@@ -526,7 +526,7 @@ class _stocks_State extends State<stocks_> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Reffle_code(),
+                            builder: (context) => const ReferralScreen(),
                           ));
                     },
                     child: Container(

@@ -6,6 +6,7 @@ class ProfileModel {
   final String fullName;
   final String email;
   final String phoneNumber;
+  final String referralCode;
   final bool isEmailVerified;
   final bool isPhoneVerified;
   final DateTime createdAt;
@@ -20,6 +21,7 @@ class ProfileModel {
     required this.isPhoneVerified,
     required this.createdAt,
     required this.updatedAt,
+    required this.referralCode,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class ProfileModel {
         isPhoneVerified: json['isPhoneVerified'] as bool? ?? false,
         createdAt: DateTime.parse(json['createdAt'] as String),
         updatedAt: DateTime.parse(json['updatedAt'] as String),
+        referralCode: json['referralCode'] ?? "",
       );
     } catch (e) {
       throw ApiError.fromString(

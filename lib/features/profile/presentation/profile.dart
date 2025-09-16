@@ -3,7 +3,7 @@ import 'package:finfx/features/brokers/presentation/screens/brokers_screen.dart'
 import 'package:finfx/features/profile/presentation/personal_data.dart';
 import 'package:finfx/features/profile/presentation/widgets/profile_tile.dart';
 import 'package:finfx/features/settings/change-password/presentation/change_password.dart';
-import 'package:finfx/screens/Account&setting/Refferal%20Code.dart';
+import 'package:finfx/screens/Account&setting/refferal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
@@ -359,6 +359,7 @@ class _ProfileState extends State<Profile> {
                             );
                           },
                         ),
+
                         AppConstants.Height(20),
                         Text(
                           "Settings",
@@ -450,7 +451,7 @@ class _ProfileState extends State<Profile> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Reffle_code(),
+                                  builder: (context) => const ReferralScreen(),
                                 ));
                           },
                         ),
