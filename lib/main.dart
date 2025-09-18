@@ -12,7 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:deriv_chart/generated/l10n.dart';
+// import 'package:deriv_chart/generated/l10n.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -228,7 +228,7 @@ class MyApp extends StatelessWidget {
       themeMode: themeMode,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
-        ChartLocalization.delegate,
+        // ChartLocalization.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
