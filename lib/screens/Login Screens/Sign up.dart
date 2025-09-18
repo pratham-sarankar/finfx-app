@@ -58,6 +58,7 @@ class _SignState extends State<Sign> {
           formData['fullName'].toString().trim(),
           formData['email'].toString().trim(),
           formData['password'].toString().trim(),
+          formData['referralCode'],
         );
 
         if (mounted) {
@@ -109,7 +110,6 @@ class _SignState extends State<Sign> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -257,6 +257,36 @@ class _SignState extends State<Sign> {
                         FormBuilderValidators.minLength(
                           6,
                           errorText: 'Password must be at least 6 characters',
+                        ),
+                      ]),
+                    ),
+                    AppConstants.Height(20),
+                    FormBuilderTextField(
+                      name: 'referralCode',
+                      style: TextStyle(color: colorScheme.onSurface),
+                      decoration: InputDecoration(
+                        hintText: "Referral Code",
+                        fillColor: colorScheme.surfaceContainer,
+                        filled: true,
+                        prefixIcon: const Icon(IconlyLight.user_1),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        hintStyle: TextStyle(
+                            color:
+                                colorScheme.onSurface.withValues(alpha: 0.6)),
+                        errorStyle: TextStyle(
+                          color: colorScheme.error,
+                          fontSize: 12,
+                        ),
+                      ),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.equalLength(
+                          8,
+                          errorText: 'Invalid Referral Code',
+                          allowEmpty: true,
+                          checkNullOrEmpty: false,
                         ),
                       ]),
                     ),

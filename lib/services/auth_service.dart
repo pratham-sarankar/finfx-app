@@ -16,14 +16,15 @@ class AuthService {
 
   AuthService(this._apiService);
 
-  Future<SignUpResponse> signUp(
-      String fullName, String email, String password) async {
+  Future<SignUpResponse> signUp(String fullName, String email, String password,
+      String? referralCode) async {
     final response = await _apiService.post(
       '/api/auth/signup',
       body: jsonEncode({
         'fullName': fullName,
         'email': email,
         'password': password,
+        if (referralCode?.isNotEmpty ?? false) 'referralCode': referralCode,
       }),
     );
 
