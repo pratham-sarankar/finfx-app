@@ -80,13 +80,11 @@ class SubscriptionCard extends StatelessWidget {
                     id: subscription.bot.id,
                     name: subscription.bot.name,
                     description: subscription.bot.description,
-                    performanceDuration: subscription.bot.performanceDuration,
-                    recommendedCapital: subscription.bot.recommendedCapital,
-                    script: subscription.bot.script,
-                    createdAt: DateTime
-                        .now(), // Use current time since SubscriptionBotModel doesn't have this
-                    updatedAt: DateTime
-                        .now(), // Use current time since SubscriptionBotModel doesn't have this
+                    performanceDuration: "N/A", // Not available in subscription bot model
+                    recommendedCapital: 0, // Not available in subscription bot model
+                    script: "", // Not available in subscription bot model
+                    createdAt: DateTime.now(), // Use current time since not available
+                    updatedAt: DateTime.now(), // Use current time since not available
                   ),
                 ),
               ),
